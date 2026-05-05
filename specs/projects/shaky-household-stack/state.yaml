@@ -1,0 +1,10 @@
+stage: submission_ready
+status: done
+language: zh-CN
+owner: auto
+next_state: submission_ready
+blockers:
+  - 真实代码仓构建产物未接入
+  - 真实提审素材与账号信息未提供
+last_artifact: specs/projects/shaky-household-stack/launch-prep.md
+updated_at: 2026-05-06

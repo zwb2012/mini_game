@@ -12,6 +12,10 @@
 - 当前主推方向是哪一个
 - 其余方向是保留、观察还是淘汰
 
+绑定产物：
+- `research-options.md`
+- `direction-gate.md`
+
 通过后进入：`direction_selected`
 
 ### 门禁 2：PRD 审批
@@ -23,6 +27,10 @@
 - 玩法闭环是否清晰
 - 验收标准是否足够明确
 
+绑定产物：
+- `prd.md`
+- `prd-gate.md`
+
 通过后进入：`prd_approved`
 
 ### 门禁 3：提审包完成
@@ -31,6 +39,10 @@
 人工确认内容：
 - 提审文档、素材、配置、检查表是否齐全
 - 是否真正执行外部平台的审核提交流程
+
+绑定产物：
+- `launch-prep.md`
+- `state.yaml`
 
 通过后进入：`submission_ready`
 
