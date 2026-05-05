@@ -6,12 +6,12 @@ description: Use when a project card exists and the next decision is whether the
 # Candidate Evaluator
 
 ## Overview
-Judge whether a project card deserves prototype time. Prefer cheap validation and reject ideas that are weak, overbuilt, or structurally hostile to ad monetization.
+判断一个项目卡是否值得进入原型验证阶段。重点是低成本验证与淘汰不合适方向，而不是把每个有趣想法都继续往下推。
 
 ## When to Use
-- A project card already exists
-- Prototype slots are limited
-- The next decision is promote, hold, or reject
+- 已经有项目卡
+- 原型名额有限
+- 当前需要做 `promote`、`hold` 或 `reject` 的判断
 
 ## Required Fields
 - attraction_judgment
@@ -22,16 +22,18 @@ Judge whether a project card deserves prototype time. Prefer cheap validation an
 - prototype_direction
 
 ## Workflow
-1. Score attraction in words, not numbers.
-2. Judge whether the prototype can fit a short time box.
-3. Decide whether ads can fit the loop without destroying it.
-4. Name the strongest competitive or repetition risk.
-5. End with `promote`, `hold`, or `reject`.
+1. 用文字判断吸引力，不用打分数字。
+2. 判断原型是否能落进短时间盒。
+3. 判断广告是否能接入而不破坏体验。
+4. 指出最大的同质化或重复性风险。
+5. 用 `promote`、`hold` 或 `reject` 结束。
+6. 正文说明默认使用中文。
 
 ## Output
-Write `candidate-review.md` using the template headings only.
+只按 `candidate-review.md` 模板输出。
 
 ## Common Mistakes
-- Treating every amusing idea as prototype-worthy
-- Ignoring repetitive loops
-- Recommending a prototype without a concrete direction
+- 只因为“看起来有趣”就推进原型
+- 忽略玩法重复性
+- 没有给出明确原型方向
+- 主要内容用英文表达

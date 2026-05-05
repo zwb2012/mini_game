@@ -6,34 +6,37 @@ description: Use when a solo developer is managing multiple game ideas or projec
 # Portfolio Manager
 
 ## Overview
-Manage the project portfolio, not individual implementation details. Keep work in progress low, compare projects against each other, and decide which stage skill should run next.
+负责多个项目的组合管理，而不是单个项目的具体实现。核心目标是控制 WIP、比较项目优先级，并为组合层输出“现在最该推进谁、推进到哪一步”。
 
 ## When to Use
-- Multiple projects exist at once
-- Daily prioritization is unclear
-- Weekly promote/hold/kill decisions are needed
-- A project changed state and the next step is unclear
+- 同时存在多个小游戏方向或项目
+- 每日优先级不清晰
+- 需要每周做 promote、hold、reject、scale、rework、kill 决策
+- 需要为多个项目分配下一步动作
 
 ## Inputs
-- `specs/portfolio/portfolio-board.md`
-- Latest stage document for each active project
-- Current WIP limits
+- `portfolio/portfolio-board.md`
+- `portfolio/projects.yaml`
+- 各项目仓库中的最新阶段产物摘要
+- 当前 WIP 限制
 
 ## Workflow
-1. Group projects by stage: `idea`, `candidate`, `prototype`, `mvp`, `live-observe`, `scale`, `hold`, `rework`, `kill`.
-2. Enforce WIP limits: candidate `<= 5`, prototype `<= 3`, mvp `<= 2`, live-observe `<= 2`.
-3. Choose `today-primary`, `today-secondary`, and `today-observe` projects.
-4. Treat `today-observe` as the daily queue for projects currently in the `live-observe` state and listed under `Live-observe` on the board.
-5. For each chosen project, emit exactly one next action and the next skill to invoke.
-6. When evidence is mixed, prefer the shortest next validation step.
+1. 按状态汇总项目：`idea_pool`、`researching`、`direction_waiting`、`active_pipeline`、`blocked`、`submission_ready`、`killed`。
+2. 执行 WIP 限制，避免太多项目同时进入高投入阶段。
+3. 选择 `today-primary`、`today-secondary` 和 `today-observe` 项目。
+4. 将 `today-observe` 解释为当前处于 `live-observe` 或相邻观察类状态的项目队列，并映射到看板中的“今日观察”。
+5. 对每个优先项目输出唯一下一步动作、建议阶段和需要调用的下游能力。
+6. 若证据混合，优先推荐最短验证路径，而不是继续扩范围。
+7. 正文说明默认使用中文。
 
 ## Output
-- Updated portfolio summary
-- Ranked project queue
-- Promote / hold / rework / kill recommendations
-- Explicit next-skill dispatch per active project
+- 更新后的组合层摘要
+- 项目优先级排序
+- promote / hold / reject / scale / rework / kill 建议
+- 每个活跃项目的下一步动作
 
 ## Common Mistakes
-- Treating every project as equally urgent
-- Letting prototype and mvp work grow without limits
-- Reviving weak projects without a review date
+- 把所有项目都当成同等紧急
+- 在没有证据时持续给弱项目续命
+- 让多个项目同时进入高投入实现阶段
+- 用英文写主要结论和组合层判断

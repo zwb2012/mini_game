@@ -1,0 +1,9 @@
+language: zh-CN
+projects:
+  - slug: example-project
+    repo: git@github.com:example/example-project.git
+    state: idea_pool
+    next_state: research_options
+    priority: medium
+    last_decision: none
+    blockers: []

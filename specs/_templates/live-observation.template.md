@@ -3,25 +3,26 @@ doc_type: live-observation
 stage: live-observe
 status: draft
 owner_skill: launch-observer
+language: zh-CN
 ---
 
-# Project
-- name:
-- slug:
+# 项目
+- 名称：
+- 标识：
 
-# Observation Window
-- start_date:
-- end_date:
+# 观察窗口
+- 开始日期：
+- 结束日期：
 
-# Signal Summary
-- user_feedback_summary:
-- key_metrics_summary:
-- ad_summary:
+# 信号摘要
+- 用户反馈摘要：
+- 关键指标摘要：
+- 广告表现摘要：
 
-# Diagnosis
-- biggest_problem:
-- strongest_positive_signal:
+# 诊断
+- 最大问题：
+- 最强正向信号：
 
-# Recommendation
-- recommended_action:
-- reason:
+# 建议
+- 推荐动作：
+- 原因：

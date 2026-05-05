@@ -6,12 +6,12 @@ description: Use when a candidate is approved for validation and the next step i
 # Prototype Planner
 
 ## Overview
-Design the smallest playable prototype that can test the main loop. The plan must protect the time box and make success or failure observable.
+把候选方向压缩成最小可验证原型。目标不是做完整产品，而是在短时间内验证核心玩法是否成立。
 
 ## When to Use
-- A candidate was promoted
-- A prototype slot is available
-- The core loop needs validation
+- 候选方向已被推进
+- 当前有原型名额
+- 需要验证核心循环是否成立
 
 ## Required Fields
 - validation_goal
@@ -23,16 +23,18 @@ Design the smallest playable prototype that can test the main loop. The plan mus
 - failure_signals
 
 ## Workflow
-1. Define the single main question the prototype should answer.
-2. Strip away everything that does not help answer it.
-3. Describe the playable loop in a few bullets.
-4. Lock a 3-7 day time box.
-5. End with explicit success and failure signals.
+1. 定义这个原型只回答哪一个核心问题。
+2. 去掉所有不能帮助回答这个问题的内容。
+3. 用几个简洁步骤描述核心循环。
+4. 锁定 3 到 7 天时间盒。
+5. 明确成功信号和失败信号。
+6. 正文说明默认使用中文。
 
 ## Output
-Write `prototype-plan.md` and nothing else.
+只按 `prototype-plan.md` 模板输出。
 
 ## Common Mistakes
-- Planning content production instead of validation
-- Letting UI polish dominate the scope
-- Using vague signals like "feels promising"
+- 把“验证”做成“内容生产”
+- 让 UI 打磨抢占验证范围
+- 使用“感觉还不错”这类模糊信号
+- 主要内容用英文表达

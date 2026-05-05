@@ -3,21 +3,22 @@ doc_type: decision-note
 owner_skill: postmortem-decider
 decision: hold
 human_override: false
+language: zh-CN
 ---
 
-# Project
-- name:
-- slug:
+# 项目
+- 名称：
+- 标识：
 
-# Decision
-- decision:
-- primary_reason:
-- supporting_reason:
+# 决策
+- 决策：
+- 主要原因：
+- 补充原因：
 
-# Override
-- human_override:
-- override_reason:
+# 覆盖
+- 是否人工覆盖：
+- 覆盖原因：
 
-# Follow-up
-- next_review_date:
-- next_action:
+# 后续
+- 下次复核时间：
+- 下一步动作：

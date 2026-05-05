@@ -6,12 +6,12 @@ description: Use when a mini-game is live and the next job is to summarize early
 # Launch Observer
 
 ## Overview
-Summarize early live signals without jumping straight into a rebuild. The goal is to produce a short observation card that the decision skill can act on.
+把上线初期的用户、留存和变现信号压缩成一份短观察卡，供后续决策阶段使用。目标是聚焦主要问题，而不是泛泛罗列现象。
 
 ## When to Use
-- A version is live
-- The observation window is open
-- Signals need to be summarized before a portfolio decision
+- 一个版本已经上线
+- 当前处于观察窗口内
+- 需要在组合层做下一步决策前先压缩信号
 
 ## Required Fields
 - observation_window
@@ -22,15 +22,17 @@ Summarize early live signals without jumping straight into a rebuild. The goal i
 - recommended_action
 
 ## Workflow
-1. Separate user understanding, replay, and monetization signals.
-2. Summarize only the strongest evidence.
-3. Name the single biggest current problem.
-4. End with one recommended next action.
+1. 分开看用户理解、复玩意愿和变现信号。
+2. 只保留最强证据，不做原始数据堆砌。
+3. 明确当前最大问题。
+4. 用一个推荐动作收尾。
+5. 正文说明默认使用中文。
 
 ## Output
-Write `live-observation.md` and avoid solution sprawl.
+只按 `live-observation.md` 模板输出，不扩散成大段方案讨论。
 
 ## Common Mistakes
-- Mixing raw data dumps with interpretation
-- Listing many problems instead of the main one
-- Making portfolio decisions inside the observation step
+- 把原始数据和解释混在一起
+- 一次列很多问题而没有主次
+- 在观察阶段提前做最终组合决策
+- 主要内容用英文表达

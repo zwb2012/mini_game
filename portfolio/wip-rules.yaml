@@ -1,0 +1,13 @@
+language: zh-CN
+limits:
+  researching: 5
+  prd_draft: 2
+  design_total: 2
+  implementation: 1
+  test_accept_launchprep_total: 2
+
+priority_rules:
+  - 用户已选主方向优先
+  - 距离 submission_ready 最近的项目优先
+  - 用户价值验证证据更强的项目优先
+  - 成本更低、闭环更快的项目优先

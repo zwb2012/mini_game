@@ -1,0 +1,8 @@
+stage: idea_pool
+status: draft
+language: zh-CN
+owner: auto
+next_state: research_options
+blockers: []
+last_artifact: null
+updated_at: 2026-05-06

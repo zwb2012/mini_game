@@ -4,19 +4,20 @@ stage: candidate
 status: draft
 owner_skill: candidate-evaluator
 decision: promote
+language: zh-CN
 ---
 
-# Project
-- name:
-- slug:
+# 项目
+- 名称：
+- 标识：
 
-# Evaluation
-- attraction_judgment:
-- development_cost_judgment:
-- ad_fit_judgment:
-- competition_risk:
+# 评估
+- 吸引力判断：
+- 开发成本判断：
+- 广告适配判断：
+- 同质化风险：
 
-# Decision
-- decision:
-- reason:
-- prototype_direction:
+# 决策
+- 决策：
+- 原因：
+- 原型方向：

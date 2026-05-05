@@ -3,31 +3,32 @@ doc_type: mvp-brief
 stage: mvp
 status: draft
 owner_skill: mvp-builder
+language: zh-CN
 ---
 
-# Project
-- name:
-- slug:
+# 项目
+- 名称：
+- 标识：
 
-# Launch Scope
-- must_have_1:
-- must_have_2:
-- must_have_3:
+# 上线范围
+- 必做项 1：
+- 必做项 2：
+- 必做项 3：
 
-# Defer
-- defer_1:
-- defer_2:
+# 延后项
+- 延后项 1：
+- 延后项 2：
 
-# Ad Points
-- ad_point_1:
-- ad_point_2:
+# 广告触点
+- 触点 1：
+- 触点 2：
 
-# Instrumentation
-- metric_1:
-- metric_2:
-- metric_3:
+# 埋点
+- 指标 1：
+- 指标 2：
+- 指标 3：
 
-# Constraints
-- performance_constraint:
-- review_check_1:
-- review_check_2:
+# 约束
+- 性能约束：
+- 审核检查 1：
+- 审核检查 2：

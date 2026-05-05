@@ -4,24 +4,25 @@ stage: idea
 status: draft
 owner_skill: idea-intake
 next_state: candidate
+language: zh-CN
 ---
 
-# Project
-- name:
-- slug:
+# 项目
+- 名称：
+- 标识：
 
-# Core Idea
-- one_sentence_loop:
-- target_audience:
-- core_hook:
+# 核心想法
+- 一句话玩法循环：
+- 目标用户：
+- 核心钩子：
 
-# Ad Fit
-- ad_fit_summary:
+# 广告适配
+- 广告适配摘要：
 
-# Risks
-- primary_risk:
-- secondary_risk:
+# 风险
+- 主要风险：
+- 次要风险：
 
-# Recommendation
-- recommended_next_state:
-- reason:
+# 建议
+- 推荐下一状态：
+- 原因：
