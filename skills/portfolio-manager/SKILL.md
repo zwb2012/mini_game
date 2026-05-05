@@ -15,7 +15,7 @@ Manage the project portfolio, not individual implementation details. Keep work i
 - A project changed state and the next step is unclear
 
 ## Inputs
-- `specs/_templates/portfolio-board.template.md`
+- `specs/portfolio/portfolio-board.md`
 - Latest stage document for each active project
 - Current WIP limits
 
@@ -23,8 +23,9 @@ Manage the project portfolio, not individual implementation details. Keep work i
 1. Group projects by stage: `idea`, `candidate`, `prototype`, `mvp`, `live-observe`, `scale`, `hold`, `rework`, `kill`.
 2. Enforce WIP limits: candidate `<= 5`, prototype `<= 3`, mvp `<= 2`, live-observe `<= 2`.
 3. Choose `today-primary`, `today-secondary`, and `today-observe` projects.
-4. For each chosen project, emit exactly one next action and the next skill to invoke.
-5. When evidence is mixed, prefer the shortest next validation step.
+4. Treat `today-observe` as the daily queue for projects currently in the `live-observe` state and listed under `Live-observe` on the board.
+5. For each chosen project, emit exactly one next action and the next skill to invoke.
+6. When evidence is mixed, prefer the shortest next validation step.
 
 ## Output
 - Updated portfolio summary
@@ -36,3 +37,4 @@ Manage the project portfolio, not individual implementation details. Keep work i
 - Treating every project as equally urgent
 - Letting prototype and mvp work grow without limits
 - Reviving weak projects without a review date
+
