@@ -25,6 +25,21 @@
 
 ---
 
+## 第一次进入仓库建议先看什么
+如果你是第一次打开这个仓库，建议按下面顺序阅读：
+
+1. `README.md`（仓库定位与导航）
+2. `QUICKSTART.md`（3 分钟快速上手）
+3. `specs/workflows/automation/operator-guide.md`（完整操作说明）
+4. `specs/workflows/automation/startup-protocol.md`（启动协议）
+5. `FAQ.md`（常见问题）
+
+如果你准备贡献或修改模板，再看：
+- `CONTRIBUTING.md`
+- `CLAUDE.md`
+
+---
+
 ## 仓库结构
 ### 1. `skills/`
 放可复用的阶段技能与总控能力，例如：
@@ -90,6 +105,9 @@
 
 > 为 `<slug>` 启动自动化产品流水线。请读取 `specs/projects/<slug>/project-request.md` 和 `specs/projects/<slug>/state.yaml`，自动推进到下一个人工门禁，并只输出当前状态、下一步和需要我确认的事项。
 
+如果你想更快开始，先看：
+- `QUICKSTART.md`
+
 ---
 
 ## 三个人工门禁
@@ -113,11 +131,11 @@ PRD 草稿完成后，系统停在：
 ---
 
 ## 详细文档
-如果你要真正使用这套模板，建议先看：
-
 ### 使用与启动
+- `QUICKSTART.md`
 - `specs/workflows/automation/operator-guide.md`
 - `specs/workflows/automation/startup-protocol.md`
+- `specs/workflows/automation/bootstrap-entry.md`
 
 ### 规则与结构
 - `specs/workflows/automation/state-machine.md`
@@ -126,6 +144,11 @@ PRD 草稿完成后，系统停在：
 - `specs/workflows/automation/artifact-schema.md`
 - `specs/workflows/automation/portfolio-topology.md`
 - `specs/workflows/automation/language-rules.md`
+
+### 仓库使用与协作
+- `CONTRIBUTING.md`
+- `FAQ.md`
+- `CLAUDE.md`
 
 ---
 
