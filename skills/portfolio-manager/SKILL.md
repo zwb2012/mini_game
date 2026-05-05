@@ -37,4 +37,3 @@ Manage the project portfolio, not individual implementation details. Keep work i
 - Treating every project as equally urgent
 - Letting prototype and mvp work grow without limits
 - Reviving weak projects without a review date
-

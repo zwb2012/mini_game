@@ -17,40 +17,40 @@ owner_skill: portfolio-manager
 - live-observe: 2
 
 ## Today Primary
-- 
+-
 
 ## Today Secondary
-- 
+-
 
 ## Today Observe
-- 
+-
 
 ## Idea
-- 
+-
 
 ## Candidate
-- 
+-
 
 ## Prototype
-- 
+-
 
 ## MVP
-- 
+-
 
 ## Live-observe
-- 
+-
 
 ## Scale
-- 
+-
 
 ## Hold
-- 
+-
 
 ## Rework
-- 
+-
 
 ## Kill
-- 
+-
 
 ## This Week Decisions
-- 
+-
