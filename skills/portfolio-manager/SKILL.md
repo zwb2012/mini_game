@@ -15,7 +15,7 @@ Manage the project portfolio, not individual implementation details. Keep work i
 - A project changed state and the next step is unclear
 
 ## Inputs
-- `specs/portfolio/portfolio-board.md`
+- `specs/_templates/portfolio-board.template.md`
 - Latest stage document for each active project
 - Current WIP limits
 

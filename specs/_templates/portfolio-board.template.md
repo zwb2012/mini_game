@@ -37,7 +37,7 @@ owner_skill: portfolio-manager
 ## MVP
 - 
 
-## Live Observe
+## Live-observe
 - 
 
 ## Scale

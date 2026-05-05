@@ -1,6 +1,6 @@
 ---
 name: postmortem-decider
-description: Use when an observation or milestone is complete and the next decision must clearly say whether to scale, hold, rework, or kill the project.
+description: Use when an observation or milestone is complete and the next decision must clearly say whether to promote, hold, reject, scale, rework, or kill the project.
 ---
 
 # Postmortem Decider
@@ -14,13 +14,15 @@ Make the project decision explicit. Use the evidence on hand, respect time limit
 - The portfolio needs a clear next state
 
 ## Allowed Decisions
-- `scale`
+- `promote`
 - `hold`
+- `reject`
+- `scale`
 - `rework`
 - `kill`
 
 ## Workflow
-1. State the decision in one word.
+1. State the decision in one word from the allowed set.
 2. List the main evidence behind it.
 3. Record whether the human is overriding the default recommendation.
 4. If overriding, record the reason and the next review date.
