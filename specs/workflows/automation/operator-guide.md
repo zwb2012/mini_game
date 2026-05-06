@@ -11,6 +11,9 @@
 ## 说明
 - 同名 `*.meta.yaml` 是机器可读权威。
 - 同名 `.md` 仅作为人类可读展示层。
+- `portfolio/registry.yaml` 是组合层唯一运行态事实源。
+- `specs/projects/<slug>/state.yaml` 是单项目运行态事实源。
+- `state + meta + registry` 共同构成运行时三元组。
 - 任何自动化推进、门禁判断和状态回写都应优先读取 sidecar，再同步 Markdown。
 
 ---
@@ -34,6 +37,7 @@
 在模板仓库或对应项目仓库里创建：
 
 - `specs/projects/<slug>/project-request.md`
+- `specs/projects/<slug>/project-request.meta.yaml`
 - `specs/projects/<slug>/state.yaml`
 - `specs/projects/<slug>/<stage>.meta.yaml`（对应阶段的机器可读 sidecar）
 
@@ -53,6 +57,7 @@
 
 模板文件：
 - `specs/_templates/project-request.template.md`
+- `specs/_templates/project-request.template.meta.yaml`
 
 ### Step 3：初始化状态文件
 如果是第一次启动，`state.yaml` 初始化为：
@@ -64,7 +69,7 @@
 
 ### Step 4：如果你在多项目模式下运行
 还要在组合层登记项目：
-- `portfolio/projects.yaml`
+- `portfolio/registry.yaml`
 
 这样组合层才能知道：
 - 这个项目存在
@@ -77,7 +82,7 @@
 ### 方式 A：直接启动单个项目
 你可以直接对总控说：
 
-> 为 `shaky-household-stack` 启动自动化产品流水线。请读取 `specs/projects/shaky-household-stack/project-request.md` 和 `specs/projects/shaky-household-stack/state.yaml`，自动推进到下一个人工门禁，并只输出当前状态、下一步和需要我确认的事项。
+> 为 `shaky-household-stack` 启动自动化产品流水线。请读取 `specs/projects/shaky-household-stack/project-request.md`、`specs/projects/shaky-household-stack/project-request.meta.yaml` 和 `specs/projects/shaky-household-stack/state.yaml`，自动推进到下一个人工门禁，并只输出当前状态、下一步和需要我确认的事项。
 
 适合：
 - 你已经确定要启动某个具体项目
@@ -85,13 +90,13 @@
 
 ### 方式 B：从组合层挑选主项目再启动
 你也可以让系统先读：
-- `portfolio/projects.yaml`
+- `portfolio/registry.yaml`
 - `portfolio/portfolio-board.md`
 - `portfolio/wip-rules.yaml`
 
 然后让它说：
 
-> 从 `portfolio/projects.yaml` 中选出当前主推项目，读取对应的 `project-request.md` 和 `state.yaml`，自动推进到下一个人工门禁，并更新组合层摘要。
+> 从 `portfolio/registry.yaml` 中选出当前主推项目，读取对应的 `project-request.md`、`project-request.meta.yaml` 和 `state.yaml`，自动推进到下一个人工门禁，并更新组合层摘要。
 
 适合：
 - 同时跑多个项目
@@ -196,6 +201,7 @@
 - `launch-prep.md`
 - `launch-prep.meta.yaml`
 - `state.yaml`
+- `portfolio/registry.yaml`
 
 默认都应以中文为主输出。
 
@@ -228,7 +234,7 @@
 
 然后再次对总控说：
 
-> 继续推进 `shaky-household-stack`，请读取当前 `state.yaml` 和最新阶段产物，自动推进到下一个人工门禁。
+> 继续推进 `shaky-household-stack`，请读取当前 `state.yaml`、最新阶段产物和对应 `*.meta.yaml` sidecar，自动推进到下一个人工门禁。
 
 ---
 
@@ -239,14 +245,14 @@
    - `specs/projects/<slug>/...`
    - `specs/projects/<slug>/<stage>.meta.yaml`
 2. 组合层统一维护：
-   - `portfolio/projects.yaml`
+   - `portfolio/registry.yaml`
    - `portfolio/portfolio-board.md`
    - `portfolio/wip-rules.yaml`
    - `portfolio/decision-log.md`
 3. 每次只把少量项目推进到高投入阶段
 
 推荐理解方式：
-- `portfolio/projects.yaml`：运行态数据源
+- `portfolio/registry.yaml`：组合层运行态数据源
 - `portfolio/wip-rules.yaml`：并行限制与优先级规则
 - `portfolio/portfolio-board.md`：给人看的摘要看板
 - `portfolio/decision-log.md`：保留关键决策历史

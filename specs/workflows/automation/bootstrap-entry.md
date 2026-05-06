@@ -17,9 +17,10 @@
 2. 生成项目名称与 slug
 3. 初始化：
    - `specs/projects/<slug>/project-request.md`
+   - `specs/projects/<slug>/project-request.meta.yaml`
    - `specs/projects/<slug>/state.yaml`
 4. 若开启组合层管理，则登记：
-   - `portfolio/projects.yaml`
+   - `portfolio/registry.yaml`
 5. 将状态设置为：
    - `idea_pool`
    - `next_state: research_options`
@@ -28,19 +29,20 @@
 ## 推荐调用语义
 用户可以这样说：
 
-> 我想做一个适合广告变现的微信小游戏，方向是搞笑物理堆叠类。请直接启动一个新项目，自动生成项目请求和状态文件，并推进到第一个人工门禁。
+> 我想做一个适合广告变现的微信小游戏，方向是搞笑物理堆叠类。请直接启动一个新项目，自动生成项目请求、状态文件和机器侧车，并推进到第一个人工门禁。
 
 或在多项目模式下说：
 
-> 帮我把这个新方向加入组合层，并自动初始化项目请求、状态文件，推进到 research_options。
+> 帮我把这个新方向加入组合层，并自动初始化项目请求、状态文件和侧车，推进到 research_options。
 
 ## 推荐系统输出格式
 ```text
 已创建项目：摇晃桌面叠物（shaky-household-stack）
 已生成：
 - specs/projects/shaky-household-stack/project-request.md
+- specs/projects/shaky-household-stack/project-request.meta.yaml
 - specs/projects/shaky-household-stack/state.yaml
-已登记组合层：是
+已登记组合层：是（portfolio/registry.yaml）
 当前状态：idea_pool
 下一步：进入 research_options，并生成 research-options.md
 ```

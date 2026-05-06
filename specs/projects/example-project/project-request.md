@@ -21,6 +21,13 @@ language: zh-CN
 - 成本约束：控制内容生产量，不依赖大量美术资源
 - 技术约束：优先选择轻量实现和稳定的单局状态机
 
+# 控制平面约定
+- 组合层唯一运行态事实源：`portfolio/registry.yaml`
+- 项目层运行态事实源：`specs/projects/example-project/state.yaml`
+- 请求阶段机器侧车：`specs/projects/example-project/project-request.meta.yaml`
+- 后续阶段统一使用同名 `*.meta.yaml` sidecar
+- 运行时三元组：state + meta + registry
+
 # 候选方向池
 - 方向 1：家居杂物平衡塔
 - 方向 2：危险早餐桌

@@ -5,4 +5,10 @@ owner: auto
 next_state: research_options
 blockers: []
 last_artifact: null
+registry: portfolio/registry.yaml
+meta_sidecar: specs/projects/example-project/project-request.meta.yaml
+runtime_triad:
+  - specs/projects/example-project/state.yaml
+  - specs/projects/example-project/project-request.meta.yaml
+  - portfolio/registry.yaml
 updated_at: 2026-05-06

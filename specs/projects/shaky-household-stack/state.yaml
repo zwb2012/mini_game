@@ -7,4 +7,10 @@ blockers:
   - 真实代码仓构建产物未接入
   - 真实提审素材与账号信息未提供
 last_artifact: specs/projects/shaky-household-stack/launch-prep.md
+registry: portfolio/registry.yaml
+meta_sidecar: specs/projects/shaky-household-stack/launch-prep.meta.yaml
+runtime_triad:
+  - specs/projects/shaky-household-stack/state.yaml
+  - specs/projects/shaky-household-stack/launch-prep.meta.yaml
+  - portfolio/registry.yaml
 updated_at: 2026-05-06
