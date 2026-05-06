@@ -85,11 +85,16 @@
 
 ### 4. `portfolio/`
 放组合层控制平面文件：
-- `registry.yaml`（运行态事实源）
+- `idea-pool.yaml`（原始想法 SSOT，先进入候选层）
+- `candidate-score-rules.yaml`（候选评分与 promote / hold / reject 规则）
+- `candidates/`（候选产物根目录）
+- `registry.yaml`（候选通过后进入的运行态事实源）
 - `projects.yaml`（兼容层）
 - `wip-rules.yaml`（WIP 与优先级规则源）
 - `portfolio-board.md`（展示视图）
 - `decision-log.md`（决策记录）
+
+原始想法不会直接登记到 `portfolio/registry.yaml`，而是先经过 `portfolio/idea-pool.yaml` 和 `portfolio/candidate-score-rules.yaml` 的候选层，再决定是否进入正式组合层。
 
 ### 5. `templates/platform-adapters/`
 放平台适配器模板：

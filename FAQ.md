@@ -34,13 +34,17 @@
 - `specs/projects/`：单项目产物层
 
 现在 `portfolio/` 内部也进一步拆分为：
-- `portfolio/registry.yaml`：唯一运行态事实源
+- `portfolio/idea-pool.yaml`：原始想法 SSOT，先进入候选层
+- `portfolio/candidate-score-rules.yaml`：候选评分与 promote / hold / reject 规则
+- `portfolio/candidates/`：候选产物根目录
+- `portfolio/registry.yaml`：候选通过后的唯一运行态事实源
 - `portfolio/projects.yaml`：兼容层
 - `portfolio/wip-rules.yaml`：WIP 与优先级规则源
 - `portfolio/portfolio-board.md`：展示视图
 - `portfolio/decision-log.md`：决策记录
 
 简单理解：
+- 原始想法先进入候选层，再决定是否进入 `portfolio/registry.yaml`
 - `portfolio/registry.yaml` 决定“现在真实是什么状态”
 - `portfolio/wip-rules.yaml` 决定“谁先做、谁该停”
 - `portfolio/portfolio-board.md` 只负责展示

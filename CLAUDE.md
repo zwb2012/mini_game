@@ -22,6 +22,9 @@
 
 ## 事实源规则
 ### 组合层
+- `portfolio/idea-pool.yaml`：原始想法 SSOT，先进入候选层
+- `portfolio/candidate-score-rules.yaml`：候选评分与 promote / hold / reject 规则源
+- `portfolio/candidates/`：候选产物根目录
 - `portfolio/registry.yaml`：组合层唯一运行态事实源
 - `portfolio/projects.yaml`：兼容层，不作为新的运行态事实源
 - `portfolio/wip-rules.yaml`：唯一 WIP 与优先级规则源

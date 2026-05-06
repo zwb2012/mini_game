@@ -1,0 +1,57 @@
+version: 1
+language: zh-CN
+purpose: 定义原始想法进入候选层后的结构化评分维度，以及 promote / hold / reject 规则。
+score_dimensions:
+  user_value:
+    weight: 3
+    description: 用户价值与问题痛点是否清晰。
+  cost:
+    weight: 2
+    description: 实现成本、试错成本和内容成本是否可控。
+  confidence:
+    weight: 2
+    description: 是否有足够证据支持继续推进。
+  risk:
+    weight: -3
+    description: 合规、技术、运营、账号或资金风险是否过高。
+  novelty:
+    weight: 1
+    description: 与现有方向相比是否有足够差异化。
+  velocity:
+    weight: 2
+    description: 是否能够快速形成可验证闭环。
+scoring_scale:
+  min: 0
+  max: 5
+  labels:
+    - very_low
+    - low
+    - medium
+    - high
+    - very_high
+rules:
+  promote:
+    all_of:
+      - user_value >= 4
+      - cost >= 3
+      - confidence >= 3
+      - risk <= 2
+      - velocity >= 3
+    note: 满足后才建议从候选层进入 portfolio/registry.yaml。
+  hold:
+    any_of:
+      - confidence < 3
+      - novelty < 2
+      - velocity < 3
+    note: 先保留在候选层继续补证据，不进入正式项目登记。
+  reject:
+    any_of:
+      - risk >= 4
+      - user_value <= 1
+      - cost <= 1
+      - confidence == 0
+    note: 风险过高或价值过弱时直接淘汰。
+candidate_artifacts:
+  root: portfolio/candidates/
+  ssot: portfolio/idea-pool.yaml
+  gate_target: portfolio/registry.yaml

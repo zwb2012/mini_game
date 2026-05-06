@@ -82,16 +82,20 @@ P0 第一版内容对应如下：
 
 ## 四、多项目模式怎么开始
 如果你要同时管理多个项目，还需要：
+- `portfolio/idea-pool.yaml`
+- `portfolio/candidate-score-rules.yaml`
+- `portfolio/candidates/`
 - `portfolio/projects.yaml`
 - `portfolio/wip-rules.yaml`
 - `portfolio/portfolio-board.md`
 - `portfolio/decision-log.md`
 
 推荐流程：
-1. 先把多个项目登记到 `portfolio/projects.yaml`
-2. 用组合层决定当前主推项目
-3. 对主推项目启动单项目流水线
-4. 控制高投入阶段的并行数
+1. 先把原始想法放进 `portfolio/idea-pool.yaml`
+2. 用 `portfolio/candidate-score-rules.yaml` 做候选评分
+3. 通过候选层后，再登记到 `portfolio/registry.yaml`
+4. 再把主推项目启动到单项目流水线
+5. 控制高投入阶段的并行数
 
 ---
 
