@@ -27,6 +27,10 @@
 
 不会自动执行真实微信提审动作。
 
+P0 第一版内容对应如下：
+- `templates/cocos-game-base/`：1 个引擎实现
+- `templates/platform-adapters/wechat/`、`templates/platform-adapters/android/`：2 个平台适配器
+
 ---
 
 ## 二、仓库里最重要的目录
@@ -35,6 +39,9 @@
 - `specs/_templates/`：所有阶段文档模板
 - `portfolio/`：多项目组合层运行文件
 - `specs/projects/`：示例项目与真实项目产物目录
+- `templates/cocos-game-base/`：P0 引擎实现模板
+- `templates/platform-adapters/wechat/`：微信小游戏平台适配器模板
+- `templates/platform-adapters/android/`：Android 平台适配器模板
 
 ---
 

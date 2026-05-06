@@ -22,6 +22,9 @@
 - **三处人工门禁**：方向选择、PRD 审批、提审包完成
 - **停在 `submission_ready`**，不自动执行真实微信提审动作
 - **所有文档型产物默认中文输出**
+- **P0 控制平面第一版包含**：
+  - 1 个引擎实现：`templates/cocos-game-base/`
+  - 2 个平台适配器：`templates/platform-adapters/wechat/`、`templates/platform-adapters/android/`
 
 ---
 
@@ -87,6 +90,11 @@
 - `wip-rules.yaml`（WIP 与优先级规则源）
 - `portfolio-board.md`（展示视图）
 - `decision-log.md`（决策记录）
+
+### 5. `templates/platform-adapters/`
+放平台适配器模板：
+- `wechat/`：微信小游戏平台适配器模板
+- `android/`：Android 平台适配器模板
 
 ### 6. `contracts/`
 放引擎无关的能力契约层，按职责划分为：
@@ -170,5 +178,6 @@ PRD 草稿完成后，系统停在：
 - **自动化模板母版**
 - **工作流与门禁规范仓库**
 - **多项目小游戏试错的产品编排基础设施**
+- **P0 第一版控制平面**：`templates/cocos-game-base/` + `templates/platform-adapters/wechat/` + `templates/platform-adapters/android/`
 
 它不是单个游戏项目本身，而是帮助你反复启动和推进多个小游戏项目的“模板系统”。
