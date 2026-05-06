@@ -1,0 +1,10 @@
+{
+  "name": "cocos-game-base",
+  "version": "0.1.0",
+  "private": true,
+  "description": "微信小游戏与 Android 共用的 Cocos 基础设施骨架",
+  "scripts": {
+    "check:structure": "find . -maxdepth 4 -type f | sort",
+    "check:contracts": "test -f scripts/core/AppRoot.ts && test -f scripts/bootstrap/BootstrapEntry.ts"
+  }
+}

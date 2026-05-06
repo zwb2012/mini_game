@@ -1,0 +1,8 @@
+{
+  "template": "cocos-game-base",
+  "engine": "cocos",
+  "platforms": [
+    "wechat",
+    "android"
+  ]
+}
