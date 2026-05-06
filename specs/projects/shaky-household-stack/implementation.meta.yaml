@@ -1,0 +1,21 @@
+artifact_type: implementation
+project_id: proj_shaky_household_stack_001
+slug: shaky-household-stack
+stage: implementation
+status: done
+language: zh-CN
+schema_version: 1
+owner_skill: implementation-orchestrator
+gate_required: none
+gate_status: none
+approved: true
+next_state: test
+blockers: []
+codebase_status: documented_only
+platform_targets:
+  - wechat
+  - android
+integration_ready: false
+source_refs:
+  - specs/projects/shaky-household-stack/uiux.md
+generated_at: 2026-05-06

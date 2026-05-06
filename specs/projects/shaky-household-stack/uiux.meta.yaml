@@ -1,0 +1,18 @@
+artifact_type: uiux
+project_id: proj_shaky_household_stack_001
+slug: shaky-household-stack
+stage: uiux
+status: done
+language: zh-CN
+schema_version: 1
+owner_skill: uiux-designer
+gate_required: none
+gate_status: none
+approved: true
+next_state: implementation
+blockers: []
+pages_defined: 3
+ad_touch_reviewed: true
+source_refs:
+  - specs/projects/shaky-household-stack/solution-design.md
+generated_at: 2026-05-06

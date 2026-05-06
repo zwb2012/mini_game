@@ -1,0 +1,20 @@
+artifact_type: acceptance
+project_id: proj_shaky_household_stack_001
+slug: shaky-household-stack
+stage: acceptance
+status: done
+language: zh-CN
+schema_version: 1
+owner_skill: acceptance-checker
+gate_required: none
+gate_status: none
+approved: true
+next_state: launch_prep
+blockers: []
+passed: true
+failed_checks: []
+rework_required: false
+rollback_target: none
+source_refs:
+  - specs/projects/shaky-household-stack/test-report.md
+generated_at: 2026-05-06

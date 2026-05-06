@@ -57,7 +57,7 @@
 
 模板文件：
 - `specs/_templates/project-request.template.md`
-- `specs/_templates/project-request.template.meta.yaml`
+- `specs/projects/example-project/project-request.meta.yaml`（作为 sidecar 示例）
 
 ### Step 3：初始化状态文件
 如果是第一次启动，`state.yaml` 初始化为：
@@ -252,7 +252,7 @@
 3. 每次只把少量项目推进到高投入阶段
 
 推荐理解方式：
-- `portfolio/registry.yaml`：组合层运行态数据源
+- `portfolio/registry.yaml`：运行态数据源
 - `portfolio/wip-rules.yaml`：并行限制与优先级规则
 - `portfolio/portfolio-board.md`：给人看的摘要看板
 - `portfolio/decision-log.md`：保留关键决策历史

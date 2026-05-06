@@ -1,0 +1,20 @@
+artifact_type: prd
+project_id: proj_shaky_household_stack_001
+slug: shaky-household-stack
+stage: prd_draft
+status: approved
+language: zh-CN
+schema_version: 1
+owner_skill: prd-writer
+gate_required: prd
+gate_status: approved
+approved: true
+next_state: prd_approved
+blockers: []
+approval_required: true
+approval_status: approved
+scope_locked: true
+acceptance_criteria_count: 3
+source_refs:
+  - specs/projects/shaky-household-stack/research-options.md
+generated_at: 2026-05-06

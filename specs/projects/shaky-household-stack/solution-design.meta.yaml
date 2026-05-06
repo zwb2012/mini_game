@@ -1,0 +1,21 @@
+artifact_type: solution-design
+project_id: proj_shaky_household_stack_001
+slug: shaky-household-stack
+stage: solution_design
+status: done
+language: zh-CN
+schema_version: 1
+owner_skill: solution-designer
+gate_required: none
+gate_status: none
+approved: true
+next_state: uiux
+blockers: []
+implementation_chunks:
+  - 单局状态机与放置反馈
+  - 失稳判定与结算
+  - 广告与埋点接入
+rollback_defined: true
+source_refs:
+  - specs/projects/shaky-household-stack/architecture.md
+generated_at: 2026-05-06

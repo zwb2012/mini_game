@@ -1,0 +1,24 @@
+artifact_type: research-options
+project_id: proj_shaky_household_stack_001
+slug: shaky-household-stack
+stage: research_options
+status: done
+language: zh-CN
+schema_version: 1
+owner_skill: research-analyst
+gate_required: direction
+gate_status: approved
+approved: true
+next_state: direction_selected
+blockers: []
+ranked_options:
+  - name: 家居杂物平衡塔
+    rank: 1
+    recommended: true
+  - name: 离谱搬家挑战
+    rank: 2
+    recommended: false
+decision_ready: true
+source_refs:
+  - specs/projects/shaky-household-stack/project-request.md
+generated_at: 2026-05-06

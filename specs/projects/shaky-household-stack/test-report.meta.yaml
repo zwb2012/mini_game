@@ -1,0 +1,20 @@
+artifact_type: test-report
+project_id: proj_shaky_household_stack_001
+slug: shaky-household-stack
+stage: test
+status: done
+language: zh-CN
+schema_version: 1
+owner_skill: test-orchestrator
+gate_required: none
+gate_status: none
+approved: true
+next_state: acceptance
+blockers:
+  - 真实代码仓未接入
+passed: false
+failed_checks:
+  - 低端机性能未验证
+source_refs:
+  - specs/projects/shaky-household-stack/implementation.md
+generated_at: 2026-05-06

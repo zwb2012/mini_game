@@ -1,0 +1,15 @@
+artifact_type: project-request
+project_id: proj_example_001
+slug: example-project
+stage: idea_pool
+status: draft
+language: zh-CN
+schema_version: 1
+owner_skill: new-project-bootstrap
+gate_required: none
+gate_status: none
+approved: true
+next_state: research_options
+blockers: []
+source_refs: []
+generated_at: 2026-05-06

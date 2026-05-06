@@ -1,0 +1,19 @@
+artifact_type: architecture
+project_id: proj_shaky_household_stack_001
+slug: shaky-household-stack
+stage: architecture
+status: done
+language: zh-CN
+schema_version: 1
+owner_skill: architecture-designer
+gate_required: none
+gate_status: none
+approved: true
+next_state: solution_design
+blockers: []
+module_count: 3
+platform_contracts_defined: true
+runtime_contracts_defined: true
+source_refs:
+  - specs/projects/shaky-household-stack/prd.md
+generated_at: 2026-05-06
