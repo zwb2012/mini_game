@@ -31,6 +31,7 @@ language: zh-CN
 | idea_pool | `project-request.md` | `project-request.meta.yaml` |
 | candidate_intake | `candidate-intake.md` | `candidate-intake.meta.yaml` |
 | candidate_scored | `candidate-scorecard.md` | `candidate-scorecard.meta.yaml` |
+| promoted_to_registry | `project-request.md` | `project-request.meta.yaml` |
 | research_options | `research-options.md` | `research-options.meta.yaml` |
 | prd_draft | `prd.md` | `prd.meta.yaml` |
 | architecture | `architecture.md` | `architecture.meta.yaml` |
@@ -46,12 +47,21 @@ language: zh-CN
 
 | 门禁状态 | 绑定产物 | 通过条件 |
 | --- | --- | --- |
+| `candidate_scored` | `candidate-scorecard.md` + `candidate-scorecard.meta.yaml` + `state.yaml` | 候选评分完成，且已根据 sidecar 记录 promote / hold / reject 结论 |
+| `promoted_to_registry` | `project-request.md` + `project-request.meta.yaml` + `state.yaml` | 候选已进入正式注册表，状态文件标记为已 promote；判定以 sidecar 为准 |
 | `direction_selected` | `research-options.md` + `research-options.meta.yaml` + `state.yaml` | 用户已明确选择推荐方向，并写入状态文件；判定以 sidecar 为准 |
 | `prd_approved` | `prd.md` + `prd.meta.yaml` + `state.yaml` | PRD 已通过人工审批，状态文件标记为已批准；判定以 sidecar 为准 |
 | `submission_ready` | `launch-prep.md` + `launch-prep.meta.yaml` + `state.yaml` | 提审包完整，状态文件标记为 `submission_ready`，但不执行真实提审；判定以 sidecar 为准 |
 
 ## 五、每类产物的最低要求
-### 1. 研究产物
+### 1. 候选产物
+必须包含：
+- 候选来源或原始想法
+- 候选评分依据
+- 推进建议（promote / hold / reject）
+- 风险与不确定性
+
+### 2. 研究产物
 必须包含：
 - 候选方向
 - 竞品观察
@@ -59,7 +69,7 @@ language: zh-CN
 - 风险
 - 推荐排序
 
-### 2. PRD
+### 3. PRD
 必须包含：
 - 目标用户
 - 核心体验
@@ -67,35 +77,35 @@ language: zh-CN
 - 范围边界
 - 验收标准
 
-### 3. 架构文档
+### 4. 架构文档
 必须包含：
 - 模块划分
 - 关键依赖
 - 状态与数据流
 - 关键技术决策
 
-### 4. 方案设计
+### 5. 方案设计
 必须包含：
 - 实现路径
 - 任务拆分
 - 关键接口与边界
 - 主要风险
 
-### 5. UI/UX 文档
+### 6. UI/UX 文档
 必须包含：
 - 页面结构
 - 交互流程
 - 反馈机制
 - 广告触点设计原则
 
-### 6. 实现文档
+### 7. 实现文档
 必须包含：
 - 当前实现范围
 - 已完成模块
 - 未完成模块
 - 关键变更说明
 
-### 7. 测试报告
+### 8. 测试报告
 必须包含：
 - 测试范围
 - 通过项
@@ -103,14 +113,14 @@ language: zh-CN
 - 阻塞项
 - 是否允许进入验收
 
-### 8. 验收文档
+### 9. 验收文档
 必须包含：
 - 验收标准
 - 对照结果
 - 是否通过
 - 回退建议
 
-### 9. 上架准备文档
+### 10. 上架准备文档
 必须包含：
 - 提审包内容
 - 素材准备情况

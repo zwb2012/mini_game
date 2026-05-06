@@ -8,23 +8,24 @@
 
 | 状态 | 含义 | 下一步 |
 | --- | --- | --- |
-| `idea_pool` | 方向池中的原始想法，尚未进入候选整理 | 进入 `candidate_intake` |
+| `idea_pool` | 原始想法池，尚未进入候选整理 | 进入 `candidate_intake` |
 | `candidate_intake` | 原始想法已整理成候选卡，等待结构化评分 | 进入 `candidate_scored` |
 | `candidate_scored` | 候选已完成评分，等待决定是否进入正式注册表 | 进入 `promoted_to_registry` 或归档 |
 | `promoted_to_registry` | 候选已被提升到组合层正式注册表，准备进入研究或正式项目流 | 进入 `research_options` |
 | `researching` | 正在自动调研题材、竞品、传播性、变现适配性 | 输出 `research_options` |
 | `direction_waiting` | 调研完成，等待用户选定方向 | 用户选方向后进入 `active_pipeline` |
-| `active_pipeline` | 某个项目已进入完整产品流水线 | 按单项目状态继续推进 |
+| `active_pipeline` | 某个正式项目已进入完整产品流水线 | 按单项目状态继续推进 |
 | `blocked` | 组合层存在阻塞，如资源冲突、关键信息缺失 | 人工处理后回到原状态 |
-| `submission_ready` | 某个项目的提审包已完成，等待用户决定是否真正提交 | 人工决定后结束或进入外部发布流程 |
-| `killed` | 某个方向或项目被淘汰 | 归档，不再自动推进 |
+| `submission_ready` | 某个正式项目的提审包已完成，等待用户决定是否真正提交 | 人工决定后结束或进入外部发布流程 |
+| `killed` | 某个方向、候选或项目被淘汰 | 归档，不再自动推进 |
 
 ## 二、单项目生命周期状态
-单项目状态机用于驱动从方向确定到提审包完成的完整自动化闭环。
+单项目状态机用于驱动从候选整理、方向确定到提审包完成的完整自动化闭环。
 
 `idea_pool -> candidate_intake -> candidate_scored -> promoted_to_registry -> research_options -> direction_selected -> prd_draft -> prd_approved -> architecture -> solution_design -> uiux -> implementation -> test -> acceptance -> launch_prep -> submission_ready`
 
 ### 状态说明
+- `idea_pool`：原始想法尚未结构化，等待进入候选整理。
 - `candidate_intake`：已把原始想法整理成候选卡，等待评分。
 - `candidate_scored`：候选评分完成，等待 promote / hold / reject 决策。
 - `promoted_to_registry`：候选已进入正式注册表，准备进入研究或项目流。
@@ -49,11 +50,13 @@
 | `blocked` | 缺失输入、凭据、素材、环境、关键依赖 | 补齐条件后回到原状态 |
 | `needs_input` | 需要用户做明确判断或补充必要信息 | 用户提供输入后回到原状态 |
 | `rework` | 当前阶段产物未通过测试、验收或门禁 | 重新进入指定阶段 |
-| `killed` | 用户或系统确认该项目不值得继续 | 归档终止 |
+| `killed` | 用户或系统确认该候选或项目不值得继续 | 归档终止 |
 
 ## 四、状态推进规则
-1. 任何状态推进前，必须先验证上一个阶段产物是否存在且字段完整。
-2. 命中人工门禁时，状态只能停在门禁前，不允许自动越过。
-3. 命中自动停止条件时，必须进入 `blocked`、`needs_input` 或 `rework`。
-4. `submission_ready` 是自动化流水线的终止状态，真实提审动作不在本模板自动执行范围内。
+1. 任何状态推进前，必须先验证上一个阶段产物是否存在且字段完整，且优先读取 sidecar。
+2. 候选层只负责 `idea_pool -> candidate_intake -> candidate_scored -> promoted_to_registry`，正式项目层只负责 `research_options -> direction_selected -> ...`。
+3. 命中人工门禁时，状态只能停在门禁前，不允许自动越过。
+4. 命中自动停止条件时，必须进入 `blocked`、`needs_input` 或 `rework`。
+5. `submission_ready` 是正式项目自动化流水线的终止状态，真实提审动作不在本模板自动执行范围内。
+6. bootstrap 阶段必须显式选择 `candidate_pool` 或 `formal_project`，不能跳过候选层直接生成正式项目语义。
 
