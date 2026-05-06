@@ -1,0 +1,24 @@
+---
+artifact_type: candidate-scorecard
+stage: candidate_scored
+status: draft
+language: zh-CN
+schema_version: 1
+owner_skill: candidate-scorer
+gate_required: none
+gate_status: none
+approved: true
+next_state: promoted_to_registry
+blockers: []
+dimensions:
+  audience_pull: medium
+  platform_fit: medium
+  monetization_fit: medium
+  implementation_cost: medium
+  differentiation: medium
+  content_burden: medium
+recommendation: hold
+fatal_flags: []
+candidate_id: null
+source_refs: []
+generated_at: YYYY-MM-DD

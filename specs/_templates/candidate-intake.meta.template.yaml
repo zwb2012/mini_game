@@ -1,0 +1,18 @@
+---
+artifact_type: candidate-intake
+stage: candidate_intake
+status: draft
+language: zh-CN
+schema_version: 1
+owner_skill: candidate-scout
+gate_required: none
+gate_status: none
+approved: true
+next_state: candidate_scored
+blockers: []
+idea_id: null
+candidate_id: null
+dedup_status: unchecked
+ready_for_scoring: false
+source_refs: []
+generated_at: YYYY-MM-DD

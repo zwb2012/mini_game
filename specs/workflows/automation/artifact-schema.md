@@ -28,6 +28,9 @@ language: zh-CN
 ## 三、阶段主产物映射
 | 阶段 | Markdown 主产物 | 机器可读 sidecar |
 | --- | --- | --- |
+| idea_pool | `project-request.md` | `project-request.meta.yaml` |
+| candidate_intake | `candidate-intake.md` | `candidate-intake.meta.yaml` |
+| candidate_scored | `candidate-scorecard.md` | `candidate-scorecard.meta.yaml` |
 | research_options | `research-options.md` | `research-options.meta.yaml` |
 | prd_draft | `prd.md` | `prd.meta.yaml` |
 | architecture | `architecture.md` | `architecture.meta.yaml` |

@@ -8,7 +8,10 @@
 
 | 状态 | 含义 | 下一步 |
 | --- | --- | --- |
-| `idea_pool` | 方向池中的原始想法，尚未进入研究 | 进入 `researching` |
+| `idea_pool` | 方向池中的原始想法，尚未进入候选整理 | 进入 `candidate_intake` |
+| `candidate_intake` | 原始想法已整理成候选卡，等待结构化评分 | 进入 `candidate_scored` |
+| `candidate_scored` | 候选已完成评分，等待决定是否进入正式注册表 | 进入 `promoted_to_registry` 或归档 |
+| `promoted_to_registry` | 候选已被提升到组合层正式注册表，准备进入研究或正式项目流 | 进入 `research_options` |
 | `researching` | 正在自动调研题材、竞品、传播性、变现适配性 | 输出 `research_options` |
 | `direction_waiting` | 调研完成，等待用户选定方向 | 用户选方向后进入 `active_pipeline` |
 | `active_pipeline` | 某个项目已进入完整产品流水线 | 按单项目状态继续推进 |
@@ -19,9 +22,12 @@
 ## 二、单项目生命周期状态
 单项目状态机用于驱动从方向确定到提审包完成的完整自动化闭环。
 
-`idea_pool -> research_options -> direction_selected -> prd_draft -> prd_approved -> architecture -> solution_design -> uiux -> implementation -> test -> acceptance -> launch_prep -> submission_ready`
+`idea_pool -> candidate_intake -> candidate_scored -> promoted_to_registry -> research_options -> direction_selected -> prd_draft -> prd_approved -> architecture -> solution_design -> uiux -> implementation -> test -> acceptance -> launch_prep -> submission_ready`
 
 ### 状态说明
+- `candidate_intake`：已把原始想法整理成候选卡，等待评分。
+- `candidate_scored`：候选评分完成，等待 promote / hold / reject 决策。
+- `promoted_to_registry`：候选已进入正式注册表，准备进入研究或项目流。
 - `research_options`：自动调研完成，产出候选方向与排序建议。
 - `direction_selected`：用户已选定方向，项目正式立项。
 - `prd_draft`：已生成 PRD 草稿，等待审批。
@@ -50,3 +56,4 @@
 2. 命中人工门禁时，状态只能停在门禁前，不允许自动越过。
 3. 命中自动停止条件时，必须进入 `blocked`、`needs_input` 或 `rework`。
 4. `submission_ready` 是自动化流水线的终止状态，真实提审动作不在本模板自动执行范围内。
+
