@@ -14,6 +14,8 @@
 
 你应该优先通过：
 - `new-project-bootstrap`
+- `candidate-scout`
+- `candidate-scorer`
 - `product-pipeline-orchestrator`
 
 这样的入口来启动和推进项目，而不是手动一个个调叶子技能。

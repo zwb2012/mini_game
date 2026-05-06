@@ -46,6 +46,9 @@
 ## 仓库结构
 ### 1. `skills/`
 放可复用的阶段技能与总控能力，例如：
+- `new-project-bootstrap`
+- `candidate-scout`
+- `candidate-scorer`
 - `product-pipeline-orchestrator`
 - `research-analyst`
 - `prd-writer`
