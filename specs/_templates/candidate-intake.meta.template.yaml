@@ -1,5 +1,6 @@
----
 artifact_type: candidate-intake
+project_id: null
+slug: null
 stage: candidate_intake
 status: draft
 language: zh-CN

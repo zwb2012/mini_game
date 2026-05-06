@@ -1,5 +1,6 @@
----
 artifact_type: candidate-scorecard
+project_id: null
+slug: null
 stage: candidate_scored
 status: draft
 language: zh-CN
