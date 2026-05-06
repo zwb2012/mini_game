@@ -81,11 +81,12 @@
 - `project-state.template.yaml`
 
 ### 4. `portfolio/`
-放组合层运行文件：
-- `projects.yaml`
-- `wip-rules.yaml`
-- `portfolio-board.md`
-- `decision-log.md`
+放组合层控制平面文件：
+- `registry.yaml`（运行态事实源）
+- `projects.yaml`（兼容层）
+- `wip-rules.yaml`（WIP 与优先级规则源）
+- `portfolio-board.md`（展示视图）
+- `decision-log.md`（决策记录）
 
 ### 5. `specs/projects/`
 放示例项目或真实项目产物链。

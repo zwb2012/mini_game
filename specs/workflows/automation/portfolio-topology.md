@@ -44,21 +44,24 @@
 - `specs/projects/<slug>/state.yaml`
 
 组合层汇总多个项目状态，例如：
-- `portfolio/projects.yaml`
+- `portfolio/registry.yaml`
+- `portfolio/projects.yaml`（兼容层）
 - `portfolio/portfolio-board.md`
 - `portfolio/decision-log.md`
 
 ## 四、组合层单一事实源（SSOT）
 为避免状态漂移，组合层文件职责固定如下：
 
-- `portfolio/projects.yaml`：**唯一运行态数据源**。记录项目列表、当前状态、下一步和阻塞项。
+- `portfolio/registry.yaml`：**唯一运行态事实源**。记录项目列表、当前状态、下一步、阻塞项以及运行态目标。
+- `portfolio/projects.yaml`：**兼容层**。保留给旧流程或旧读者读取，不作为新的运行态事实源。
 - `portfolio/wip-rules.yaml`：**唯一 WIP 与优先级规则源**。记录并行上限和排序原则。
 - `portfolio/portfolio-board.md`：**展示视图**。面向人类阅读的汇总看板，可由前两者生成或同步更新。
-- `portfolio/decision-log.md`：**决策记录**。记录关键调整与人为判断。
+- `portfolio/decision-log.md`：**决策记录**。记录关键调整与人为判断，不记录运行态。
 
 因此：
-- 不应在多个运行态文件里重复维护同一份 WIP 规则作为事实源。
-- `portfolio-board.md` 负责展示，不作为 WIP 规则的唯一来源。
+- 不应在多个运行态文件里重复维护同一份事实源。
+- `portfolio-board.md` 负责展示，不作为运行态事实源。
+- 运行态判断以 `portfolio/registry.yaml` 为准。
 
 ## 五、为什么不把多个项目放进同一个代码仓库
 1. 业务代码容易互相污染

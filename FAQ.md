@@ -30,11 +30,20 @@
 
 ## 4. 为什么有 `portfolio/`，又有 `specs/projects/`？
 两者职责不同：
-- `portfolio/`：跨项目组合层
+- `portfolio/`：跨项目组合层控制平面
 - `specs/projects/`：单项目产物层
 
+现在 `portfolio/` 内部也进一步拆分为：
+- `portfolio/registry.yaml`：唯一运行态事实源
+- `portfolio/projects.yaml`：兼容层
+- `portfolio/wip-rules.yaml`：WIP 与优先级规则源
+- `portfolio/portfolio-board.md`：展示视图
+- `portfolio/decision-log.md`：决策记录
+
 简单理解：
-- `portfolio/` 决定“先推谁、谁停、谁卡住了”
+- `portfolio/registry.yaml` 决定“现在真实是什么状态”
+- `portfolio/wip-rules.yaml` 决定“谁先做、谁该停”
+- `portfolio/portfolio-board.md` 只负责展示
 - `specs/projects/` 记录“这个项目本身现在推进到了哪一步”
 
 ---

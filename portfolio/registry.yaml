@@ -1,5 +1,6 @@
-# 兼容层：运行态事实源已迁移到 portfolio/registry.yaml。
 language: zh-CN
+target: cocos
+source_of_truth: true
 projects:
   - slug: example-project
     repo: git@github.com:example/example-project.git
