@@ -1,17 +1,20 @@
 version: 1
 language: zh-CN
-source: raw_idea_ssot
-purpose: 保存进入组合层之前的原始想法，不直接代表项目立项。
-status_values:
-  - draft
-  - candidate
-  - parked
-  - dropped
+pool_status: active
 ideas:
   - idea_id: idea_example_001
-    title: 示例原始想法
-    source: user_prompt
-    status: draft
+    title: 家居杂物平衡塔
+    source: user
+    raw_pitch: 在摇晃桌面上堆叠家居杂物，撑到倒塌前拿高分
+    tags:
+      - 物理
+      - 搞笑
+      - 堆叠
+      - 广告变现
+    candidate_status: new
+    duplicate_of: null
+    candidate_id: null
+    promoted_project_slug: null
+    notes: []
     created_at: 2026-05-06
-    notes: |
-      这是一个占位示例，用来说明原始想法先进入候选层，再决定是否进入 portfolio/registry.yaml。
+    updated_at: 2026-05-06
