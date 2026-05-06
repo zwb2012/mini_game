@@ -8,6 +8,12 @@
 
 > 我想做一个适合广告变现的微信小游戏，方向是搞笑物理堆叠类，帮我启动一个新项目。
 
+## 说明
+- 同名 `*.meta.yaml` 是机器可读权威。
+- 同名 `.md` 是给人阅读的展示层。
+- 当两者存在冲突时，以 `*.meta.yaml` 为准。
+- 启动后每个阶段都应形成 `state + meta + registry` 三元组。
+
 ## 系统应自动完成的动作
 1. 解析用户输入中的：
    - 游戏类型
@@ -44,10 +50,11 @@
 - specs/projects/shaky-household-stack/state.yaml
 已登记组合层：是（portfolio/registry.yaml）
 当前状态：idea_pool
-下一步：进入 research_options，并生成 research-options.md
+下一步：进入 research_options，并生成 research-options.md / research-options.meta.yaml
 ```
 
 ## 注意事项
 - 这个入口只负责“启动”，不负责越过人工门禁。
 - 启动后仍由 `product-pipeline-orchestrator` 继续接管。
 - 所有自动生成的文档型产物默认使用中文。
+- 运行态判断优先读取 `state + meta + registry`，Markdown 只做人工展示层。
