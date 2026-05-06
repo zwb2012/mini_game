@@ -1,5 +1,7 @@
 # 兼容层：运行态事实源已迁移到 portfolio/registry.yaml。
 language: zh-CN
+compatibility_mode: true
+compatibility_note: 该文件保留为过渡层，长期以 portfolio/registry.yaml 为唯一运行态事实源。
 projects:
   - slug: example-project
     repo: git@github.com:example/example-project.git

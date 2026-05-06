@@ -22,10 +22,11 @@
 
 ## 事实源规则
 ### 组合层
-- `portfolio/projects.yaml`：组合层运行态数据源
-- `portfolio/wip-rules.yaml`：WIP 与优先级规则源
-- `portfolio/portfolio-board.md`：给人阅读的组合层看板视图
-- `portfolio/decision-log.md`：关键决策记录
+- `portfolio/registry.yaml`：组合层唯一运行态事实源
+- `portfolio/projects.yaml`：兼容层，不作为新的运行态事实源
+- `portfolio/wip-rules.yaml`：唯一 WIP 与优先级规则源
+- `portfolio/portfolio-board.md`：给人阅读的组合层看板展示视图
+- `portfolio/decision-log.md`：关键决策记录，不记录运行态状态
 
 ### 项目层
 - `specs/projects/<slug>/state.yaml`：单项目运行态状态源

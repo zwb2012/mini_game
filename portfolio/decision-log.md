@@ -11,6 +11,7 @@ runtime_state_source: portfolio/registry.yaml
 
 - 日期：
   项目：
+  registry 条目：
   阶段：
   决策：
   原因：

@@ -1,11 +1,53 @@
+version: 1
 language: zh-CN
-target: cocos
-source_of_truth: true
+template_family: mini-game-pipeline
+template_version: 0.1.0
+engine_policy: pluggable
+default_platforms:
+  - wechat
+  - android
 projects:
-  - slug: example-project
-    repo: git@github.com:example/example-project.git
-    state: idea_pool
-    next_state: research_options
-    priority: medium
-    last_decision: none
+  - project_id: proj_example_001
+    slug: example-project
+    name: 示例项目
+    status: active
+    stage: idea_pool
+    next_action: move_to_research
+    gate_status:
+      direction:
+        required: true
+        state: not_started
+      prd:
+        required: true
+        state: not_started
+      submission:
+        required: true
+        state: not_started
+    engine:
+      target: cocos
+      contract_version: 1
+      implementation_template: cocos-game-base
+    platforms:
+      target:
+        - wechat
+        - android
+      ready:
+        wechat: false
+        android: false
+    artifacts:
+      latest_doc: specs/projects/example-project/project-request.md
+      latest_meta: null
+      state_file: specs/projects/example-project/state.yaml
+    delivery:
+      codebase_status: not_started
+      test_status: not_started
+      acceptance_status: not_started
+      submission_ready: false
+    evaluation:
+      latest_decision: none
+      confidence: low
+      user_value_risk: medium
     blockers: []
+    owner: auto
+    last_actor: new-project-bootstrap
+    updated_at: 2026-05-06
