@@ -1,0 +1,38 @@
+---
+doc_type: research-options
+stage: research_options
+status: draft
+owner_skill: research-analyst
+next_state: direction_selected
+language: zh-CN
+---
+project:
+  name: ""
+  slug: ""
+research_scope:
+  target_theme: ""
+  target_audience: ""
+  competitor_samples: []
+candidates:
+  - name: ""
+    concept: ""
+    appeal_assessment: ""
+    ad_monetization_fit: ""
+    main_risk: ""
+  - name: ""
+    concept: ""
+    appeal_assessment: ""
+    ad_monetization_fit: ""
+    main_risk: ""
+  - name: ""
+    concept: ""
+    appeal_assessment: ""
+    ad_monetization_fit: ""
+    main_risk: ""
+ranking:
+  first: ""
+  second: ""
+  third: ""
+decision:
+  recommended_direction: ""
+  rationale: ""

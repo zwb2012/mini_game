@@ -1,6 +1,12 @@
 # 自动化流水线产物 Schema
 
-## 一、统一 frontmatter 字段
+## 一、权威层级
+- 同名 `*.meta.yaml` 是机器可读权威。
+- 同名 `.md` 是给人阅读的展示层。
+- 当两者存在冲突时，以 `*.meta.yaml` 为准，Markdown 仅作为渲染结果与人工检查视图。
+- 所有阶段产物与门禁判断都应优先读取 sidecar，再参考 Markdown。
+
+## 二、统一 frontmatter 字段
 所有 Markdown 产物都应尽量包含以下 frontmatter：
 
 ```yaml
@@ -17,30 +23,31 @@ language: zh-CN
 - `language` 默认必须为 `zh-CN`
 - `status` 用于区分草稿、通过、阻塞和完成
 - `next_state` 由当前阶段结论决定
+- 对应的 `*.meta.yaml` 必须与 Markdown 保持同源字段；如需更新流程状态，先更新 sidecar，再同步 Markdown
 
-## 二、阶段主产物映射
-| 阶段 | 主产物 |
-| --- | --- |
-| research_options | `research-options.md` |
-| prd_draft | `prd.md` |
-| architecture | `architecture.md` |
-| solution_design | `solution-design.md` |
-| uiux | `uiux.md` |
-| implementation | `implementation.md` |
-| test | `test-report.md` |
-| acceptance | `acceptance.md` |
-| launch_prep | `launch-prep.md` |
+## 三、阶段主产物映射
+| 阶段 | Markdown 主产物 | 机器可读 sidecar |
+| --- | --- | --- |
+| research_options | `research-options.md` | `research-options.meta.yaml` |
+| prd_draft | `prd.md` | `prd.meta.yaml` |
+| architecture | `architecture.md` | `architecture.meta.yaml` |
+| solution_design | `solution-design.md` | `solution-design.meta.yaml` |
+| uiux | `uiux.md` | `uiux.meta.yaml` |
+| implementation | `implementation.md` | `implementation.meta.yaml` |
+| test | `test-report.md` | `test-report.meta.yaml` |
+| acceptance | `acceptance.md` | `acceptance.meta.yaml` |
+| launch_prep | `launch-prep.md` | `launch-prep.meta.yaml` |
 
-## 三、门禁状态与产物映射
-门禁状态不强制要求独立模板，但必须明确绑定到主产物或状态文件，避免流程推进时出现语义空档。
+## 四、门禁状态与产物映射
+门禁状态不强制要求独立模板，但必须明确绑定到同名 sidecar 与主产物，避免流程推进时出现语义空档。
 
 | 门禁状态 | 绑定产物 | 通过条件 |
 | --- | --- | --- |
-| `direction_selected` | `research-options.md` + `state.yaml` | 用户已明确选择推荐方向，并写入状态文件 |
-| `prd_approved` | `prd.md` + `state.yaml` | PRD 已通过人工审批，状态文件标记为已批准 |
-| `submission_ready` | `launch-prep.md` + `state.yaml` | 提审包完整，状态文件标记为 `submission_ready`，但不执行真实提审 |
+| `direction_selected` | `research-options.md` + `research-options.meta.yaml` + `state.yaml` | 用户已明确选择推荐方向，并写入状态文件；判定以 sidecar 为准 |
+| `prd_approved` | `prd.md` + `prd.meta.yaml` + `state.yaml` | PRD 已通过人工审批，状态文件标记为已批准；判定以 sidecar 为准 |
+| `submission_ready` | `launch-prep.md` + `launch-prep.meta.yaml` + `state.yaml` | 提审包完整，状态文件标记为 `submission_ready`，但不执行真实提审；判定以 sidecar 为准 |
 
-## 四、每类产物的最低要求
+## 五、每类产物的最低要求
 ### 1. 研究产物
 必须包含：
 - 候选方向

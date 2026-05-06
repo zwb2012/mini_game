@@ -1,0 +1,25 @@
+---
+doc_type: test-report
+stage: test
+status: draft
+owner_skill: test-orchestrator
+next_state: acceptance
+language: zh-CN
+---
+project:
+  name: ""
+  slug: ""
+test_scope:
+  scope_1: ""
+  scope_2: ""
+pass_items:
+  - ""
+  - ""
+fail_items:
+  - ""
+  - ""
+blockers:
+  - ""
+conclusion:
+  allow_acceptance: ""
+  notes: ""

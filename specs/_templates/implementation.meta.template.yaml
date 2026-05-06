@@ -1,0 +1,27 @@
+---
+doc_type: implementation
+stage: implementation
+status: draft
+owner_skill: implementation-orchestrator
+next_state: test
+language: zh-CN
+---
+project:
+  name: ""
+  slug: ""
+current_implementation_scope:
+  in_scope: ""
+  out_of_scope: ""
+module_status:
+  - module: ""
+    status: ""
+  - module: ""
+    status: ""
+  - module: ""
+    status: ""
+key_changes:
+  - ""
+  - ""
+unfinished_items:
+  - ""
+  - ""

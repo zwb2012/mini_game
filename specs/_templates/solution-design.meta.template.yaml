@@ -1,0 +1,29 @@
+---
+doc_type: solution-design
+stage: solution_design
+status: draft
+owner_skill: solution-designer
+next_state: uiux
+language: zh-CN
+---
+project:
+  name: ""
+  slug: ""
+implementation_goal:
+  current_stage_goal: ""
+solution_breakdown:
+  subsolutions:
+    - ""
+    - ""
+    - ""
+interfaces_and_boundaries:
+  inputs: []
+  outputs: []
+  dependencies: []
+implementation_order:
+  first: ""
+  second: ""
+  third: ""
+risks_and_fallback:
+  major_risks: []
+  rollback_strategy: ""

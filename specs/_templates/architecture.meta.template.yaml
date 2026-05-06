@@ -1,0 +1,33 @@
+---
+doc_type: architecture
+stage: architecture
+status: draft
+owner_skill: architecture-designer
+next_state: solution_design
+language: zh-CN
+---
+project:
+  name: ""
+  slug: ""
+architecture_goals:
+  goals: ""
+  key_constraints: []
+module_breakdown:
+  - name: ""
+    responsibility: ""
+  - name: ""
+    responsibility: ""
+  - name: ""
+    responsibility: ""
+data_and_state_flow:
+  critical_states: []
+  data_sources: []
+  flow_description: ""
+technical_decisions:
+  decisions:
+    - ""
+    - ""
+  dependencies: []
+risks:
+  technical_risks: []
+  performance_risks: []

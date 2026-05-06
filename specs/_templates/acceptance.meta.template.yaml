@@ -1,0 +1,23 @@
+---
+doc_type: acceptance
+stage: acceptance
+status: draft
+owner_skill: acceptance-checker
+next_state: launch_prep
+language: zh-CN
+---
+project:
+  name: ""
+  slug: ""
+acceptance_criteria:
+  - ""
+  - ""
+  - ""
+actual_results:
+  - ""
+  - ""
+  - ""
+conclusion:
+  passed: ""
+  failed_reason: ""
+  rollback_suggestion: ""

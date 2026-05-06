@@ -14,6 +14,7 @@
 
 绑定产物：
 - `research-options.md`
+- `research-options.meta.yaml`
 - `direction-gate.md`
 
 通过后进入：`direction_selected`
@@ -29,6 +30,7 @@
 
 绑定产物：
 - `prd.md`
+- `prd.meta.yaml`
 - `prd-gate.md`
 
 通过后进入：`prd_approved`
@@ -42,6 +44,7 @@
 
 绑定产物：
 - `launch-prep.md`
+- `launch-prep.meta.yaml`
 - `state.yaml`
 
 通过后进入：`submission_ready`
@@ -79,3 +82,8 @@
 1. 上一阶段产物齐全
 2. 未命中自动停止条件
 3. 当前项目未超出 WIP 规则
+
+## 五、机器可读权威规则
+- 每个门禁判断都应优先读取同名 `*.meta.yaml`。
+- Markdown 仅用于人工阅读与复核。
+- 状态回写时，先更新 sidecar，再同步 Markdown。

@@ -1,0 +1,22 @@
+---
+doc_type: uiux
+stage: uiux
+status: draft
+owner_skill: uiux-designer
+next_state: implementation
+language: zh-CN
+---
+project:
+  name: ""
+  slug: ""
+page_structure:
+  pages: []
+interaction_flows:
+  flows: []
+visual_and_feedback:
+  main_style: ""
+  feedback_mechanisms: []
+  ad_touchpoint_principles: []
+risks:
+  misclick_points: []
+  churn_points: []

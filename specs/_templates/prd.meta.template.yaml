@@ -1,0 +1,30 @@
+---
+doc_type: prd
+stage: prd_draft
+status: draft
+owner_skill: prd-writer
+next_state: prd_approved
+language: zh-CN
+---
+project:
+  name: ""
+  slug: ""
+product_goals:
+  target_users: ""
+  core_experience_hypothesis: ""
+  business_goals: ""
+core_gameplay:
+  core_loop: ""
+  session_goal: ""
+  failure_conditions: ""
+scope_definition:
+  must_have: []
+  deferred: []
+  out_of_scope: []
+acceptance_criteria:
+  - ""
+  - ""
+  - ""
+risks_and_notes:
+  major_risks: []
+  notes: ""

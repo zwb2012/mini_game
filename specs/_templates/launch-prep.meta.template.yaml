@@ -1,0 +1,21 @@
+---
+doc_type: launch-prep
+stage: launch_prep
+status: draft
+owner_skill: launch-prep
+next_state: submission_ready
+language: zh-CN
+---
+project:
+  name: ""
+  slug: ""
+submission_package:
+  materials: []
+configuration_check:
+  items: []
+unfinished_items:
+  - ""
+  - ""
+conclusion:
+  submission_ready: ""
+  notes: ""

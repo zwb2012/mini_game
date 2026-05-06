@@ -8,6 +8,11 @@
 - 希望同时维护多个小游戏候选方向
 - 只在少数关键节点人工拍板，其余阶段尽量自动推进
 
+## 说明
+- 同名 `*.meta.yaml` 是机器可读权威。
+- 同名 `.md` 仅作为人类可读展示层。
+- 任何自动化推进、门禁判断和状态回写都应优先读取 sidecar，再同步 Markdown。
+
 ---
 
 ## 一、你只需要做两类动作
@@ -30,6 +35,7 @@
 
 - `specs/projects/<slug>/project-request.md`
 - `specs/projects/<slug>/state.yaml`
+- `specs/projects/<slug>/<stage>.meta.yaml`（对应阶段的机器可读 sidecar）
 
 其中 `<slug>` 是项目标识，例如：
 - `shaky-household-stack`
@@ -118,6 +124,7 @@
 ### 1. 方向选择门禁
 系统会停在：
 - `research-options.md`
+- `research-options.meta.yaml`
 - `direction-gate.md`
 
 你建议用这个格式回复：
@@ -131,6 +138,7 @@
 ### 2. PRD 审批门禁
 系统会停在：
 - `prd.md`
+- `prd.meta.yaml`
 - `prd-gate.md`
 
 你建议用这个格式回复：
@@ -151,6 +159,7 @@
 ### 3. 提审包完成门禁
 系统会停在：
 - `launch-prep.md`
+- `launch-prep.meta.yaml`
 - `state.yaml`
 
 你建议用这个格式回复：
@@ -167,16 +176,25 @@
 在正常推进中，系统会自动生成这些文档型产物：
 
 - `research-options.md`
+- `research-options.meta.yaml`
 - `direction-gate.md`
 - `prd.md`
+- `prd.meta.yaml`
 - `prd-gate.md`
 - `architecture.md`
+- `architecture.meta.yaml`
 - `solution-design.md`
+- `solution-design.meta.yaml`
 - `uiux.md`
+- `uiux.meta.yaml`
 - `implementation.md`
+- `implementation.meta.yaml`
 - `test-report.md`
+- `test-report.meta.yaml`
 - `acceptance.md`
+- `acceptance.meta.yaml`
 - `launch-prep.md`
+- `launch-prep.meta.yaml`
 - `state.yaml`
 
 默认都应以中文为主输出。
@@ -219,6 +237,7 @@
 
 1. 每个项目保留自己的：
    - `specs/projects/<slug>/...`
+   - `specs/projects/<slug>/<stage>.meta.yaml`
 2. 组合层统一维护：
    - `portfolio/projects.yaml`
    - `portfolio/portfolio-board.md`
