@@ -141,3 +141,5 @@ $RECYCLE.BIN/
 *.lnk
 node_modules/
 templates/*/node_modules/
+templates/*/package-lock.json
+.worktrees/
