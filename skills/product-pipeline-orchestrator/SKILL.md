@@ -16,6 +16,7 @@ description: Use when a game direction has been promoted into a formal project a
 ## Inputs
 - `specs/projects/<slug>/project-request.md`（正式项目启动时）
 - `specs/projects/<slug>/state.yaml`
+- `portfolio/project-thresholds.yaml`
 - `specs/workflows/automation/state-machine.md`
 - `specs/workflows/automation/gates.md`
 - `specs/workflows/automation/rules.md`
@@ -23,21 +24,23 @@ description: Use when a game direction has been promoted into a formal project a
 - 当前正式项目的最新阶段产物
 
 ## Workflow
-1. 仅当项目已处于 `promoted_to_registry` 或更后续的正式项目状态时，才读取 `project-request.md` 与 `state.yaml` 并进入正式项目流。
-2. 读取项目状态文件中的 `stage`、`status`、`next_state` 与 `blockers`。
-3. 验证当前阶段产物是否存在且符合 schema。
-4. 若处于 `research_options`，调度调研能力并等待方向选择门禁。
-5. 若处于 `direction_selected`，调度 `prd-writer`。
-6. 若处于 `prd_approved`，依次调度 `architecture-designer`、`solution-designer`、`uiux-designer`。
-7. 若处于 `implementation`，调度 `implementation-orchestrator`，随后进入 `test-orchestrator` 与 `acceptance-checker`。
-8. 若验收通过，调度 `launch-prep`。
-9. 遇到方向选择、PRD 审批、提审包完成三个门禁时立即停住，并输出明确的人工确认协议。
-10. 遇到 blocker、测试失败、验收失败、输入缺失或文档非中文主输出时立即停住。
+1. 仅当项目已处于 `promoted_to_registry` 或更后续的正式项目状态时，才读取 `project-request.md`、`state.yaml` 与 `portfolio/project-thresholds.yaml` 并进入正式项目流。
+2. 读取项目状态文件中的 `stage`、`status`、`next_state`、`threshold_result` 与 `blockers`。
+3. 先按 `project-thresholds.yaml` 判断当前阶段是否允许前进；只有当 `threshold_result` 为 `pass` 时才继续推进。
+4. 验证当前阶段产物是否存在且符合 schema。
+5. 若处于 `research_options`，调度调研能力并等待方向选择门禁。
+6. 若处于 `direction_selected`，调度 `prd-writer`。
+7. 若处于 `prd_approved`，依次调度 `architecture-designer`、`solution-designer`、`uiux-designer`。
+8. 若处于 `implementation`，调度 `implementation-orchestrator`，随后进入 `test-orchestrator` 与 `acceptance-checker`。
+9. 若验收通过，且阈值结果仍为 `pass`，调度 `launch-prep`。
+10. 遇到方向选择、PRD 审批、提审包完成三个门禁时立即停住，并输出明确的人工确认协议。
+11. 遇到 blocker、测试失败、验收失败、输入缺失、`threshold_result` 为 `hold / fail / rework` 或文档非中文主输出时立即停住。
 
 ## Output
 总控每次运行后都应尽量输出：
 - 当前正式项目
 - 当前状态
+- 当前 `threshold_result`
 - 下一动作
 - 当前产物路径
 - 是否需要人工确认

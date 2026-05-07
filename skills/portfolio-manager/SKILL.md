@@ -21,17 +21,19 @@ description: Use when a solo developer is managing multiple game ideas, candidat
 - `portfolio/idea-pool.yaml`
 - `portfolio/candidates/`
 - `portfolio/candidate-score-rules.yaml`
+- `portfolio/project-thresholds.yaml`
 - 各项目仓库中的最新阶段产物摘要
 - 当前 WIP 限制
 
 ## Workflow
 1. 按状态汇总组合层对象：`idea_pool`、`candidate_intake`、`candidate_scored`、`promoted_to_registry`、`researching`、`direction_waiting`、`active_pipeline`、`blocked`、`submission_ready`、`killed`。
-2. 先处理原始想法与候选层，再执行 WIP 限制，避免太多对象同时进入高投入阶段。
-3. 选择 `today-primary`、`today-secondary` 和 `today-observe` 候选或项目。
-4. 将 `today-observe` 解释为当前处于观察类状态的候选或项目队列，并映射到看板中的“今日观察”。
-5. 对每个优先对象输出唯一下一步动作、建议阶段和需要调用的下游能力。
-6. 若证据混合，优先推荐最短验证路径，而不是继续扩范围。
-7. 正文说明默认使用中文。
+2. 读取候选层的 `threshold_result` 与正式项目层的 `threshold_result`，先把明确通过者排前，再把 `hold / rework` 的对象作为观察或回修队列。
+3. 先处理原始想法与候选层，再执行 WIP 限制，避免太多对象同时进入高投入阶段。
+4. 选择 `today-primary`、`today-secondary` 和 `today-observe` 候选或项目。
+5. 将 `today-observe` 解释为当前处于观察类状态的候选或项目队列，并映射到看板中的“今日观察”。
+6. 对每个优先对象输出唯一下一步动作、建议阶段和需要调用的下游能力。
+7. 若证据混合，优先推荐最短验证路径，而不是继续扩范围。
+8. 正文说明默认使用中文。
 
 ## Output
 - 更新后的组合层摘要

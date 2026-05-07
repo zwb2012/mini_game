@@ -4,36 +4,36 @@
 定义哪些节点必须人工确认，哪些情况必须自动停止，避免流水线在错误方向上高速推进。
 
 ## 一、必须人工确认的门禁
-### 门禁 1：方向选择
-触发时机：`research_options` 阶段结束后。
+### 门禁 1：候选阈值确认
+触发时机：`candidate_scored` 阶段结束后。
 
 人工确认内容：
-- 候选方向是否值得立项
-- 当前主推方向是哪一个
-- 其余方向是保留、观察还是淘汰
+- `threshold_result` 是否符合候选层判定
+- `threshold_reason` 是否解释清楚
+- `required_rework` 是否完整
+- `human_override` 是否需要介入
 
 绑定产物：
-- `research-options.md`
-- `research-options.meta.yaml`
-- `direction-gate.md`
+- `candidate-scorecard.md`
+- `candidate-scorecard.meta.yaml`
+- `portfolio/candidate-score-rules.yaml`
 
-通过后进入：`direction_selected`
+通过后进入：`promoted_to_registry`、`candidate_hold` 或 `candidate_reject`
 
-### 门禁 2：PRD 审批
-触发时机：`prd_draft` 阶段结束后。
+### 门禁 2：正式项目阈值确认
+触发时机：`research_options`、`prd_draft`、`architecture`、`solution_design`、`uiux`、`implementation`、`test`、`acceptance`、`launch_prep` 任一阶段结束后。
 
 人工确认内容：
-- 目标用户是否准确
-- 核心体验假设是否成立
-- 玩法闭环是否清晰
-- 验收标准是否足够明确
+- `threshold_result` 是否为 `pass / hold / fail / rework` 中符合当前阶段的结果
+- 阈值说明是否和当前产物一致
+- 是否需要人工覆盖自动结果
 
 绑定产物：
-- `prd.md`
-- `prd.meta.yaml`
-- `prd-gate.md`
+- 对应阶段的 `.md`
+- 对应阶段的 `.meta.yaml`
+- `portfolio/project-thresholds.yaml`
 
-通过后进入：`prd_approved`
+通过后进入：下一阶段或 `submission_ready`
 
 ### 门禁 3：提审包完成
 触发时机：`launch_prep` 阶段结束后。

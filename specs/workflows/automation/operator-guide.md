@@ -13,6 +13,7 @@
 - 同名 `.md` 仅作为人类可读展示层。
 - `portfolio/idea-pool.yaml`、`portfolio/candidates/`、`portfolio/registry.yaml` 与 `specs/projects/<slug>/state.yaml` 共同构成运行时三元组与候选层事实源。
 - 自动推进、门禁判断和状态回写都应优先读取 sidecar，再同步 Markdown。
+- 候选层先依据 `portfolio/candidate-score-rules.yaml` 计算 `threshold_result / threshold_reason / required_rework / human_override`，正式项目层再依据 `portfolio/project-thresholds.yaml` 计算 `pass / hold / fail / rework`。
 - 候选层与正式项目层必须分开处理：候选先走 `idea_pool -> candidate_intake -> candidate_scored -> promoted_to_registry`，正式项目再走 `research_options -> direction_selected -> ...`。
 
 ---
@@ -136,7 +137,21 @@
 ---
 
 ## 五、门禁点怎么回复
-### 1. 方向选择门禁
+### 1. 候选阈值门禁
+系统会停在：
+- `candidate-scorecard.md`
+- `candidate-scorecard.meta.yaml`
+
+你建议用这个格式回复：
+
+```text
+threshold_result：promote
+threshold_reason：候选评分通过，用户价值证据足够
+required_rework：无
+human_override：否
+```
+
+### 2. 方向选择门禁
 系统会停在：
 - `research-options.md`
 - `research-options.meta.yaml`
@@ -256,6 +271,7 @@
 2. 组合层统一维护：
    - `portfolio/idea-pool.yaml`
    - `portfolio/candidate-score-rules.yaml`
+   - `portfolio/project-thresholds.yaml`
    - `portfolio/candidates/`
    - `portfolio/registry.yaml`
    - `portfolio/portfolio-board.md`

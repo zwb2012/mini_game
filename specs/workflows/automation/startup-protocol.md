@@ -13,6 +13,7 @@
 - 同名 `.md` 仅作为人类可读展示层。
 - `portfolio/idea-pool.yaml`、`portfolio/candidates/`、`portfolio/registry.yaml` 与 `specs/projects/<slug>/state.yaml` 共同构成运行时三元组与候选层事实源。
 - 自动推进、门禁判断和状态回写都应优先读取 sidecar，再同步 Markdown。
+- 候选层先按 `portfolio/candidate-score-rules.yaml` 产出 `threshold_result / threshold_reason / required_rework / human_override`，正式项目层再按 `portfolio/project-thresholds.yaml` 产出 `pass / hold / fail / rework`。
 - 候选层与正式项目层必须分开处理：候选先走 `idea_pool -> candidate_intake -> candidate_scored -> promoted_to_registry`，正式项目再走 `research_options -> direction_selected -> ...`。
 
 ---
@@ -43,8 +44,8 @@
 
 ### Step 2：选择 bootstrap 模式
 你至少要判断当前属于哪种模式：
-- `candidate_pool`：原始想法先进入候选池，推进 `idea_pool -> candidate_intake -> candidate_scored`
-- `formal_project`：候选已被 promote，进入正式项目初始化，推进 `promoted_to_registry -> research_options`
+- `candidate_pool`：原始想法先进入候选池，推进 `idea_pool -> candidate_intake -> candidate_scored -> threshold_result`
+- `formal_project`：候选已被 promote，进入正式项目初始化，推进 `promoted_to_registry -> research_options -> threshold_result`
 
 ### Step 3：当候选被 promote 后，再创建正式项目目录
 只有在候选完成评分并被 promote 后，才创建：
@@ -190,8 +191,8 @@
 ## 六、系统会自动生成什么
 在正常推进中，系统会自动生成这些文档型产物：
 
-- 候选层：`candidate-intake.md`、`candidate-intake.meta.yaml`、`candidate-scorecard.md`、`candidate-scorecard.meta.yaml`
-- 正式项目层：`research-options.md`、`research-options.meta.yaml`、`direction-gate.md`
+- 候选层：`candidate-intake.md`、`candidate-intake.meta.yaml`、`candidate-scorecard.md`、`candidate-scorecard.meta.yaml`、`threshold_result`、`threshold_reason`、`required_rework`、`human_override`
+- 正式项目层：`research-options.md`、`research-options.meta.yaml`、`direction-gate.md`、`project-thresholds.yaml` 中对应阶段的阈值结果
 - 后续阶段：`prd.md`、`prd.meta.yaml`、`prd-gate.md`
 - `architecture.md`
 - `architecture.meta.yaml`
@@ -256,6 +257,7 @@
 2. 组合层统一维护：
    - `portfolio/idea-pool.yaml`
    - `portfolio/candidate-score-rules.yaml`
+   - `portfolio/project-thresholds.yaml`
    - `portfolio/candidates/`
    - `portfolio/registry.yaml`
    - `portfolio/portfolio-board.md`

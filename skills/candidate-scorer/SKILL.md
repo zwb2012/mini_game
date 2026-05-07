@@ -22,18 +22,27 @@ description: Use when a candidate intake artifact exists and the system needs an
 - content_burden
 - recommendation
 - fatal_flags
+- threshold_result
+- threshold_reason
+- required_rework
+- human_override
 
 ## Workflow
-1. 读取 `candidate-score-rules.yaml`。
+1. 读取 `portfolio/candidate-score-rules.yaml`。
 2. 按规则给每个维度写 `high / medium / low`。
-3. 用可解释规则输出 `promote / hold / reject`。
-4. 生成 `candidate-scorecard.md` 与 `candidate-scorecard.meta.yaml`。
-5. 不直接写入正式项目目录；promote 只是给组合层动作建议。
-6. 正文默认使用中文。
+3. 基于阈值规则写入 `threshold_result`、`threshold_reason`、`required_rework`、`human_override`。
+4. 用可解释规则输出 `promote / hold / reject`，并把结果同步到候选评分卡。
+5. 生成 `candidate-scorecard.md` 与 `candidate-scorecard.meta.yaml`。
+6. 不直接写入正式项目目录；promote 只是给组合层动作建议。
+7. 正文默认使用中文。
 
 ## Output
 - `candidate-scorecard.md`
 - `candidate-scorecard.meta.yaml`
+- `threshold_result`
+- `threshold_reason`
+- `required_rework`
+- `human_override`
 
 ## Common Mistakes
 - 伪精确总分
