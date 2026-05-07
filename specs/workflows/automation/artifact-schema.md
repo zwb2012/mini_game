@@ -48,7 +48,7 @@ language: zh-CN
 ```yaml
 threshold_scope: candidate_layer | project_layer
 threshold_ready: true | false
-threshold_result: hold | pass | rework | reject
+threshold_result: promote | hold | reject | pass | fail | rework
 threshold_reason: []
 required_rework: []
 human_override: false
@@ -57,8 +57,9 @@ threshold_version: 1
 
 说明：
 - `threshold_scope` 区分候选层与正式项目层；候选层使用 `candidate_layer`，正式项目层使用 `project_layer`
+- 候选层 `threshold_result` 只允许：`promote | hold | reject`
+- 正式项目层 `threshold_result` 只允许：`pass | hold | fail | rework`
 - `threshold_ready` 表示阈值信息是否已经可供自动化消费
-- `threshold_result` 是当前阶段的阈值结论，自动化应优先据此决定是否推进
 - `threshold_reason` 用于记录阈值判断依据，建议保持结构化条目列表
 - `required_rework` 记录必须补齐的返工项，供后续回写与追踪
 - `human_override` 表示是否存在人工覆写，人工覆写时应保留痕迹
@@ -67,14 +68,14 @@ threshold_version: 1
 自动化原则：
 - 先更新 sidecar 中的阈值字段，再推进状态文件或 Markdown 展示层
 - 当 `threshold_ready` 为 `false` 或 `threshold_result` 未允许推进时，流程必须停住或进入返工路径
-- 候选层与项目层都遵循同一字段结构，避免分支逻辑在不同模板里各自发散
+- 候选层与项目层遵循同一字段结构，但必须使用各自允许的阈值结果集合
 
 ## 五、门禁状态与产物映射
 门禁状态不强制要求独立模板，但必须明确绑定到同名 sidecar 与主产物，避免流程推进时出现语义空档。
 
 | 门禁状态 | 绑定产物 | 通过条件 |
 | --- | --- | --- |
-| `candidate_scored` | `candidate-scorecard.md` + `candidate-scorecard.meta.yaml` + `state.yaml` | 候选评分完成，且已根据 sidecar 记录 promote / hold / reject 结论 |
+| `candidate_scored` | `candidate-scorecard.md` + `candidate-scorecard.meta.yaml` + `state.yaml` | 候选评分完成，且已根据 sidecar 记录 `promote / hold / reject` 结论 |
 | `promoted_to_registry` | `project-request.md` + `project-request.meta.yaml` + `state.yaml` | 候选已进入正式注册表，状态文件标记为已 promote；判定以 sidecar 为准 |
 | `direction_selected` | `research-options.md` + `research-options.meta.yaml` + `state.yaml` | 用户已明确选择推荐方向，并写入状态文件；判定以 sidecar 为准 |
 | `prd_approved` | `prd.md` + `prd.meta.yaml` + `state.yaml` | PRD 已通过人工审批，状态文件标记为已批准；判定以 sidecar 为准 |
