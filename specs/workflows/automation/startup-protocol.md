@@ -270,13 +270,10 @@
 ## 十、最小上手路径
 如果你明天就想试一次，最短路径是：
 
-1. 复制 `project-request.template.md`
-2. 填一个真实候选方向
-3. 复制 `project-state.template.yaml`
-4. 把状态设成 `idea_pool`
-5. 用总控入口启动一次候选池
-6. 在候选评分和方向门禁各回复一次
-7. 让它在 promote 后继续跑到 `submission_ready`
+1. 先把原始想法写入候选层
+2. 让系统生成 `candidate-intake` 与 `candidate-scorecard`
+3. 只有在候选被 promote 之后，才创建 `specs/projects/<slug>/project-request.md`
+4. 再由正式项目总控继续推进到下一个人工门禁
 
 这样你就能最快验证：
 - 这套模板是否真适合你的工作方式
