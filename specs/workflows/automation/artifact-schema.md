@@ -42,7 +42,34 @@ language: zh-CN
 | acceptance | `acceptance.md` | `acceptance.meta.yaml` |
 | launch_prep | `launch-prep.md` | `launch-prep.meta.yaml` |
 
-## 四、门禁状态与产物映射
+## 四、统一阈值字段
+所有 sidecar `*.meta.yaml` 都应携带统一阈值字段，用于让自动化在推进阶段前先读取机器可读结论。
+
+```yaml
+threshold_scope: candidate_layer | project_layer
+threshold_ready: true | false
+threshold_result: hold | pass | rework | reject
+threshold_reason: []
+required_rework: []
+human_override: false
+threshold_version: 1
+```
+
+说明：
+- `threshold_scope` 区分候选层与正式项目层；候选层使用 `candidate_layer`，正式项目层使用 `project_layer`
+- `threshold_ready` 表示阈值信息是否已经可供自动化消费
+- `threshold_result` 是当前阶段的阈值结论，自动化应优先据此决定是否推进
+- `threshold_reason` 用于记录阈值判断依据，建议保持结构化条目列表
+- `required_rework` 记录必须补齐的返工项，供后续回写与追踪
+- `human_override` 表示是否存在人工覆写，人工覆写时应保留痕迹
+- `threshold_version` 用于未来兼容和字段演进
+
+自动化原则：
+- 先更新 sidecar 中的阈值字段，再推进状态文件或 Markdown 展示层
+- 当 `threshold_ready` 为 `false` 或 `threshold_result` 未允许推进时，流程必须停住或进入返工路径
+- 候选层与项目层都遵循同一字段结构，避免分支逻辑在不同模板里各自发散
+
+## 五、门禁状态与产物映射
 门禁状态不强制要求独立模板，但必须明确绑定到同名 sidecar 与主产物，避免流程推进时出现语义空档。
 
 | 门禁状态 | 绑定产物 | 通过条件 |
@@ -53,7 +80,7 @@ language: zh-CN
 | `prd_approved` | `prd.md` + `prd.meta.yaml` + `state.yaml` | PRD 已通过人工审批，状态文件标记为已批准；判定以 sidecar 为准 |
 | `submission_ready` | `launch-prep.md` + `launch-prep.meta.yaml` + `state.yaml` | 提审包完整，状态文件标记为 `submission_ready`，但不执行真实提审；判定以 sidecar 为准 |
 
-## 五、每类产物的最低要求
+## 六、每类产物的最低要求
 ### 1. 候选产物
 必须包含：
 - 候选来源或原始想法

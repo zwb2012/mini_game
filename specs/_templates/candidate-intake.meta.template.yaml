@@ -15,5 +15,12 @@ idea_id: null
 candidate_id: null
 dedup_status: unchecked
 ready_for_scoring: false
+threshold_scope: candidate_layer
+threshold_ready: true
+threshold_result: hold
+threshold_reason: []
+required_rework: []
+human_override: false
+threshold_version: 1
 source_refs: []
 generated_at: YYYY-MM-DD

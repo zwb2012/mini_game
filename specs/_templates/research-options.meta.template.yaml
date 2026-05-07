@@ -5,6 +5,13 @@ status: draft
 owner_skill: research-analyst
 next_state: direction_selected
 language: zh-CN
+threshold_scope: project_layer
+threshold_ready: true
+threshold_result: hold
+threshold_reason: []
+required_rework: []
+human_override: false
+threshold_version: 1
 ---
 project:
   name: ""

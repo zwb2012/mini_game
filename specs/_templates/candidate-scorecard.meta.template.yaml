@@ -20,6 +20,13 @@ dimensions:
   content_burden: medium
 recommendation: hold
 fatal_flags: []
+threshold_scope: candidate_layer
+threshold_ready: true
+threshold_result: hold
+threshold_reason: []
+required_rework: []
+human_override: false
+threshold_version: 1
 candidate_id: null
 source_refs: []
 generated_at: YYYY-MM-DD
