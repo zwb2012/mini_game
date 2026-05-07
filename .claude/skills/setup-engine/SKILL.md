@@ -36,7 +36,7 @@ If no engine is specified, run an interactive engine selection process:
 
 **Question 1 — Prior experience** (ask this first, always, via `AskUserQuestion`):
 - Prompt: "Have you worked in any of these engines before?"
-- Options: `Godot` / `Unity` / `Unreal Engine 5` / `Multiple — I'll explain` / `None of them`
+- Options: `Godot` / `Unity` / `Unreal Engine 5` / `Cocos Creator` / `Multiple — I'll explain` / `None of them`
 - If they pick a specific engine → recommend that engine. Prior experience outweighs all other factors. Confirm with them and skip the matrix.
 - If "None" or "Multiple" → continue to the questions below.
 
@@ -82,6 +82,11 @@ Do NOT use a simple scoring matrix that eliminates engines. Instead, reason thro
 - Licensing reality: 5% royalty only applies AFTER $1M gross revenue per title. For a first game or any game that doesn't reach $1M, it costs nothing. This threshold is high enough that most indie developers will never pay it.
 - Best fit: AAA-quality 3D; large open-world games; photorealistic visuals; developers with C++ experience or willing to use Blueprint; games targeting high-end PC/console where visual fidelity is a core selling point
 
+**Cocos Creator**
+- Genuine strengths: The best choice for WeChat Mini Games and H5/web games; TypeScript-first development with low learning curve; lightweight editor (fast compile, small project size); excellent 2D and UI system; native WeChat/Android/iOS/Web export; strong in Asian mobile game market; open source (MIT)
+- Real limitations: 3D capabilities lag behind Unity/Unreal (not suitable for high-end 3D); smaller Western community and asset ecosystem; less documentation in English; not suitable for PC/console games; performance ceiling lower than Unity for complex games
+- Best fit: WeChat Mini Games; H5/web games; mobile 2D/lightweight 3D casual games; developers targeting Asian mobile markets; TypeScript developers; projects with small scope and fast iteration needs
+
 **Genre-specific guidance** (factor this into the recommendation):
 - 2D any style → Godot strongly preferred
 - 3D stylized / atmospheric / contained world → Godot viable, Unity solid alternative
@@ -93,6 +98,8 @@ Do NOT use a simple scoring matrix that eliminates engines. Instead, reason thro
 - Action RPG / Soulslike → Unity or Unreal for 3D; community support and assets matter here
 - Platformer 2D → Godot
 - Strategy / top-down / RTS → Godot or Unity depending on 2D vs 3D
+- WeChat Mini Game / H5 → Cocos Creator strongly preferred (native WeChat export, small bundle size, TypeScript)
+- Casual mobile 2D → Cocos Creator or Godot
 
 **Recommendation format:**
 1. Show a comparison table with the user's specific factors as rows
@@ -167,8 +174,14 @@ Update the Technology Stack section, replacing the `[CHOOSE]` placeholders with 
 - **Asset Pipeline**: Unreal Content Pipeline
 ```
 
----
-
+**For Cocos Creator:**
+```markdown
+- **Engine**: Cocos Creator [version]
+- **Language**: TypeScript
+- **Build System**: Cocos Creator Build Panel
+- **Asset Pipeline**: Cocos Asset Manager + Bundle System
+- **Target Platform**: [WeChat Mini Game / Android / iOS / Web]
+```
 ## 5. Populate Technical Preferences
 
 After updating CLAUDE.md, create or update `.claude/docs/technical-preferences.md` with
@@ -195,6 +208,16 @@ engine-appropriate defaults. Read the existing template first, then fill in:
 - Functions: PascalCase (e.g., `TakeDamage()`)
 - Booleans: `b` prefix (e.g., `bIsAlive`)
 - Files: Match class without prefix (e.g., `PlayerController.h`)
+
+**For Cocos Creator (TypeScript):**
+- Classes/Components: PascalCase (e.g., `PlayerController`)
+- Methods/Variables: camelCase (e.g., `moveSpeed`, `takeDamage()`)
+- Private fields: `_camelCase` (e.g., `_moveSpeed`)
+- Files: PascalCase matching class (e.g., `PlayerController.ts`)
+- Interfaces: PascalCase, `I` prefix optional (e.g., `IPlayerData`)
+- Constants: UPPER_SNAKE_CASE
+- Decorators: `@ccclass`, `@property` for editor integration
+- Naming follows TypeScript community conventions with Cocos decorator patterns
 
 ### Input & Platform Section
 
