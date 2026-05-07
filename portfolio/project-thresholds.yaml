@@ -1,0 +1,72 @@
+version: 1
+language: zh-CN
+scope: project_layer
+stages:
+  research_options:
+    hard_gates:
+      - ranked_options_present
+      - recommendation_present
+      - direction_gate_ready
+    soft_checks:
+      - evidence_strength
+      - monetization_explanation
+      - risk_clarity
+  prd_draft:
+    hard_gates:
+      - target_user_defined
+      - core_loop_defined
+      - acceptance_criteria_present
+      - scope_boundary_present
+    soft_checks:
+      - clarity_of_value_hypothesis
+      - replay_loop_strength
+      - monetization_fit_explanation
+  architecture:
+    hard_gates:
+      - modules_defined
+      - state_flow_defined
+      - key_contracts_referenced
+    soft_checks:
+      - platform_risk_noted
+      - performance_risk_noted
+  solution_design:
+    hard_gates:
+      - implementation_sequence_present
+      - interfaces_defined
+      - rollback_strategy_present
+    soft_checks:
+      - integration_risk_clarity
+  uiux:
+    hard_gates:
+      - page_structure_defined
+      - interaction_flow_defined
+      - ad_touch_principles_defined
+    soft_checks:
+      - onboarding_clarity
+      - feedback_readability
+  implementation:
+    hard_gates:
+      - scope_declared
+      - unfinished_items_declared
+    soft_checks:
+      - module_progress_visibility
+  test:
+    hard_gates:
+      - test_scope_present
+      - pass_fail_explicit
+      - blockers_explicit
+    soft_checks:
+      - failure_severity_clarity
+  acceptance:
+    hard_gates:
+      - criteria_checked
+      - pass_or_fail_explicit
+    soft_checks:
+      - rollback_reason_clarity
+  launch_prep:
+    hard_gates:
+      - submission_materials_listed
+      - config_checks_listed
+      - submission_ready_explicit
+    soft_checks:
+      - remaining_manual_work_clarity

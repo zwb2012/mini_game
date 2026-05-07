@@ -1,6 +1,7 @@
 version: 1
 language: zh-CN
-purpose: 定义原始想法进入候选层后的结构化评估维度，以及 promote / hold / reject 规则。
+scope: candidate_layer
+purpose: 定义原始想法进入候选层后的结构化阈值规则，以及 promote / hold / reject 结果。
 dimensions:
   audience_pull:
     values:

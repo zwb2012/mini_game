@@ -37,7 +37,8 @@
 
 现在 `portfolio/` 内部也进一步拆分为：
 - `portfolio/idea-pool.yaml`：原始想法 SSOT，先进入候选层
-- `portfolio/candidate-score-rules.yaml`：候选评分与 promote / hold / reject 规则
+- `portfolio/candidate-score-rules.yaml`：候选层阈值源，负责 promote / hold / reject
+- `portfolio/project-thresholds.yaml`：正式项目层阈值源，负责各阶段 hard_gates / soft_checks
 - `portfolio/candidates/`：候选产物根目录
 - `portfolio/registry.yaml`：候选通过后的唯一运行态事实源
 - `portfolio/projects.yaml`：兼容层
@@ -46,7 +47,9 @@
 - `portfolio/decision-log.md`：决策记录
 
 简单理解：
-- 原始想法先进入候选层，再决定是否进入 `portfolio/registry.yaml`
+- 原始想法先进入候选层，再决定是否进入正式项目层
+- `portfolio/candidate-score-rules.yaml` 决定候选是否 promote / hold / reject
+- `portfolio/project-thresholds.yaml` 决定正式项目各阶段是否继续推进
 - `portfolio/registry.yaml` 决定“现在真实是什么状态”
 - `portfolio/wip-rules.yaml` 决定“谁先做、谁该停”
 - `portfolio/portfolio-board.md` 只负责展示
