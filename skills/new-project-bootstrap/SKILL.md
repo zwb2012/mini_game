@@ -26,10 +26,11 @@ description: Use when a user wants to start from a raw game idea or an already p
 1. 从用户输入里提取游戏类型、目标平台和商业目标。
 2. 生成稳定的名称、slug 与候选标识。
 3. 若处于 `candidate_pool` 模式，先创建或更新候选层请求与状态文件，初始为 `idea_pool -> candidate_intake -> candidate_scored`。
-4. 若候选已被 promote，切换到 `formal_project` 模式，创建 `specs/projects/<slug>/project-request.md` 与 `specs/projects/<slug>/state.yaml`，初始为 `promoted_to_registry -> research_options`。
-5. 若组合层启用，则把想法或正式项目登记到对应的组合层事实源。
-6. 输出启动结果，并提示可直接交给 `product-pipeline-orchestrator` 继续推进正式项目流。
-7. 文档主体默认使用中文。
+4. 只有当候选已经被 `promote`，才允许切换到 `formal_project` 模式。
+5. `formal_project` 模式下，创建 `specs/projects/<slug>/project-request.md` 与 `specs/projects/<slug>/state.yaml`，初始为 `promoted_to_registry -> research_options`。
+6. 若组合层启用，则把想法或正式项目登记到对应的组合层事实源。
+7. 输出启动结果，并提示可直接交给 `product-pipeline-orchestrator` 继续推进正式项目流。
+8. 文档主体默认使用中文。
 
 ## Output
 - 新项目或候选名称与 slug
@@ -42,6 +43,7 @@ description: Use when a user wants to start from a raw game idea or an already p
 ## Common Mistakes
 - 直接把一句话想法当作完整 PRD
 - 候选还没完成评分就强行按正式项目推进
+- 让 fresh idea 直接跳过候选层进入 `research_options`
 - promote 之后没有切到正式项目的状态初始化
 - 没有把候选或项目登记到组合层却希望多项目统一管理
 - 主要内容用英文表达
