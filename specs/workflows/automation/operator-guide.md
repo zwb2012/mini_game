@@ -32,44 +32,50 @@
 ---
 
 ## 二、首次启动一个条目
-### Step 1：新建候选或项目目录
-在模板仓库或对应项目仓库里创建：
+### Step 1：先准备候选层输入
+当你只有一个新想法时，先准备：
 
 - `portfolio/idea-pool.yaml`（原始想法池，权威输入之一）
 - `portfolio/candidates/`（候选产物目录）
-- `specs/projects/<slug>/project-request.md`
-- `specs/projects/<slug>/state.yaml`
-- `specs/projects/<slug>/<stage>.meta.yaml`（对应阶段的机器可读 sidecar）
+- 候选层 sidecar（如 `candidate-intake.meta.yaml`、`candidate-scorecard.meta.yaml`）
 
-其中 `<slug>` 是项目标识，例如：
-- `shaky-household-stack`
-- `kitchen-balance`
-- `moving-chaos`
+不要在这一步就创建正式项目目录。
 
 ### Step 2：选择 bootstrap 模式
 你至少要判断当前属于哪种模式：
 - `candidate_pool`：原始想法先进入候选池，推进 `idea_pool -> candidate_intake -> candidate_scored`
 - `formal_project`：候选已被 promote，进入正式项目初始化，推进 `promoted_to_registry -> research_options`
 
+### Step 3：只有在候选被 promote 后，再创建正式项目目录
+正式项目目录只在候选被 promote 后创建：
+- `specs/projects/<slug>/project-request.md`
+- `specs/projects/<slug>/state.yaml`
+- `specs/projects/<slug>/<stage>.meta.yaml`
+
+其中 `<slug>` 是项目标识，例如：
+- `shaky-household-stack`
+- `kitchen-balance`
+- `moving-chaos`
+
 模板文件：
 - `specs/_templates/project-request.template.md`
 - `specs/_templates/project-state.template.yaml`
 
-### Step 3：填写条目内容
-你至少要填写：
+### Step 4：填写正式项目条目内容
+正式项目层至少要填写：
 - 项目名称
 - 项目标识
 - 产品目标
 - 约束（时间、成本、技术）
-- 候选方向池（可选）
-- 是否需要系统自动补方向
+- 候选来源 ID
+- promote 原因
 
-### Step 4：初始化状态文件
-如果是第一次启动，`state.yaml` 初始化为：
-- 候选池模式：`stage: idea_pool`，`next_state: candidate_intake`
-- 正式项目模式：`stage: promoted_to_registry`，`next_state: research_options`
+### Step 5：初始化正式项目状态文件
+当正式项目被创建时，`state.yaml` 初始化为：
+- `stage: promoted_to_registry`
+- `next_state: research_options`
 
-### Step 5：如果你在多项目模式下运行
+### Step 6：如果你在多项目模式下运行
 还要在组合层登记条目：
 - 候选层：`portfolio/idea-pool.yaml`
 - 候选结果：`portfolio/candidates/`
@@ -86,7 +92,7 @@
 ### 方式 A：先启动候选池
 你可以直接对总控说：
 
-> 为这个游戏想法启动候选池流程。请读取 `portfolio/idea-pool.yaml`、`portfolio/candidates/`、`specs/projects/<slug>/state.yaml`，先推进到候选评分门禁，并只输出当前状态、下一步和需要我确认的事项。
+> 为这个游戏想法启动候选池流程。请读取 `portfolio/idea-pool.yaml`、`portfolio/candidates/`、候选层 sidecar，先推进到候选评分门禁，并只输出当前状态、下一步和需要我确认的事项。
 
 适合：
 - 你只有一个原始想法
@@ -245,8 +251,8 @@
 如果你同时跑多个项目，推荐这样做：
 
 1. 每个候选或项目保留自己的：
-   - `specs/projects/<slug>/...`
-   - `specs/projects/<slug>/<stage>.meta.yaml`
+   - 候选层：`portfolio/candidates/<candidate-id>/...`
+   - 正式项目层：`specs/projects/<slug>/...`
 2. 组合层统一维护：
    - `portfolio/idea-pool.yaml`
    - `portfolio/candidate-score-rules.yaml`
@@ -270,13 +276,10 @@
 ## 十、最小上手路径
 如果你明天就想试一次，最短路径是：
 
-1. 复制 `project-request.template.md`
-2. 填一个真实候选方向
-3. 复制 `project-state.template.yaml`
-4. 把状态设成 `idea_pool`
-5. 用总控入口启动一次候选池
-6. 在候选评分和方向门禁各回复一次
-7. 让它在 promote 后继续跑到 `submission_ready`
+1. 先把原始想法写入候选层
+2. 让系统生成 `candidate-intake` 与 `candidate-scorecard`
+3. 只有在候选被 promote 之后，才创建 `specs/projects/<slug>/project-request.md`
+4. 再由正式项目总控继续推进到下一个人工门禁
 
 这样你就能最快验证：
 - 这套模板是否真适合你的工作方式
