@@ -1,8 +1,8 @@
 ---
 doc_type: project-request
-stage: idea_pool
+stage: promoted_to_registry
 status: draft
-owner_skill: product-pipeline-orchestrator
+owner_skill: new-project-bootstrap
 next_state: research_options
 language: zh-CN
 ---
@@ -21,10 +21,10 @@ language: zh-CN
 - 成本约束：
 - 技术约束：
 
-# 候选方向池
-- 方向 1：
-- 方向 2：
-- 方向 3：
+# 候选来源
+- 来源候选 ID：
+- promote 前评分结论：
+- promote 原因：
 
 # 调研要求
 - 是否需要自动补充候选方向：是 / 否

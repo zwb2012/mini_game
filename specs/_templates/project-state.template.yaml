@@ -2,7 +2,7 @@ stage: idea_pool
 status: draft
 language: zh-CN
 owner: auto
-next_state: research_options
+next_state: candidate_intake
 blockers: []
 last_artifact: null
 updated_at: YYYY-MM-DD

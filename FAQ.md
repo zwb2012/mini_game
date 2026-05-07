@@ -71,15 +71,11 @@
 ## 6. 能不能只通过一句“我想做一个什么类型的游戏”就启动？
 可以，这正是 `new-project-bootstrap` 的目标。
 
-理想输入例如：
-> 我想做一个适合广告变现的微信小游戏，方向是搞笑物理堆叠类。
-
-系统应自动：
-- 生成项目名称与 slug
-- 生成 `project-request.md`
-- 生成 `state.yaml`
-- 如有需要，登记到组合层
-- 推进到 `research_options`
+但在 P1 之后，这个启动会先进入候选层：
+- 原始想法先写入 `portfolio/idea-pool.yaml`
+- 再由 `candidate-scout` 生成 `candidate-intake`
+- 再由 `candidate-scorer` 生成 `candidate-scorecard`
+- 只有被 promote 的候选，才进入正式项目控制平面
 
 ---
 
@@ -123,8 +119,8 @@
 
 ## 10. 我应该先看哪个文档？
 推荐顺序：
-1. [`README.md`](README.md)
-2. [`QUICKSTART.md`](QUICKSTART.md)
-3. [`specs/workflows/automation/operator-guide.md`](specs/workflows/automation/operator-guide.md)
-4. [`specs/workflows/automation/startup-protocol.md`](specs/workflows/automation/startup-protocol.md)
-5. [`specs/projects/shaky-household-stack/`](specs/projects/shaky-household-stack/) 示例产物链
+1. `README.md`
+2. `QUICKSTART.md`
+3. `specs/workflows/automation/operator-guide.md`
+4. `specs/workflows/automation/startup-protocol.md`
+5. `specs/projects/shaky-household-stack/` 示例产物链

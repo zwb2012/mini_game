@@ -22,7 +22,7 @@
 - **三处人工门禁**：方向选择、PRD 审批、提审包完成
 - **停在 `submission_ready`**，不自动执行真实微信提审动作
 - **所有文档型产物默认中文输出**
-- **P0 控制平面第一版包含**：
+- **P0 第一版控制平面第一版包含**：
   - 1 个引擎实现：`templates/cocos-game-base/`
   - 2 个平台适配器：`templates/platform-adapters/wechat/`、`templates/platform-adapters/android/`
 
@@ -75,6 +75,8 @@
 - `project-request.template.md`
 - `research-options.template.md`
 - `direction-gate.template.md`
+- `candidate-intake.template.md`
+- `candidate-scorecard.template.md`
 - `prd.template.md`
 - `prd-gate.template.md`
 - `architecture.template.md`
@@ -97,7 +99,7 @@
 - `portfolio-board.md`（展示视图）
 - `decision-log.md`（决策记录）
 
-原始想法不会直接登记到 `portfolio/registry.yaml`，而是先经过 `portfolio/idea-pool.yaml` 和 `portfolio/candidate-score-rules.yaml` 的候选层，再决定是否进入正式组合层。
+原始想法不会直接登记到 `portfolio/registry.yaml`，而是先经过 `portfolio/idea-pool.yaml`、`portfolio/candidates/` 与 `portfolio/candidate-score-rules.yaml` 的候选层，再决定是否进入正式组合层。
 
 ### 5. `templates/platform-adapters/`
 放平台适配器模板：
@@ -116,15 +118,14 @@
 ## 最短上手路径
 如果你现在就想试一次，最短路径是：
 
-1. 复制 `specs/_templates/project-request.template.md`
-2. 在 `specs/projects/<slug>/project-request.md` 填入你的项目请求
-3. 复制 `specs/_templates/project-state.template.yaml`
-4. 在 `specs/projects/<slug>/state.yaml` 初始化项目状态
-5. 让总控入口读取这两个文件并推进到下一个人工门禁
+1. 先把原始想法写入候选层
+2. 让系统生成 `candidate-intake` 与 `candidate-scorecard`
+3. 只有在候选被 promote 之后，才创建 `specs/projects/<slug>/project-request.md`
+4. 再由正式项目总控继续推进到下一个人工门禁
 
-建议总控调用语义：
+建议调用语义：
 
-> 为 `<slug>` 启动自动化产品流水线。请读取 `specs/projects/<slug>/project-request.md` 和 `specs/projects/<slug>/state.yaml`，自动推进到下一个人工门禁，并只输出当前状态、下一步和需要我确认的事项。
+> 先把这个方向作为候选启动，读取 `portfolio/idea-pool.yaml`，自动推进到候选评分阶段；若被 promote，再创建正式项目请求并继续推进到下一个人工门禁。
 
 如果你想更快开始，先看：
 - `QUICKSTART.md`
