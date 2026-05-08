@@ -1,73 +1,54 @@
-# Agent Coordination Rules
+# Agent 协作规则
 
-1. **Vertical Delegation**: Leadership agents delegate to department leads, who
-   delegate to specialists. Never skip a tier for complex decisions.
-2. **Horizontal Consultation**: Agents at the same tier may consult each other
-   but must not make binding decisions outside their domain.
-3. **Conflict Resolution**: When two agents disagree, escalate to the shared
-   parent. If no shared parent, escalate to `creative-director` for design
-   conflicts or `technical-director` for technical conflicts.
-4. **Change Propagation**: When a design change affects multiple domains, the
-   `producer` agent coordinates the propagation.
-5. **No Unilateral Cross-Domain Changes**: An agent must never modify files
-   outside its designated directories without explicit delegation.
+1. **纵向委托**: 导演级 agent 委托给部门主管，部门主管再委托给专员。复杂决策不可跳过层级。
+2. **横向咨询**: 同层级 agent 可以相互咨询，但不得做出自己领域之外的绑定性决策。
+3. **冲突解决**: 两个 agent 意见不一时，升级到共同上级。无共同上级时，设计冲突升级到 `creative-director`，技术冲突升级到 `technical-director`。
+4. **变更传播**: 当设计变更影响多个领域时，由 `producer` agent 协调传播。
+5. **禁止单方面跨领域变更**: Agent 不得在未获明确委托的情况下修改指定目录之外的文件。
 
-## Model Tier Assignment
+## 模型层级分配
 
-Skills and agents are assigned to model tiers based on task complexity:
+Skill 和 agent 根据任务复杂度分配到不同模型层级:
 
-| Tier | Model | When to use |
+| 层级 | 模型 | 适用场景 |
 |------|-------|-------------|
-| **Haiku** | `claude-haiku-4-5-20251001` | Read-only status checks, formatting, simple lookups — no creative judgment needed |
-| **Sonnet** | `claude-sonnet-4-6` | Implementation, design authoring, analysis of individual systems — default for most work |
-| **Opus** | `claude-opus-4-6` | Multi-document synthesis, high-stakes phase gate verdicts, cross-system holistic review |
+| **Haiku** | `claude-haiku-4-5-20251001` | 只读状态检查、格式化、简单查询——不需要创造性判断 |
+| **Sonnet** | `claude-sonnet-4-6` | 实现、设计撰写、单系统分析——大多数工作的默认选择 |
+| **Opus** | `claude-opus-4-6` | 多文档综合、高风险阶段门禁判定、跨系统整体评审 |
 
-Skills with `model: haiku`: `/help`, `/sprint-status`, `/story-readiness`, `/scope-check`,
-`/project-stage-detect`, `/changelog`, `/patch-notes`, `/onboard`
+使用 Haiku 的 skill: `/help`、`/sprint-status`、`/story-readiness`、`/scope-check`、`/project-stage-detect`、`/changelog`、`/patch-notes`、`/onboard`
 
-Skills with `model: opus`: `/review-all-gdds`, `/architecture-review`, `/gate-check`
+使用 Opus 的 skill: `/review-all-gdds`、`/architecture-review`、`/gate-check`
 
-All other skills default to Sonnet. When creating new skills, assign Haiku if the
-skill only reads and formats; assign Opus if it must synthesize 5+ documents with
-high-stakes output; otherwise leave unset (Sonnet).
+其余所有 skill 默认使用 Sonnet。创建新 skill 时，如果只做读取和格式化则分配 Haiku；如果必须综合 5 个以上文档且输出高风险则分配 Opus；否则不设（默认 Sonnet）。
 
-## Subagents vs Agent Teams
+## Subagent 与 Agent Team
 
-This project uses two distinct multi-agent patterns:
+本项目使用两种不同的多 agent 模式:
 
-### Subagents (current, always active)
-Spawned via `Task` within a single Claude Code session. Used by all `team-*` skills
-and orchestration skills. Subagents share the session's permission context, run
-sequentially or in parallel within the session, and return results to the parent.
+### Subagent（当前，始终激活）
+通过 `Task` 在单个 Claude Code session 内启动。所有 `team-*` skill 和编排类 skill 都使用此方式。Subagent 共享 session 的权限上下文，在 session 内顺序或并行运行，并将结果返回给父级。
 
-**When to spawn in parallel**: If two subagents' inputs are independent (neither
-needs the other's output to begin), spawn both Task calls simultaneously rather
-than waiting. Example: `/review-all-gdds` Phase 1 (consistency) and Phase 2
-(design theory) are independent — spawn both at the same time.
+**何时并行启动**: 如果两个 subagent 的输入互不依赖，同时发出两个 Task 调用而不是等待。例如：`/review-all-gdds` 阶段 1（一致性）和阶段 2（设计理论）互不依赖——同时启动两者。
 
-### Agent Teams (experimental — opt-in)
-Multiple independent Claude Code *sessions* running simultaneously, coordinated
-via a shared task list. Each session has its own context window and token budget.
-Requires `CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS=1` environment variable.
+### Agent Team（实验性——需主动开启）
+多个独立的 Claude Code *session* 同时运行，通过共享任务列表协调。每个 session 有自己独立的上下文窗口和 token 预算。需要设置环境变量 `CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS=1`。
 
-**Use agent teams when**:
-- Work spans multiple subsystems that will not touch the same files
-- Each workstream would take >30 minutes and benefits from true parallelism
-- A senior agent (technical-director, producer) needs to coordinate 3+ specialist
-  sessions working on different epics simultaneously
+**适用场景**:
+- 工作跨越多个不触碰相同文件的子系统
+- 每个工作流超过 30 分钟，且能从真正的并行中获益
+- 高级 agent（technical-director、producer）需要协调 3 个以上专员 session 同时处理不同 epic
 
-**Do not use agent teams when**:
-- One session's output is required as input for another (use sequential subagents)
-- The task fits in a single session's context (use subagents instead)
-- Cost is a concern — each team member burns tokens independently
+**不适用场景**:
+- 一个 session 的输出是另一个 session 的输入（使用顺序 subagent）
+- 任务适合单个 session 的上下文（使用 subagent）
+- 成本敏感——每个团队成员独立消耗 token
 
-**Current status**: Not yet used in this project. Document usage here when first adopted.
+## 并行 Task 协议
 
-## Parallel Task Protocol
+当编排类 skill 启动多个独立 agent 时:
 
-When an orchestration skill spawns multiple independent agents:
-
-1. Issue all independent Task calls before waiting for any result
-2. Collect all results before proceeding to dependent phases
-3. If any agent is BLOCKED, surface it immediately — do not silently skip
-4. Always produce a partial report if some agents complete and others block
+1. 在等待任何结果之前，先发出所有独立的 Task 调用
+2. 收集所有结果后再进入依赖阶段
+3. 如果任何 agent 被 BLOCKED，立即提示——不可静默跳过
+4. 如果部分 agent 完成、部分阻塞，始终产出部分报告

@@ -1,87 +1,87 @@
-# Technical Preferences
+# 技术偏好
 
-<!-- Populated by /setup-engine. Updated as the user makes decisions throughout development. -->
-<!-- All agents reference this file for project-specific standards and conventions. -->
+<!-- 由 /setup-engine 填充。随着开发过程中用户做出决策而更新。 -->
+<!-- 所有 agent 引用此文件获取项目特定规范和约定。 -->
 
-## Engine & Language
+## 引擎与语言
 
-- **Engine**: [TO BE CONFIGURED — run /setup-engine]
-- **Language**: [TO BE CONFIGURED]
-- **Rendering**: [TO BE CONFIGURED]
-- **Physics**: [TO BE CONFIGURED]
+- **引擎**: [待配置 — 运行 /setup-engine]
+- **语言**: [待配置]
+- **渲染**: [待配置]
+- **物理**: [待配置]
 
-## Input & Platform
+## 输入与平台
 
-<!-- Written by /setup-engine. Read by /ux-design, /ux-review, /test-setup, /team-ui, and /dev-story -->
-<!-- to scope interaction specs, test helpers, and implementation to the correct input methods. -->
+<!-- 由 /setup-engine 写入。由 /ux-design、/ux-review、/test-setup、/team-ui、/dev-story 读取 -->
+<!-- 用于限定交互规格、测试辅助工具和实现范围到正确的输入方式。 -->
 
-- **Target Platforms**: [TO BE CONFIGURED — e.g., PC, Console, Mobile, Web]
-- **Input Methods**: [TO BE CONFIGURED — e.g., Keyboard/Mouse, Gamepad, Touch, Mixed]
-- **Primary Input**: [TO BE CONFIGURED — the dominant input for this game]
-- **Gamepad Support**: [TO BE CONFIGURED — Full / Partial / None]
-- **Touch Support**: [TO BE CONFIGURED — Full / Partial / None]
-- **Platform Notes**: [TO BE CONFIGURED — any platform-specific UX constraints]
+- **目标平台**: [待配置 — 例如 PC、Console、Mobile、Web]
+- **输入方式**: [待配置 — 例如 键盘鼠标、手柄、触屏、混合]
+- **主要输入**: [待配置 — 此游戏的主导输入方式]
+- **手柄支持**: [待配置 — 完整 / 部分 / 无]
+- **触屏支持**: [待配置 — 完整 / 部分 / 无]
+- **平台备注**: [待配置 — 任何平台特定的 UX 约束]
 
-## Naming Conventions
+## 命名约定
 
-- **Classes**: [TO BE CONFIGURED]
-- **Variables**: [TO BE CONFIGURED]
-- **Signals/Events**: [TO BE CONFIGURED]
-- **Files**: [TO BE CONFIGURED]
-- **Scenes/Prefabs**: [TO BE CONFIGURED]
-- **Constants**: [TO BE CONFIGURED]
+- **类**: [待配置]
+- **变量**: [待配置]
+- **信号/事件**: [待配置]
+- **文件**: [待配置]
+- **场景/预制体**: [待配置]
+- **常量**: [待配置]
 
-## Performance Budgets
+## 性能预算
 
-- **Target Framerate**: [TO BE CONFIGURED]
-- **Frame Budget**: [TO BE CONFIGURED]
-- **Draw Calls**: [TO BE CONFIGURED]
-- **Memory Ceiling**: [TO BE CONFIGURED]
+- **目标帧率**: [待配置]
+- **帧预算**: [待配置]
+- **Draw Call**: [待配置]
+- **内存上限**: [待配置]
 
-## Testing
+## 测试
 
-- **Framework**: [TO BE CONFIGURED]
-- **Minimum Coverage**: [TO BE CONFIGURED]
-- **Required Tests**: Balance formulas, gameplay systems, networking (if applicable)
+- **框架**: [待配置]
+- **最低覆盖率**: [待配置]
+- **必需测试**: 数值公式、玩法系统、网络（如适用）
 
-## Forbidden Patterns
+## 禁止模式
 
-<!-- Add patterns that should never appear in this project's codebase -->
-- [None configured yet — add as architectural decisions are made]
+<!-- 添加不应在此项目代码库中出现的模式 -->
+- [尚未配置 — 随架构决策做出而添加]
 
-## Allowed Libraries / Addons
+## 允许的库/插件
 
-<!-- Add approved third-party dependencies here -->
-- [None configured yet — add as dependencies are approved]
+<!-- 在此添加已批准的三方依赖 -->
+- [尚未配置 — 随依赖审批而添加]
 
-## Architecture Decisions Log
+## 架构决策记录
 
-<!-- Quick reference linking to full ADRs in docs/architecture/ -->
-- [No ADRs yet — use /architecture-decision to create one]
+<!-- 快速参考，链接到 docs/architecture/ 中的完整 ADR -->
+- [尚无 ADR — 使用 /architecture-decision 创建]
 
-## Engine Specialists
+## 引擎专员
 
-<!-- Written by /setup-engine when engine is configured. -->
-<!-- Read by /code-review, /architecture-decision, /architecture-review, and team skills -->
-<!-- to know which specialist to spawn for engine-specific validation. -->
+<!-- 由 /setup-engine 在配置引擎时写入。 -->
+<!-- 由 /code-review、/architecture-decision、/architecture-review 和 team skill 读取 -->
+<!-- 以确定启动哪个专员进行引擎特定校验。 -->
 
-- **Primary**: [TO BE CONFIGURED — run /setup-engine]
-- **Language/Code Specialist**: [TO BE CONFIGURED]
-- **Shader Specialist**: [TO BE CONFIGURED]
-- **UI Specialist**: [TO BE CONFIGURED]
-- **Additional Specialists**: [TO BE CONFIGURED]
-- **Routing Notes**: [TO BE CONFIGURED]
+- **主专员**: [待配置 — 运行 /setup-engine]
+- **语言/代码专员**: [待配置]
+- **Shader 专员**: [待配置]
+- **UI 专员**: [待配置]
+- **额外专员**: [待配置]
+- **路由备注**: [待配置]
 
-### File Extension Routing
+### 文件扩展名路由
 
-<!-- Skills use this table to select the right specialist per file type. -->
-<!-- If a row says [TO BE CONFIGURED], fall back to Primary for that file type. -->
+<!-- Skill 使用此表按文件类型选择正确的专员。 -->
+<!-- 如果某行显示 [待配置]，则该文件类型回退到主专员。 -->
 
-| File Extension / Type | Specialist to Spawn |
+| 文件扩展名 / 类型 | 应启动的专员 |
 |-----------------------|---------------------|
-| Game code (primary language) | [TO BE CONFIGURED] |
-| Shader / material files | [TO BE CONFIGURED] |
-| UI / screen files | [TO BE CONFIGURED] |
-| Scene / prefab / level files | [TO BE CONFIGURED] |
-| Native extension / plugin files | [TO BE CONFIGURED] |
-| General architecture review | Primary |
+| 游戏代码（主语言） | [待配置] |
+| Shader / 材质文件 | [待配置] |
+| UI / 界面文件 | [待配置] |
+| 场景 / 预制体 / 关卡文件 | [待配置] |
+| 原生扩展 / 插件文件 | [待配置] |
+| 通用架构评审 | 主专员 |
