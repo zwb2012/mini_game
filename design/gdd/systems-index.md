@@ -23,11 +23,11 @@
 | 4 | 场景管理器 | Core | MVP | Designed | [scene-manager.md](scene-manager.md) | — |
 | 5 | 音频管理器 | Core | MVP | Designed | [audio-manager.md](audio-manager.md) | — |
 | 6 | 本地存储 | Core | MVP | Designed | [local-storage.md](local-storage.md) | — |
-| 7 | 网格连线引擎 | Gameplay | MVP | Not Started | — | 1, 2, 3, 5 |
-| 8 | 步数评分系统 | Gameplay | MVP | Not Started | — | 7 |
-| 9 | 关卡选择界面 | UI | MVP | Not Started | — | 4, 6 |
-| 10 | 游戏内 HUD | UI | MVP | Not Started | — | 2, 7, 8 |
-| 11 | 完成结算弹窗 | UI | MVP | Not Started | — | 8 |
+| 7 | 网格连线引擎 | Gameplay | MVP | Designed | [grid-connection-engine.md](grid-connection-engine.md) | 1, 2, 3, 5 |
+| 8 | 步数评分系统 | Gameplay | MVP | Designed | [step-scoring.md](step-scoring.md) | 7 |
+| 9 | 关卡选择界面 | UI | MVP | Designed | [level-select-ui.md](level-select-ui.md) | 4, 6 |
+| 10 | 游戏内 HUD | UI | MVP | Designed | [in-game-hud.md](in-game-hud.md) | 2, 7, 8 |
+| 11 | 完成结算弹窗 | UI | MVP | Designed | [level-complete-overlay.md](level-complete-overlay.md) | 8 |
 | 12 | 关卡求解器 | Gameplay | Vertical Slice | Not Started | — | 1 |
 | 13 | 提示系统 | Gameplay | Vertical Slice | Not Started | — | 7, 12 |
 | 14 | 激励视频广告 | Gameplay | Alpha | Not Started | — | 13 |
@@ -141,10 +141,10 @@
 | Metric | Count |
 |--------|-------|
 | Total systems identified | 14 |
-| Design docs started | 6 |
+| Design docs started | 11 |
 | Design docs reviewed | 0 |
 | Design docs approved | 0 |
-| MVP systems designed | 6/11 |
+| MVP systems designed | 11/11 |
 | Vertical Slice systems designed | 0/2 |
 
 ---
