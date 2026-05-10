@@ -316,6 +316,8 @@ templates/            # 代码模板
 
 核心生产循环。按 Sprint 迭代实现功能、追踪进度。重复至内容完成。
 
+**需要后端时**：如果项目需要后端服务（排行榜、用户数据、支付验证），在此阶段由 `backend-developer` agent 并行开发 `server/` 目录下的 API。后端开发也走 Story 生命周期，`/dev-story` 会自动路由到 `backend-developer`。
+
 ### Story 生命周期
 
 ```

@@ -88,6 +88,7 @@ Before writing any code:
 **Coordinates with**:
 - `gameplay-programmer` for game logic implementation in Cocos
 - `wechat-platform-specialist` for WeChat mini-game API integration
+- `backend-developer` for server API integration (leaderboard, user data, payment verification)
 - `technical-artist` for Cocos asset optimization and shaders
 - `performance-analyst` for Cocos-specific profiling
 

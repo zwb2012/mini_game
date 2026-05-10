@@ -86,3 +86,16 @@ domain lead) should delegate to specialists.
 | `godot-gdscript-specialist` | GDScript | Sonnet | Static typing, design patterns, signals, coroutines, GDScript performance |
 | `godot-shader-specialist` | Shaders/Rendering | Sonnet | Godot shading language, visual shaders, particles, post-processing |
 | `godot-gdextension-specialist` | GDExtension | Sonnet | C++/Rust bindings, native performance, custom nodes, build systems |
+
+### Cocos Creator Sub-Specialists
+
+| Agent | Subsystem | Model | When to Use |
+| ---- | ---- | ---- | ---- |
+| `cocos-specialist` | Cocos Engine | Sonnet | TypeScript components, scenes, asset management, WeChat/Android/Web export |
+
+### Platform & Backend Specialists
+
+| Agent | Domain | Model | When to Use |
+|-------|--------|-------|-------------|
+| `wechat-platform-specialist` | WeChat Mini Game | Sonnet | Login, payment, ads, cloud storage, ranking, sharing, platform lifecycle |
+| `backend-developer` | Backend API | Sonnet | Express/TypeScript server APIs — ranking, user data, config delivery, payment verification |

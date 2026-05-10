@@ -182,6 +182,9 @@ Update the Technology Stack section, replacing the `[CHOOSE]` placeholders with 
 - **Asset Pipeline**: Cocos Asset Manager + Bundle System
 - **Target Platform**: [WeChat Mini Game / Android / iOS / Web]
 ```
+
+> **微信小游戏注意**: 微信小游戏通常需要后端服务（支付验证、排行榜、用户数据同步）。如果选择了微信小游戏平台，建议同时配置后端。使用 `backend-developer` agent 在 `server/` 目录下开发 API。骨架代码位于 `templates/backend-base/`。
+
 ## 5. Populate Technical Preferences
 
 After updating CLAUDE.md, create or update `.claude/docs/technical-preferences.md` with
