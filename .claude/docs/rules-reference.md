@@ -9,6 +9,7 @@
 | `ai-code.md` | `src/ai/**` | 性能预算、可调试性、数据驱动参数 |
 | `network-code.md` | `src/networking/**` | 服务端权威、版本化消息、安全 |
 | `ui-code.md` | `src/ui/**` | 不持有游戏状态、本地化就绪、无障碍 |
+| `server-code.md` | `server/src/**` | 统一 API 响应格式、凭据安全、支付验单、路由领域分文件 |
 | `design-docs.md` | `design/gdd/**` | 必含 8 个章节、公式格式、边界情况 |
 | `narrative.md` | `design/narrative/**` | 背景一致性、角色声音、正典层级 |
 | `data-files.md` | `assets/data/**` | JSON 有效性、命名约定、schema 规则 |

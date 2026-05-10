@@ -6,6 +6,8 @@
 ├── .claude/                     # Agent 定义、Skill、Hook、Rule、文档
 ├── src/                         # 游戏源码（core、gameplay、ai、networking、ui、tools）
 ├── assets/                      # 游戏资源（美术、音频、VFX、Shader、数据）
+├── server/                      # 服务端代码（Express + TypeScript API）
+│   └── src/routes/              # 排行榜、用户数据、配置下发、支付验证路由
 ├── design/                      # 游戏设计文档（GDD、叙事、关卡、数值）
 ├── docs/                        # 技术文档（架构、API、复盘）
 │   └── engine-reference/        # 精选引擎 API 快照（锁定版本）
