@@ -11,11 +11,12 @@
 
 ## 技术栈
 
-- **Engine**: [CHOOSE: Cocos Creator / Godot 4 / Unity / Unreal Engine 5]
-- **Language**: [CHOOSE: TypeScript / GDScript / C# / C++ / Blueprint]
-- **Target Platform**: [CHOOSE: 微信小游戏 / Android / iOS / Web / PC / Console]
+- **Engine**: Cocos Creator 3.8.8
+- **Language**: TypeScript
+- **Build System**: Cocos Creator Build Panel
+- **Asset Pipeline**: Cocos Asset Manager + Bundle System
+- **Target Platform**: 微信小游戏
 - **Version Control**: Git with trunk-based development
-- **Build System**: [SPECIFY after choosing engine]
 
 > **Note**: 本模板完整保留了 CCGS 的 Godot/Unity/Unreal agent，并额外提供了
 > Cocos Creator 引擎 agent、微信小游戏平台 agent 和后端开发 agent。
@@ -39,6 +40,10 @@
 ## Technical Preferences
 
 @.claude/docs/technical-preferences.md
+
+## Engine Version Reference
+
+@docs/engine-reference/cocos/VERSION.md
 
 ## Coordination Rules
 
