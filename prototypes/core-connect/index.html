@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<!-- PROTOTYPE - NOT FOR PRODUCTION -->
+<!-- Question: Can slide-to-connect on a touch grid feel responsive and satisfying? -->
+<!-- Date: 2026-05-11 -->
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<title>Core Connect Prototype</title>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { background: #1a1a2e; display: flex; justify-content: center; align-items: center; height: 100vh; overflow: hidden; touch-action: none; }
+#container { position: relative; }
+canvas { display: block; background: #16213e; border-radius: 4px; }
+#hud { position: absolute; top: 8px; left: 12px; color: #ccc; font: 14px monospace; }
+</style>
+</head>
+<body>
+<div id="container">
+  <canvas id="c"></canvas>
+  <div id="hud"></div>
+</div>
+<script>
+// === PROTOTYPE: Core Connect ===
+// Validates: touch→grid mapping, cell fill, Bresenham, undo, feel at 60fps
+
+const GRID_ROWS = 6, GRID_COLS = 6;
+const NODES = [{ num: 1, row: 1, col: 1 }, { num: 2, row: 4, col: 2 }, { num: 3, row: 2, col: 5 }];
+const LINE_COLORS = ['#E03E2D', '#2196F3', '#4CAF50', '#FF9800', '#9C27B0', '#00BCD4'];
+const CELL_SIZE = 72, MARGIN = 8;
+
+const canvas = document.getElementById('c');
+const ctx = canvas.getContext('2d');
+const hud = document.getElementById('hud');
+
+// --- State ---
+let cells = [];          // cells[row][col] = { filled, owner, isNode, nodeNum }
+let path = [];           // [{row, col}]
+let currentNumber = 1;
+let stepCount = 0;
+let lastGridCoord = null;
+let isDrawing = false;
+let fps = 0, frameCount = 0, lastFpsTime = performance.now();
+let touchStartTime = 0, firstFrameDrawn = false;
+
+function init() {
+  const size = CELL_SIZE;
+  canvas.width = GRID_COLS * size + MARGIN * 2;
+  canvas.height = GRID_ROWS * size + MARGIN * 2;
+  cells = [];
+  for (let r = 0; r < GRID_ROWS; r++) {
+    cells[r] = [];
+    for (let c = 0; c < GRID_COLS; c++) {
+      cells[r][c] = { filled: false, owner: 0, isNode: false, nodeNum: 0 };
+    }
+  }
+  for (const n of NODES) {
+    cells[n.row][n.col].isNode = true;
+    cells[n.row][n.col].nodeNum = n.num;
+  }
+  stepCount = 0;
+  path = [];
+  currentNumber = 1;
+  lastGridCoord = null;
+  isDrawing = false;
+  firstFrameDrawn = false;
+}
+
+// --- Coordinate Mapping ---
+function screenToGrid(ex, ey) {
+  const rect = canvas.getBoundingClientRect();
+  const scaleX = canvas.width / rect.width;
+  const scaleY = canvas.height / rect.height;
+  const x = (ex - rect.left) * scaleX - MARGIN;
+  const y = (ey - rect.top) * scaleY - MARGIN;
+  const col = Math.floor(x / CELL_SIZE);
+  const row = Math.floor(y / CELL_SIZE);
+  if (row < 0 || row >= GRID_ROWS || col < 0 || col >= GRID_COLS) return null;
+  return { row, col };
+}
+
+// --- Bresenham Interpolation ---
+function bresenham(r0, c0, r1, c1) {
+  const points = [];
+  const dr = Math.abs(r1 - r0), dc = Math.abs(c1 - c0);
+  const sr = r0 < r1 ? 1 : -1, sc = c0 < c1 ? 1 : -1;
+  let err = dr - dc;
+  let r = r0, c = c0;
+  while (true) {
+    points.push({ row: r, col: c });
+    if (r === r1 && c === c1) break;
+    const e2 = 2 * err;
+    if (e2 > -dc) { err -= dc; r += sr; }
+    if (e2 < dr) { err += dr; c += sc; }
+  }
+  return points;
+}
+
+// --- Touch Handlers ---
+function handleStart(ex, ey) {
+  const coord = screenToGrid(ex, ey);
+  if (!coord) return;
+  const cell = cells[coord.row][coord.col];
+  if (!cell.isNode) return;
+  // Start from matching node or any node matching currentNumber
+  if (cell.nodeNum !== currentNumber) return;
+  isDrawing = true;
+  touchStartTime = performance.now();
+  firstFrameDrawn = false;
+  stepCount = 0;
+  path = [{ row: coord.row, col: coord.col }];
+  cell.filled = true;
+  cell.owner = currentNumber;
+  stepCount++;
+  lastGridCoord = coord;
+}
+
+function handleMove(ex, ey) {
+  if (!isDrawing) return;
+  const coord = screenToGrid(ex, ey);
+  if (!coord) return;
+  if (lastGridCoord && coord.row === lastGridCoord.row && coord.col === lastGridCoord.col) return;
+
+  // Bresenham fill skipped cells
+  const from = lastGridCoord || path[path.length - 1];
+  const interpolated = bresenham(from.row, from.col, coord.row, coord.col);
+  for (let i = 1; i < interpolated.length; i++) {
+    const p = interpolated[i];
+    const cell = cells[p.row][p.col];
+    if (cell.filled && cell.owner === currentNumber) {
+      // Check if this is the last cell in path (backtrack)
+      const lastPath = path[path.length - 1];
+      if (lastPath && p.row === lastPath.row && p.col === lastPath.col) {
+        cell.filled = false;
+        cell.owner = 0;
+        path.pop();
+        stepCount--;
+        if (path.length === 0) currentNumber = 1;
+        continue;
+      }
+      // Already filled - skip
+      continue;
+    }
+    if (cell.filled) continue; // locked cell
+    // Check if this is the next node
+    if (cell.isNode && cell.nodeNum === currentNumber + 1) {
+      cell.filled = true;
+      cell.owner = currentNumber;
+      path.push(p);
+      stepCount++;
+      currentNumber++;
+      lastGridCoord = p;
+      return;
+    }
+    if (cell.isNode && cell.nodeNum !== currentNumber) continue; // wrong node, skip
+    // Fill cell
+    cell.filled = true;
+    cell.owner = currentNumber;
+    path.push(p);
+    stepCount++;
+  }
+  lastGridCoord = coord;
+  if (!firstFrameDrawn) {
+    firstFrameDrawn = true;
+    const latency = performance.now() - touchStartTime;
+    console.log('First frame latency:', latency.toFixed(1), 'ms');
+  }
+}
+
+function handleEnd() {
+  isDrawing = false;
+  lastGridCoord = null;
+}
+
+// --- Event Binding ---
+canvas.addEventListener('touchstart', e => { e.preventDefault(); const t = e.touches[0]; handleStart(t.clientX, t.clientY); });
+canvas.addEventListener('touchmove', e => { e.preventDefault(); const t = e.touches[0]; handleMove(t.clientX, t.clientY); });
+canvas.addEventListener('touchend', e => { e.preventDefault(); handleEnd(); });
+canvas.addEventListener('mousedown', e => { handleStart(e.clientX, e.clientY); });
+canvas.addEventListener('mousemove', e => { handleMove(e.clientX, e.clientY); });
+canvas.addEventListener('mouseup', () => handleEnd());
+canvas.addEventListener('mouseleave', () => handleEnd());
+
+// --- Render ---
+function drawGrid() {
+  for (let r = 0; r < GRID_ROWS; r++) {
+    for (let c = 0; c < GRID_COLS; c++) {
+      const x = MARGIN + c * CELL_SIZE, y = MARGIN + r * CELL_SIZE;
+      const cell = cells[r][c];
+      // Cell background
+      if (cell.filled) {
+        const colorIdx = (cell.owner - 1) % LINE_COLORS.length;
+        ctx.fillStyle = LINE_COLORS[colorIdx];
+        ctx.fillRect(x + 1, y + 1, CELL_SIZE - 2, CELL_SIZE - 2);
+      } else {
+        ctx.fillStyle = '#1a1a2e';
+        ctx.fillRect(x + 1, y + 1, CELL_SIZE - 2, CELL_SIZE - 2);
+      }
+      // Grid line
+      ctx.strokeStyle = '#2a2a4e';
+      ctx.lineWidth = 1;
+      ctx.strokeRect(x, y, CELL_SIZE, CELL_SIZE);
+      // Node number
+      if (cell.isNode) {
+        ctx.fillStyle = cell.filled ? '#fff' : '#666';
+        ctx.font = 'bold 24px monospace';
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
+        ctx.fillText(cell.nodeNum, x + CELL_SIZE / 2, y + CELL_SIZE / 2);
+      }
+    }
+  }
+  // Draw current path line
+  if (path.length > 1) {
+    const colorIdx = (currentNumber - 1) % LINE_COLORS.length;
+    ctx.strokeStyle = LINE_COLORS[colorIdx];
+    ctx.lineWidth = 3;
+    ctx.lineCap = 'round';
+    ctx.lineJoin = 'round';
+    ctx.beginPath();
+    const first = path[0];
+    ctx.moveTo(MARGIN + first.col * CELL_SIZE + CELL_SIZE / 2, MARGIN + first.row * CELL_SIZE + CELL_SIZE / 2);
+    for (let i = 1; i < path.length; i++) {
+      ctx.lineTo(MARGIN + path[i].col * CELL_SIZE + CELL_SIZE / 2, MARGIN + path[i].row * CELL_SIZE + CELL_SIZE / 2);
+    }
+    ctx.stroke();
+  }
+}
+
+function drawHUD() {
+  hud.textContent = `步数: ${stepCount} | 当前数字: ${currentNumber} | FPS: ${fps}`;
+}
+
+function gameLoop() {
+  frameCount++;
+  const now = performance.now();
+  if (now - lastFpsTime >= 1000) {
+    fps = frameCount;
+    frameCount = 0;
+    lastFpsTime = now;
+  }
+  drawGrid();
+  drawHUD();
+  requestAnimationFrame(gameLoop);
+}
+
+// --- Start ---
+init();
+gameLoop();
+console.log('Core Connect Prototype ready. Touch or click the grid to connect nodes 1→2→3.');
+</script>
+</body>
+</html>

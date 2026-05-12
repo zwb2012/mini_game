@@ -37,7 +37,7 @@
 | 按钮 | 行为 | 可见条件 |
 |------|------|----------|
 | 下一关 | 触发 NEXT_LEVEL → Playing(levelId+1) | 存在下一关 |
-| 重玩 | 触发 NEXT_LEVEL → Playing(levelId) | 始终可见 |
+| 重玩 | 触发 REPLAY → Playing(levelId) | 始终可见 |
 | 返回 | 触发 BACK_TO_MENU → Menu | 始终可见 |
 
 **规则 4：弹窗出现时机**
@@ -49,7 +49,7 @@
 | 系统 | 方向 | 数据流 |
 |------|------|--------|
 | 步数评分系统 | 读取 | stars, actualSteps, optimalSteps → 展示 |
-| 游戏状态机 | 触发 | NEXT_LEVEL / BACK_TO_MENU |
+| 游戏状态机 | 触发 | NEXT_LEVEL / REPLAY / BACK_TO_MENU |
 
 ## Formulas
 
@@ -74,7 +74,14 @@
 - **GIVEN** stars=3，**WHEN** 结算弹窗显示，**THEN** 3 颗金色星依次点亮（每次间隔 200ms）
 - **GIVEN** stars=2，**WHEN** 结算弹窗显示，**THEN** 2 颗星点亮，第 3 颗灰色
 - **GIVEN** 当前关卡 id=50（最后一关），**WHEN** 弹窗显示，**THEN** "下一关"按钮不显示
-- **GIVEN** 结算弹窗显示中，**WHEN** 点击"下一关"，**THEN** 状态机触发 NEXT_LEVEL，进入下一关
+- **GIVEN** 结算弹窗显示中，**WHEN** 点击"重玩"，**THEN** 状态机触发 REPLAY，重新进入当前关卡
+
+## Cross-References
+
+| This Document References | Target GDD | Specific Element Referenced | Nature |
+|--------------------------|-----------|----------------------------|--------|
+| 读取评分结果 | `design/gdd/step-scoring.md` | stars, actualSteps, optimalSteps → 展示 | Data dependency |
+| 触发状态转换 | `design/gdd/game-state-machine.md` | NEXT_LEVEL / REPLAY / BACK_TO_MENU 事件 | Event trigger |
 
 ## Open Questions
 

@@ -8,7 +8,7 @@
 
 ## Summary
 
-本地存储系统封装微信小游戏 `wx.setStorage` / `cc.sys.localStorage` API，持久化玩家进度（关卡完成状态、星级评分）、设置偏好（静音开关）和游戏元数据。以 level.id 为主键索引关卡进度，所有读写操作为同步写、异步读。
+本地存储系统封装微信小游戏 `wx.setStorage` / `cc.sys.localStorage` API，持久化玩家进度（关卡完成状态、星级评分）、设置偏好（静音开关）和游戏元数据。以 level.id 为主键索引关卡进度，通关进度同步写入（确保不丢档），设置变更延迟写入（500ms 防抖），元数据会话结束时写入。
 
 > **Quick reference** — Layer: `Foundation` · Priority: `MVP` · Key deps: `None`
 

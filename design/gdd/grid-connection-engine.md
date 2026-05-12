@@ -88,6 +88,7 @@ Cell = {
 - 移除当前 path 最后一格：filled=false, ownerNumber=null, path.pop()
 - 若该格为数字节点，还需恢复 currentNumber：`currentNumber = nodeNumber - 1`
 - 若 path 为空，无操作
+- 提供 `canUndo(): boolean` 供 HUD 查询——当前路径非空且引擎状态为 Drawing/Dirty 时返回 true
 
 ### States and Transitions
 
@@ -109,10 +110,11 @@ Drawing ──(全部填满)──→ 触发 LEVEL_COMPLETE
 | 系统 | 方向 | 数据流 |
 |------|------|--------|
 | 关卡数据结构 | 读取 | Level(grid, nodes, blockedCells) → 初始化网格单元 |
-| 游戏状态机 | 双向 | 监听 onEnter(Playing) 初始化 + onExit(Playing) 清理；触发 LEVEL_COMPLETE |
+| 游戏状态机 | 双向 | 监听 onEnter(Playing) 初始化 + onExit(Playing) 清理；触发 LEVEL_COMPLETE 转换 Playing→LevelComplete |
 | 输入管理器 | 订阅事件 + 提供布局参数 | 订阅 INPUT_MOVE(row,col)、INPUT_END；提供 gridOriginX/Y、cellSize |
 | 音频管理器 | 调用 | play('TICK') 每步填充 + 回溯；play('LEVEL_COMPLETE') 通关 |
-| 步数评分系统 | 通知 | 每步填充后通知 stepCount++；通关时发送最终步数 |
+| 步数评分系统 | 通知 | 每步填充后推送 stepCount++；通关后同时发送 LEVEL_COMPLETE + finalStepCount |
+| 游戏内 HUD | 提供接口 | engine.undo() 供 HUD 调用；推送 stepCount、currentNumber 给 HUD 显示 |
 
 ## Formulas
 
@@ -138,7 +140,7 @@ Drawing ──(全部填满)──→ 触发 LEVEL_COMPLETE
 | 游戏状态机 | 引擎依赖 | 硬依赖——引擎仅在 Playing 态运行 |
 | 输入管理器 | 引擎依赖 | 硬依赖——引擎的唯一输入来源 |
 | 音频管理器 | 引擎依赖 | 硬依赖——无音频则划线手感降级 |
-| 步数评分系统 | 评分依赖引擎 | 评分系统读取引擎的 stepCount |
+| 步数评分系统 | 评分依赖引擎 | 评分系统接收引擎推送的 stepCount 变化和通关事件 |
 
 ## Tuning Knobs
 

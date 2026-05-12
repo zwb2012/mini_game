@@ -1,0 +1,18 @@
+{
+  "name": "number-link",
+  "version": "0.1.0",
+  "private": true,
+  "description": "数字连线 — Number Link puzzle game (Cocos Creator 3.8.8 + WeChat Mini Game)",
+  "scripts": {
+    "test": "jest",
+    "test:watch": "jest --watch",
+    "test:coverage": "jest --coverage",
+    "test:ci": "jest --ci --coverage --maxWorkers=2"
+  },
+  "devDependencies": {
+    "@types/jest": "^29.5.0",
+    "jest": "^29.7.0",
+    "ts-jest": "^29.1.0",
+    "typescript": "^5.3.0"
+  }
+}

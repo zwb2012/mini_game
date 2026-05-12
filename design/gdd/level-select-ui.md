@@ -70,6 +70,7 @@
 | 系统 | 方向 | 依赖性质 |
 |------|------|----------|
 | 本地存储 | 界面依赖 | 硬依赖——进度数据是按钮状态的唯一来源 |
+| 关卡数据结构 | 界面依赖 | 硬依赖——读取关卡元数据（id/name/chapter/unlockCondition）渲染按钮列表 |
 | 场景管理器 | 界面依赖 | 硬依赖——界面在 MenuScene 中显示 |
 
 ## Tuning Knobs
@@ -84,6 +85,15 @@
 - **GIVEN** 新玩家首次启动，**WHEN** 界面渲染，**THEN** 仅关卡 1 可点击（亮色），其余灰色锁定
 - **GIVEN** 玩家已通关 1-5 关（第 5 关 3 星），**WHEN** 界面渲染，**THEN** 关卡 1-5 显示星级角标，关卡 6 解锁可点击
 - **GIVEN** 玩家点击已解锁关卡 3，**WHEN** SELECT_LEVEL(3) 触发，**THEN** 状态机进入 Playing 态
+
+## Cross-References
+
+| This Document References | Target GDD | Specific Element Referenced | Nature |
+|--------------------------|-----------|----------------------------|--------|
+| 触发 SELECT_LEVEL 事件 | `design/gdd/game-state-machine.md` | SELECT_LEVEL → Playing | Event trigger |
+| 读取关卡进度数据 | `design/gdd/local-storage.md` | getLevelProgress(id) | Data dependency |
+| 读取关卡元数据 | `design/gdd/level-data-schema.md` | Level.id/name/chapter/unlockCondition | Data dependency |
+| MenuScene 显示 | `design/gdd/scene-manager.md` | MenuScene 场景 | State trigger |
 
 ## Open Questions
 

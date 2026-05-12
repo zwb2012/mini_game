@@ -4,7 +4,7 @@
 > **Author**: cocos-specialist
 > **Last Updated**: 2026-05-10
 > **Last Verified**: —
-> **Implements Pillar**: Pillar 1（纯逻辑零运气）
+> **Implements Pillar**: Pillar 2（一分钟一关）— 快速透明的结算反馈让玩家迅速进入下一关循环
 
 ## Summary
 
@@ -35,15 +35,14 @@
 starRatio = actualSteps / optimalSteps
 ```
 
-| 条件 | 星级 |
+| 条件（按序判断，命中即停止） | 星级 |
 |------|------|
-| starRatio ≤ 1.0 | ★★★ 三星（完美或更优） |
-| starRatio ≤ 1.5 | ★★ 二星 |
-| starRatio ≤ 2.5 | ★ 一星 |
-| starRatio > 2.5 | ★ 一星（底线，防止零星挫败） |
+| starRatio ≤ THRESHOLD_THREE_STAR | ★★★ 三星（完美或更优） |
+| starRatio ≤ THRESHOLD_TWO_STAR | ★★ 二星 |
+| 其他所有情况 | ★ 一星（底线——防止零星挫败） |
 
 - `optimalSteps` 从关卡数据的 `Level.optimalSteps` 读取
-- 结果向上取整：`starRatio = 1.0` → 三星；`starRatio = 1.01` → 二星
+- `THRESHOLD_THREE_STAR` = 1.0, `THRESHOLD_TWO_STAR` = 1.5（详细调优参数见 Tuning Knobs）
 
 **规则 3：星级封顶和保底**
 - 最高 ★★★，最低 ★（无论如何通关都有 1 星）
@@ -75,20 +74,23 @@ starRatio = actualSteps / optimalSteps
 ```
 starRatio = actualSteps / optimalSteps
 
-stars = 3  if starRatio ≤ 1.0
-        2  if starRatio ≤ 1.5
-        1  if starRatio > 1.5
+stars = 3  if actualSteps ≤ 0                    (防御性检查：0 步不可能通关)
+        3  if starRatio ≤ THRESHOLD_THREE_STAR   (默认 1.0)
+        2  if starRatio ≤ THRESHOLD_TWO_STAR     (默认 1.5)
+        1  otherwise                              (保底 1 星)
 ```
 
 **变量：**
 
 | 变量 | 符号 | 类型 | 范围 | 描述 |
 |------|------|------|------|------|
-| actualSteps | A | int | [optimalSteps, ∞) | 玩家实际步数 |
-| optimalSteps | O | int | [1, max_steps] | 关卡理论最小步数 |
+| actualSteps | A | int | [0, ∞) | 玩家实际步数 |
+| optimalSteps | O | int | [1, ∞) | 关卡理论最小步数 |
+| THRESHOLD_THREE_STAR | T3 | float | [1.0, 1.2] | ★★★ / ★★ 分界值 |
+| THRESHOLD_TWO_STAR | T2 | float | [1.2, 2.0] | ★★ / ★ 分界值 |
 
 **输出范围：** 1-3 星
-**示例：** optimalSteps=12, actualSteps=14 → ratio=1.17 → ★★ 二星
+**示例：** optimalSteps=12, actualSteps=14 → ratio=1.17, 1.17 ≤ T3(1.0)? No, 1.17 ≤ T2(1.5)? Yes → ★★ 二星
 
 ## Edge Cases
 
@@ -111,11 +113,11 @@ stars = 3  if starRatio ≤ 1.0
 
 ## Tuning Knobs
 
-| 参数 | 当前值 | 安全范围 | 效果 |
-|------|--------|----------|------|
-| ★★★ 阈值 | 1.0 | [1.0, 1.2] | 增大→更容易拿三星，降低三星含金量 |
-| ★★ 阈值 | 1.5 | [1.2, 2.0] | 增大→二星更容易，缩小三星和二星的差距 |
-| ★ 阈值 | 2.5 | [1.5, 3.0] | 增大→更宽容，保证玩家总是有星 |
+| 参数 | 变量名 | 当前值 | 安全范围 | 效果 |
+|------|--------|--------|----------|------|
+| ★★★ 阈值 | THRESHOLD_THREE_STAR | 1.0 | [1.0, 1.2] | 增大→更容易拿三星，降低三星含金量 |
+| ★★ 阈值 | THRESHOLD_TWO_STAR | 1.5 | [1.2, 2.0] | 增大→二星范围更宽；这是 ★★/★ 的实际计算分界 |
+| ★ 感知上界 | — | 2.5 | [1.5, 3.0] | 文档值——任何 > THRESHOLD_TWO_STAR 都是 1 星，2.5 是预期的最大合理 ratio，供设计参考 |
 
 ## Visual/Audio Requirements
 

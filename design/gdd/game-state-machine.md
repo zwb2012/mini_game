@@ -42,6 +42,7 @@ Paused ──(继续按钮)──→ Playing
 Paused ──(退出)──→ Menu
 Playing ──(全部连通)──→ LevelComplete
 LevelComplete ──(下一关)──→ Playing
+LevelComplete ──(重玩)──→ Playing
 LevelComplete ──(返回)──→ Menu
 ```
 
@@ -56,15 +57,16 @@ LevelComplete ──(返回)──→ Menu
 
 ### States and Transitions
 
-| 当前状态 | 触发事件 | 目标状态 | 条件 |
-|----------|----------|----------|------|
-| Menu | `SELECT_LEVEL` | Playing | levelId 有效 |
-| Playing | `PAUSE` | Paused | — |
-| Paused | `RESUME` | Playing | — |
-| Paused | `QUIT_TO_MENU` | Menu | — |
-| Playing | `LEVEL_COMPLETE` | LevelComplete | 所有格子已填满 |
-| LevelComplete | `NEXT_LEVEL` | Playing | 存在下一关 |
-| LevelComplete | `BACK_TO_MENU` | Menu | — |
+| 当前状态 | 触发事件 | 目标状态 | 条件 | 参数 |
+|----------|----------|----------|------|------|
+| Menu | `SELECT_LEVEL` | Playing | levelId 有效 | levelId: number |
+| Playing | `PAUSE` | Paused | — | — |
+| Paused | `RESUME` | Playing | — | — |
+| Paused | `QUIT_TO_MENU` | Menu | — | — |
+| Playing | `LEVEL_COMPLETE` | LevelComplete | 所有格子已填满 | — |
+| LevelComplete | `NEXT_LEVEL` | Playing | 存在 levelId+1 的关卡 | levelId: number |
+| LevelComplete | `REPLAY` | Playing | — | levelId: number |
+| LevelComplete | `BACK_TO_MENU` | Menu | — | — |
 
 ### Interactions with Other Systems
 
@@ -74,6 +76,8 @@ LevelComplete ──(返回)──→ Menu
 | 游戏内 HUD | HUD 监听状态 | Playing 时显示步数/撤销；Paused 时覆盖暂停菜单 |
 | 场景管理器 | 场景管理器监听状态 | Menu ⇄ Playing 时触发场景切换 |
 | 输入管理器 | 输入管理器查询状态 | 仅在 Playing 状态处理 touch 事件 |
+| 完成结算弹窗 | 弹窗触发状态转换 | 弹窗按钮发起 NEXT_LEVEL / REPLAY / BACK_TO_MENU 事件 |
+| 音频管理器 | 音频管理器监听状态 | onEnter(LevelComplete) → 播放 LEVEL_COMPLETE 音效 |
 
 ## Formulas
 

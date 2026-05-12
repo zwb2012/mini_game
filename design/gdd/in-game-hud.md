@@ -77,6 +77,14 @@ HUD 不制造存在感——它只在玩家需要时可用，不需要时不打�
 - **GIVEN** path 为空，**WHEN** 页面渲染，**THEN** 撤销按钮灰色不可点击
 - **GIVEN** Playing 状态，**WHEN** 点击暂停按钮，**THEN** 状态变为 Paused
 
+## Cross-References
+
+| This Document References | Target GDD | Specific Element Referenced | Nature |
+|--------------------------|-----------|----------------------------|--------|
+| 读取步数 | `design/gdd/step-scoring.md` | stepCount → 显示计数器 | Data dependency |
+| 调用撤销 | `design/gdd/grid-connection-engine.md` | engine.undo() / engine.canUndo() | Method call |
+| 监听/触发状态 | `design/gdd/game-state-machine.md` | Playing/Paused 状态 + PAUSE/RESUME 事件 | State trigger |
+
 ## Open Questions
 
 暂无。

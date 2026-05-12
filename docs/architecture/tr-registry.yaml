@@ -1,56 +1,234 @@
-# Technical Requirement ID Registry
-#
-# PURPOSE: Persistent, stable IDs for every GDD technical requirement.
-# Prevents TR-ID renumbering across /architecture-review runs, which would
-# break story references.
-#
-# RULES:
-#   - IDs are PERMANENT. Never renumber, never delete (use status: deprecated).
-#   - Add new entries only at the END of each system's list.
-#   - When a GDD requirement is reworded (same intent): update `requirement`
-#     text and add a `revised` date. The ID stays the same.
-#   - When a requirement is removed from the GDD: set status: deprecated.
-#   - When a requirement is split or replaced: set status: superseded-by with
-#     the new TR-ID(s).
-#
-# WRITTEN BY: /architecture-review (appends new entries, never overwrites)
-# READ BY:    /create-stories (embed IDs in stories)
-#             /story-done (look up current requirement text at review time)
-#             /story-readiness (validate TR-ID exists and is active)
-#
-# ID FORMAT: TR-[system-slug]-[NNN]
-#   system-slug = short slug matching the GDD system name
-#   NNN = three-digit zero-padded sequence per system, starting at 001
-#
-# STATUS VALUES: active | deprecated | superseded-by: TR-[system]-NNN
+# Technical Requirement ID Registry — 数字连线
+version: 3
+last_updated: "2026-05-11"
+# Architecture review: CONCERNS — 17 covered, 12 partial, 8 gaps (37 total)
+# All 37 TR-IDs verified against 12 GDDs + 5 ADRs. No new TR-IDs added.
 
-version: 1
-last_updated: ""
-
-requirements: []
-
-# --- EXAMPLE ENTRIES (remove when first real entries are added) ---
-#
-# - id: TR-combat-001
-#   system: combat
-#   gdd: design/gdd/combat-system.md
-#   requirement: "Player takes damage from enemies based on attack power minus defence"
-#   created: 2026-03-10
-#   revised: ""
-#   status: active
-#
-# - id: TR-combat-002
-#   system: combat
-#   gdd: design/gdd/combat-system.md
-#   requirement: "Combo window timing is 0.4 seconds between hits"
-#   created: 2026-03-10
-#   revised: "2026-04-01"
-#   status: active
-#
-# - id: TR-combat-003
-#   system: combat
-#   gdd: design/gdd/combat-system.md
-#   requirement: "Old damage formula using raw stats"
-#   created: 2026-03-10
-#   revised: ""
-#   status: superseded-by: TR-combat-001
+requirements:
+  # Foundation Layer
+  - id: TR-LDS-001
+    system: level-data-schema
+    gdd: design/gdd/level-data-schema.md
+    requirement: "LevelData JSON 格式 — version + levels[] 数组"
+    created: "2026-05-10"
+    status: active
+  - id: TR-LDS-002
+    system: level-data-schema
+    gdd: design/gdd/level-data-schema.md
+    requirement: "单关数据结构 — grid {rows,cols}, nodes[], blockedCells[], optimalSteps, unlockCondition"
+    created: "2026-05-10"
+    status: active
+  - id: TR-LDS-003
+    system: level-data-schema
+    gdd: design/gdd/level-data-schema.md
+    requirement: "数据校验 — nodes 连续、坐标不重复、grid [3,10]、optimalSteps >= 1"
+    created: "2026-05-10"
+    status: active
+  - id: TR-GSM-001
+    system: game-state-machine
+    gdd: design/gdd/game-state-machine.md
+    requirement: "4 状态 — Menu, Playing, Paused, LevelComplete"
+    created: "2026-05-10"
+    status: active
+  - id: TR-GSM-002
+    system: game-state-machine
+    gdd: design/gdd/game-state-machine.md
+    requirement: "8 条合法转换 — SELECT_LEVEL, PAUSE, RESUME, QUIT_TO_MENU, LEVEL_COMPLETE, NEXT_LEVEL, REPLAY, BACK_TO_MENU"
+    created: "2026-05-10"
+    status: active
+  - id: TR-GSM-003
+    system: game-state-machine
+    gdd: design/gdd/game-state-machine.md
+    requirement: "onEnter/onExit 回调 — 同步按序执行"
+    created: "2026-05-10"
+    status: active
+  - id: TR-GSM-004
+    system: game-state-machine
+    gdd: design/gdd/game-state-machine.md
+    requirement: "非法转换静默忽略 + 微信切后台自动 PAUSE"
+    created: "2026-05-10"
+    status: active
+  - id: TR-IM-001
+    system: input-manager
+    gdd: design/gdd/input-manager.md
+    requirement: "TOUCH_START/MOVE/END -> 屏幕坐标转网格坐标"
+    created: "2026-05-10"
+    status: active
+  - id: TR-IM-002
+    system: input-manager
+    gdd: design/gdd/input-manager.md
+    requirement: "滑动阈值 4px + 多点触摸忽略 + 越界丢弃"
+    created: "2026-05-10"
+    status: active
+  - id: TR-IM-003
+    system: input-manager
+    gdd: design/gdd/input-manager.md
+    requirement: "端到端延迟 <=50ms, 仅 Playing 态激活"
+    created: "2026-05-10"
+    status: active
+  - id: TR-SM-001
+    system: scene-manager
+    gdd: design/gdd/scene-manager.md
+    requirement: "MenuScene + GameScene 状态驱动切换 + 预加载"
+    created: "2026-05-10"
+    status: active
+  - id: TR-SM-002
+    system: scene-manager
+    gdd: design/gdd/scene-manager.md
+    requirement: "场景参数传递 levelId -> engine 初始化"
+    created: "2026-05-10"
+    status: active
+  - id: TR-LS-001
+    system: local-storage
+    gdd: design/gdd/local-storage.md
+    requirement: "nl_ 前缀命名空间 — LevelProgress, Settings, Meta"
+    created: "2026-05-10"
+    status: active
+  - id: TR-LS-002
+    system: local-storage
+    gdd: design/gdd/local-storage.md
+    requirement: "通关同步写入 + 设置 500ms 防抖 + 元数据会话结束写"
+    created: "2026-05-10"
+    status: active
+  - id: TR-LS-003
+    system: local-storage
+    gdd: design/gdd/local-storage.md
+    requirement: "微信 wx.setStorage 优先 + cc.sys.localStorage 回退"
+    created: "2026-05-10"
+    status: active
+  # Core Layer
+  - id: TR-GCE-001
+    system: grid-connection-engine
+    gdd: design/gdd/grid-connection-engine.md
+    requirement: "网格初始化 — Cell[][] 创建、节点放置、障碍格标记"
+    created: "2026-05-10"
+    status: active
+  - id: TR-GCE-002
+    system: grid-connection-engine
+    gdd: design/gdd/grid-connection-engine.md
+    requirement: "路径追踪 — 按序连接 (1->2->3)、填充格子、到达下一数字切换 currentNumber"
+    created: "2026-05-10"
+    status: active
+  - id: TR-GCE-003
+    system: grid-connection-engine
+    gdd: design/gdd/grid-connection-engine.md
+    requirement: "Bresenham 插值 — 快速滑动填充跳格"
+    created: "2026-05-10"
+    status: active
+  - id: TR-GCE-004
+    system: grid-connection-engine
+    gdd: design/gdd/grid-connection-engine.md
+    requirement: "路径回溯 — 滑入当前路径末格 = 撤销, 不可修改已锁定段"
+    created: "2026-05-10"
+    status: active
+  - id: TR-GCE-005
+    system: grid-connection-engine
+    gdd: design/gdd/grid-connection-engine.md
+    requirement: "通关检测 — 全部非障碍格 filled=true -> LEVEL_COMPLETE"
+    created: "2026-05-10"
+    status: active
+  - id: TR-GCE-006
+    system: grid-connection-engine
+    gdd: design/gdd/grid-connection-engine.md
+    requirement: "撤销接口 — undo() + canUndo()"
+    created: "2026-05-10"
+    status: active
+  - id: TR-GCE-007
+    system: grid-connection-engine
+    gdd: design/gdd/grid-connection-engine.md
+    requirement: "3 内部状态 — Idle, Drawing, Dirty"
+    created: "2026-05-10"
+    status: active
+  # Feature Layer
+  - id: TR-SS-001
+    system: step-scoring
+    gdd: design/gdd/step-scoring.md
+    requirement: "步数追踪 — engine 推送 +-1 增量, stepCount >= 0"
+    created: "2026-05-10"
+    status: active
+  - id: TR-SS-002
+    system: step-scoring
+    gdd: design/gdd/step-scoring.md
+    requirement: "星级计算 — starRatio = actualSteps/optimalSteps, THRESHOLD 可配"
+    created: "2026-05-10"
+    status: active
+  - id: TR-SS-003
+    system: step-scoring
+    gdd: design/gdd/step-scoring.md
+    requirement: "保底 1 星 — 永不返回 0 星"
+    created: "2026-05-10"
+    status: active
+  - id: TR-HS-001
+    system: hint-system
+    gdd: design/gdd/hint-system.md
+    requirement: "每日 3 次免费提示 — 日历日重置"
+    created: "2026-05-10"
+    status: active
+  - id: TR-HS-002
+    system: hint-system
+    gdd: design/gdd/hint-system.md
+    requirement: "简化 BFS — 起点=当前路径末格/节点格, 目标=下一数字节点"
+    created: "2026-05-10"
+    status: active
+  # Presentation Layer
+  - id: TR-UI-001
+    system: level-select-ui
+    gdd: design/gdd/level-select-ui.md
+    requirement: "3 列按钮网格 + 锁定/解锁/已完成 3 态 + 星级角标"
+    created: "2026-05-10"
+    status: active
+  - id: TR-UI-002
+    system: level-select-ui
+    gdd: design/gdd/level-select-ui.md
+    requirement: "44x44px 最小触控 + 滚动位置保持"
+    created: "2026-05-10"
+    status: active
+  - id: TR-UI-003
+    system: in-game-hud
+    gdd: design/gdd/in-game-hud.md
+    requirement: "步数计数器 + 撤销按钮 + 暂停按钮 + 暂停菜单"
+    created: "2026-05-10"
+    status: active
+  - id: TR-UI-004
+    system: in-game-hud
+    gdd: design/gdd/in-game-hud.md
+    requirement: "撤销按钮仅在 canUndo()=true 时可点击"
+    created: "2026-05-10"
+    status: active
+  - id: TR-UI-005
+    system: level-complete-overlay
+    gdd: design/gdd/level-complete-overlay.md
+    requirement: "1-3 星依次点亮 (200ms) + 步数对比 + 3 操作按钮"
+    created: "2026-05-10"
+    status: active
+  - id: TR-UI-006
+    system: level-complete-overlay
+    gdd: design/gdd/level-complete-overlay.md
+    requirement: "末关隐藏下一关按钮 — REPLAY 始终可见"
+    created: "2026-05-10"
+    status: active
+  # Audio (Foundation — added 2026-05-11)
+  - id: TR-AM-001
+    system: audio-manager
+    gdd: design/gdd/audio-manager.md
+    requirement: "音频事件定义 — TICK/LEVEL_COMPLETE 启动时预加载, AMBIENT 延迟加载"
+    created: "2026-05-11"
+    status: active
+  - id: TR-AM-002
+    system: audio-manager
+    gdd: design/gdd/audio-manager.md
+    requirement: "播放接口 — play(eventId)、setMuted(bool)、isMuted()"
+    created: "2026-05-11"
+    status: active
+  - id: TR-AM-003
+    system: audio-manager
+    gdd: design/gdd/audio-manager.md
+    requirement: "TICK 同帧防抖 — 同一帧多次请求合并为一次播放"
+    created: "2026-05-11"
+    status: active
+  - id: TR-AM-004
+    system: audio-manager
+    gdd: design/gdd/audio-manager.md
+    requirement: "资源缺失静默降级 — 加载失败 console.warn, 游戏不崩溃"
+    created: "2026-05-11"
+    status: active

@@ -45,8 +45,8 @@ Level = {
     rows: number,        // 行数，范围 [3, 10]
     cols: number         // 列数，范围 [3, 10]
   },
-  nodes: Node[],         // 数字节点列表，按 number 升序
-  blockedCells: Cell[],  // 障碍格列表（可选，空数组表示无障碍）
+  nodes: NodeData[],         // 数字节点列表，按 number 升序
+  blockedCells: CellCoord[],  // 障碍格列表（可选，空数组表示无障碍）
   optimalSteps: number,  // 理论最小步数（由求解器计算并写入）
   unlockCondition: null | {  // 解锁条件（null = 默认解锁，即通关上一关）
     type: "stars",       // 条件类型：累计星级
@@ -58,7 +58,7 @@ Level = {
 **规则 3：数字节点**
 
 ```
-Node = {
+NodeData = {
   number: number,    // 数字（从 1 开始，必须连续：1,2,3,...）
   row: number,       // 所在行（0-based，范围 [0, rows-1]）
   col: number        // 所在列（0-based，范围 [0, cols-1]）
@@ -74,7 +74,7 @@ Node = {
 **规则 4：障碍格**
 
 ```
-Cell = {
+CellCoord = {
   row: number,    // 行坐标（0-based）
   col: number     // 列坐标（0-based）
 }
@@ -107,7 +107,24 @@ Cell = {
 
 ## Formulas
 
-关卡数据结构本身不包含计算公式。`optimalSteps` 的最优路径计算由关卡求解器（系统 #12）负责，不属于本系统的公式范围。
+关卡数据结构本身不包含玩法计算公式。`optimalSteps` 的最优路径计算由关卡求解器（系统 #12）负责，不属于本系统的公式范围。
+
+### 难度启发式（参考公式）
+
+`difficulty` 标签由以下启发式公式辅助计算，供人工审核参考：
+
+```
+blockedRatio = blockedCells.length / (rows * cols)
+rawScore = (rows * cols * 0.08) + (nodes.length * 0.3) + (blockedRatio * 3.0)
+difficulty = clamp(round(rawScore), 1, 5)
+```
+
+- `rows * cols * 0.08`：网格越大，路径搜索空间越大
+- `nodes.length * 0.3`：节点越多，连线步骤越多
+- `blockedRatio * 3.0`：障碍密度是难度提升的最强因子
+- 最终值 clamp 到 [1, 5]，与 `difficulty` 字段范围一致
+
+MVP 阶段手工设计的 20 关由设计师最终确认难度标签；AI 生成的 30 关用此公式初始化标签后人工校验。
 
 ## Edge Cases
 

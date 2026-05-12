@@ -1,0 +1,53 @@
+{
+  "version": "1.0",
+  "levels": [
+    {
+      "id": 1,
+      "name": "1-1",
+      "chapter": 1,
+      "difficulty": 1,
+      "grid": { "rows": 3, "cols": 3 },
+      "nodes": [
+        { "number": 1, "row": 0, "col": 0 },
+        { "number": 2, "row": 2, "col": 2 }
+      ],
+      "blockedCells": [],
+      "optimalSteps": 4,
+      "unlockCondition": null
+    },
+    {
+      "id": 2,
+      "name": "1-2",
+      "chapter": 1,
+      "difficulty": 1,
+      "grid": { "rows": 4, "cols": 4 },
+      "nodes": [
+        { "number": 1, "row": 0, "col": 1 },
+        { "number": 2, "row": 1, "col": 3 },
+        { "number": 3, "row": 3, "col": 2 }
+      ],
+      "blockedCells": [{ "row": 1, "col": 1 }],
+      "optimalSteps": 7,
+      "unlockCondition": { "type": "stars", "value": 3 }
+    },
+    {
+      "id": 3,
+      "name": "2-1",
+      "chapter": 2,
+      "difficulty": 2,
+      "grid": { "rows": 5, "cols": 5 },
+      "nodes": [
+        { "number": 1, "row": 0, "col": 0 },
+        { "number": 2, "row": 2, "col": 2 },
+        { "number": 3, "row": 4, "col": 4 },
+        { "number": 4, "row": 4, "col": 0 }
+      ],
+      "blockedCells": [
+        { "row": 0, "col": 4 },
+        { "row": 4, "col": 2 }
+      ],
+      "optimalSteps": 14,
+      "unlockCondition": { "type": "stars", "value": 6 }
+    }
+  ]
+}

@@ -29,7 +29,7 @@
 | 10 | 游戏内 HUD | UI | MVP | Designed | [in-game-hud.md](in-game-hud.md) | 2, 7, 8 |
 | 11 | 完成结算弹窗 | UI | MVP | Designed | [level-complete-overlay.md](level-complete-overlay.md) | 8 |
 | 12 | 关卡求解器 | Gameplay | Vertical Slice | Not Started | — | 1 |
-| 13 | 提示系统 | Gameplay | Vertical Slice | Not Started | — | 7, 12 |
+| 13 | 提示系统 | Gameplay | MVP | Designed | [hint-system.md](hint-system.md) | 7 |
 | 14 | 激励视频广告 | Gameplay | Alpha | Not Started | — | 13 |
 
 ---
@@ -48,8 +48,8 @@
 
 | Tier | Definition | Systems |
 |------|------------|---------|
-| **MVP** | 最小可玩闭环：进入关卡→连线→评分→存档→下一关 | 1-11 (11 systems) |
-| **Vertical Slice** | 关卡质量验证 + 辅助功能 | 12 关卡求解器, 13 提示系统 |
+| **MVP** | 最小可玩闭环：进入关卡→连线→评分→存档→下一关 | 1-11, 13 (12 systems) |
+| **Vertical Slice** | 关卡质量验证 | 12 关卡求解器 |
 | **Alpha** | 变现层 | 14 激励视频广告 |
 
 ---
@@ -84,13 +84,18 @@
 11. **完成结算弹窗** — depends on: 8
     通关动画、1-3 星展示、"下一关"/"重玩"按钮。每关结束时的反馈界面。
 
+11. **完成结算弹窗** — depends on: 8
+    通关动画、1-3 星展示、"下一关"/"重玩"按钮。每关结束时的反馈界面。
+
+### Feature Layer (depends on Core)
+
+13. **提示系统** — depends on: 7
+    消耗提示次数，使用简化路径查找计算下一步最优方向，在网格上显示箭头指引。MVP 阶段不依赖完整关卡求解器（#12）。
+
 ### Vertical Slice Layer (MVP 之后)
 
 12. **关卡求解器** — depends on: 1
-    Backtracking 算法验证关卡有唯一最优解，计算每关理论最小步数。AI 关卡生成的质量守门人。
-
-13. **提示系统** — depends on: 7, 12
-    消耗提示次数，由求解器计算下一步最优方向，在网格上显示箭头指引。
+    Backtracking 算法验证关卡有唯一最优解，计算每关理论最小步数。AI 关卡生成的质量守门人。MVP 阶段提示系统使用简化版路径查找（不依赖完整求解器）。
 
 ### Alpha Layer
 
@@ -115,7 +120,7 @@
 | 10 | 游戏内 HUD | MVP | Presentation | cocos-specialist | M |
 | 11 | 完成结算弹窗 | MVP | Presentation | cocos-specialist | S |
 | 12 | 关卡求解器 | VS | Core | cocos-specialist | M |
-| 13 | 提示系统 | VS | Feature | cocos-specialist + wechat-platform-specialist | S |
+| 13 | 提示系统 | MVP | Feature | cocos-specialist | S |
 | 14 | 激励视频广告 | Alpha | Feature | wechat-platform-specialist + backend-developer | M |
 
 ---
@@ -144,7 +149,7 @@
 | Design docs started | 11 |
 | Design docs reviewed | 0 |
 | Design docs approved | 0 |
-| MVP systems designed | 11/11 |
+| MVP systems designed | 12/12 |
 | Vertical Slice systems designed | 0/2 |
 
 ---
