@@ -1,32 +1,32 @@
-# Example Session: Using /design-system to Author a GDD
+# 示例会话：使用 /design-system 编写 GDD
 
-**Context:** Solo indie dev, week 3 of project. `/map-systems` already ran and produced `design/gdd/systems-index.md`. The movement system is listed as MVP tier, Foundation priority.
+**背景：** 独立开发者，项目第 3 周。`/map-systems` 已经运行并生成了 `design/gdd/systems-index.md`。movement system 被列为 MVP tier、Foundation priority。
 
-**Starting State:**
-- `design/gdd/game-concept.md` exists (survival-crafting game, 2D, Godot 4.6)
-- `design/gdd/systems-index.md` exists (15 systems identified, movement is first in design order)
-- No per-system GDDs written yet
-- No upstream dependencies for movement (it is the foundation)
+**起始状态：**
+- `design/gdd/game-concept.md` 存在（survival-crafting game、2D、Godot 4.6）
+- `design/gdd/systems-index.md` 存在（已识别 15 个系统，movement 是设计顺序中的第一个）
+- 尚未编写任何 per-system GDD
+- movement 没有上游依赖（它是 foundation）
 
-**Session Duration:** ~60 minutes
-**Turns:** 14
-**Outcome:** Complete `design/gdd/movement-system.md` with all 8 required sections written to file, ready for `/design-review`
+**会话时长：** 约 60 分钟
+**轮次：** 14
+**结果：** 完整 `design/gdd/movement-system.md`，所有 8 个必需章节已写入文件，可用于 `/design-review`
 
 ---
 
-## Turn 1: User Invokes the Skill
+## Turn 1: User 调用技能
 
 **User:**
 > /design-system movement
 
-## Turn 2: Agent Loads Context and Presents the Plan
+## Turn 2: Agent 加载上下文并提出计划
 
-**Agent (game-designer, via /design-system):**
-> I'm loading context before we start:
+**Agent（game-designer，通过 /design-system）:**
+> 开始前我正在加载上下文：
 >
-> - Read `design/gdd/game-concept.md` — survival-crafting, exploration-heavy, lone survivor stranded on alien planet
-> - Read `design/gdd/systems-index.md` — movement is **Foundation / MVP**, no upstream deps, downstream: combat, exploration, stamina
-> - No prior GDD found for movement — starting fresh
+> - Read `design/gdd/game-concept.md` — survival-crafting、重探索、孤独幸存者滞留异星
+> - Read `design/gdd/systems-index.md` — movement 是 **Foundation / MVP**，无上游依赖，下游：combat、exploration、stamina
+> - 未找到 movement 的既有 GDD——从头开始
 >
 > **Technical Feasibility Pre-Check:**
 >
@@ -36,17 +36,17 @@
 > | Physics | Jolt is now the default in 4.6 — 2D movement unaffected, but note for future 3D work |
 > | Downstream risk | Stamina system listed as downstream dep — movement must expose a stamina callback hook |
 >
-> The GDD template has **8 required sections**. We'll go one at a time:
+> GDD 模板有 **8 required sections**。我们会逐个处理：
 > `Overview → Player Fantasy → Detailed Rules → Formulas → Edge Cases → Dependencies → Tuning Knobs → Acceptance Criteria`
 >
-> I'll show you a draft of each section, you approve or revise, then I write it to the file before we move on.
+> 我会展示每个章节的草稿，你批准或修改，然后我再把它写入文件，之后才进入下一节。
 >
-> Creating the file skeleton now with empty section headers — may I write `design/gdd/movement-system.md` with placeholders?
+> 现在创建带空章节标题的文件骨架——may I write `design/gdd/movement-system.md` with placeholders?
 
 **User:**
 > Yes
 
-**Agent writes** `design/gdd/movement-system.md` with 8 empty section headers.
+**Agent writes** `design/gdd/movement-system.md`，包含 8 个空章节标题。
 
 ---
 
@@ -55,9 +55,9 @@
 **Agent:**
 > **Section 1 draft — Overview:**
 >
-> > The movement system is the player's primary interface with the world. It governs how the lone survivor walks, runs, rolls, and traverses alien terrain. Movement is physically grounded — the planet has heavier-than-Earth gravity, and the survivor is physically exhausted — but remains responsive enough to stay out of the player's way. The system feeds directly into exploration pacing, combat positioning, and the stamina system.
+> > Movement system 是玩家与世界交互的主要界面。它管理孤独幸存者如何行走、奔跑、翻滚并穿越异星地形。Movement 应具有物理感——这颗星球的重力比地球更强，幸存者也身心疲惫——但仍要足够响应迅速，不妨碍玩家操作。该系统直接影响 exploration pacing、combat positioning 和 stamina system。
 >
-> Does this capture what you want?
+> 这是否捕捉了你想要的方向？
 
 **User:**
 > Good but add something about the terrain — surfaces slow you down or have friction modifiers.
@@ -65,7 +65,7 @@
 **Agent:**
 > Revised:
 >
-> > The movement system is the player's primary interface with the world. It governs how the lone survivor walks, runs, rolls, and traverses alien terrain. Movement is physically grounded — the planet has heavier-than-Earth gravity, and the survivor is physically exhausted — but remains responsive enough to stay out of the player's way. Terrain surfaces apply friction and speed modifiers (slick rock, sand, shallow water) that make navigation a meaningful skill. The system feeds directly into exploration pacing, combat positioning, and the stamina system.
+> > Movement system 是玩家与世界交互的主要界面。它管理孤独幸存者如何行走、奔跑、翻滚并穿越异星地形。Movement 应具有物理感——这颗星球的重力比地球更强，幸存者也身心疲惫——但仍要足够响应迅速，不妨碍玩家操作。地形表面会施加摩擦和速度修饰符（slick rock、sand、shallow water），让导航成为有意义的技能。该系统直接影响 exploration pacing、combat positioning 和 stamina system。
 >
 > May I write this to Section 1 in the file?
 
@@ -81,9 +81,9 @@
 **Agent:**
 > **Section 2 draft — Player Fantasy:**
 >
-> > The player should feel like a tired but capable survivor — not a superhero, not helpless. Early game movement is deliberate and taxing; the player earns fluency over time. When traversing alien terrain, the goal is careful navigation with moments of urgency (running from threats, leaping a gap). The fantasy is "I know this terrain" — every surface type becomes readable and manageable as the player internalizes the friction system.
+> > 玩家应该感觉自己是一个疲惫但有能力的幸存者——不是超级英雄，也不是无助者。早期移动是慎重且耗体力的；玩家会随时间获得流畅感。穿越异星地形时，目标是谨慎导航，同时有紧迫瞬间（逃离威胁、跃过缺口）。幻想是 “I know this terrain”——随着玩家内化 friction system，每种地表类型都会变得可读、可管理。
 >
-> Approve, revise, or change direction?
+> 批准、修改，还是改变方向？
 
 **User:**
 > Love it. Write it.
@@ -115,13 +115,13 @@
 > > - Slopes up to 45° walked normally; >45° blocked
 > > - One-way platforms supported (drop-through with Down + Jump)
 >
-> A lot here — want me to trim or expand anything?
+> 内容很多——你希望我删减或扩展什么吗？
 
 **User:**
 > Add that running is disabled when carrying a heavy object (like a large resource chunk).
 
 **Agent:**
-> Added to Run rule:
+> 已添加到 Run 规则：
 > > - **Run** (hold Shift): Faster, medium stamina drain per second — cancels automatically when stamina hits 0. **Disabled when carrying heavy objects** (signals broadcast by inventory system).
 >
 > Write to file?
@@ -138,7 +138,7 @@
 **Agent:**
 > **Section 4 draft — Formulas:**
 >
-> Let me define variables first, then the formulas:
+> 我先定义变量，再给出公式：
 >
 > | Variable | Type | Description |
 > |----------|------|-------------|
@@ -166,7 +166,7 @@
 > (clamped to 0 — roll still executes, but player lands with 0 stamina)
 > ```
 >
-> Approve or adjust variable names/formulas?
+> 批准，还是调整变量名/公式？
 
 **User:**
 > Looks right. Write it.
@@ -177,7 +177,7 @@
 
 ## Turn 7–9: Sections 5, 6, 7
 
-*(These follow the same pattern — agent drafts, user approves or requests minor tweaks, agent writes each section to file before moving on. Abbreviated here.)*
+*（这些章节遵循同样模式——agent 起草，user 批准或请求小调整，agent 在进入下一节前将每节写入文件。此处简写。）*
 
 **Section 5 — Edge Cases** covered:
 - Player rolls into a wall (animation completes, no movement bonus)
@@ -204,7 +204,7 @@
 **Agent:**
 > **Section 8 draft — Acceptance Criteria:**
 >
-> These are the testable conditions that prove this system is complete:
+> 以下是证明该系统完成的可测试条件：
 >
 > - [ ] Player walks at `base_walk_speed` on normal ground (measured with debug overlay)
 > - [ ] Player runs at `base_walk_speed × run_multiplier` on normal ground
@@ -215,13 +215,13 @@
 > - [ ] Stamina system receives `on_stamina_event` signals during walk, run, and roll
 > - [ ] All movement values come from exported variables — no hardcoded numbers in code
 >
-> Does this cover what "done" means to you?
+> 这是否覆盖了你对 “done” 的定义？
 
 **User:**
 > Add one for slopes — make sure >45 degree slopes block movement.
 
 **Agent:**
-> Added:
+> 已添加：
 > - [ ] Slopes ≤45° traversed normally; slopes >45° block movement (player slides back)
 >
 > Write to file?
@@ -236,7 +236,7 @@
 ## Turn 11: Completion Summary
 
 **Agent:**
-> All 8 sections written to `design/gdd/movement-system.md`.
+> 所有 8 个章节已写入 `design/gdd/movement-system.md`。
 >
 > **GDD Status:**
 > - ✅ Overview
@@ -255,15 +255,15 @@
 >
 > **Recommended next step:** Run `/design-review design/gdd/movement-system.md` before moving to the next system in your queue (stamina is next in dependency order, per systems-index).
 >
-> The review will validate completeness, internal consistency, and catch anything that needs revision before you build on this GDD.
+> Review 会验证完整性、内部一致性，并在你基于该 GDD 构建前捕捉需要修订的问题。
 
 ---
 
-## What This Example Demonstrates
+## 此示例展示了什么
 
-- **Incremental file writing**: each section written to disk immediately after approval — a session crash loses at most one in-progress section
-- **Template population**: the GDD template's 8 sections become concrete content through dialogue, not bulk generation
-- **Dependency signaling**: agent proactively surfaces downstream signal contracts (stamina, inventory) during the Dependencies section
-- **Technical feasibility pre-check**: agent notes Jolt physics change before design starts, not after implementation breaks
-- **Section-by-section cycle**: no full draft dumped at once — each section is a small, reviewable unit
-- **Recovery**: if the session crashes, the agent re-reads the file on restart and resumes from the first empty section
+- **Incremental file writing**：每个章节在批准后立即写入磁盘——会话崩溃最多只会丢失一个进行中的章节
+- **Template population**：GDD 模板的 8 个章节通过对话变成具体内容，而不是一次性批量生成
+- **Dependency signaling**：agent 在 Dependencies 章节主动暴露下游 signal contracts（stamina、inventory）
+- **Technical feasibility pre-check**：agent 在设计开始前提示 Jolt physics 变化，而不是等实现失败后才发现
+- **Section-by-section cycle**：不会一次倾倒完整草稿——每个章节都是小而可审阅的单元
+- **Recovery**：如果会话崩溃，agent 重启后重新读取文件，并从第一个空章节继续

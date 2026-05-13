@@ -1,62 +1,62 @@
-# What's New in [Version]
+# [Version] 新内容
 
 **Release Date**: [Date]
 
 ---
 
-## New Features
+## 新功能
 
-- **[Feature Name]**: [Player-friendly description of what they can now do. Focus on the experience, not the implementation. 1-2 sentences.]
+- **[Feature Name]**: [面向玩家描述他们现在可以做什么。聚焦体验，而不是实现。1-2 句。]
 
 - **[Feature Name]**: [Description]
 
 ---
 
-## Improvements
+## 改进
 
-- **[Area Improved]**: [How this makes the game better for the player. Be specific.]
+- **[Area Improved]**: [这如何让游戏对玩家更好。请具体说明。]
 
 - **[Area Improved]**: [Description]
 
 ---
 
-## Balance Changes
+## 平衡性调整
 
-- **[What Changed]**: [Old value] -> [New value]. [Brief design reasoning in player terms. Example: "Healing potions now restore 50 HP (up from 30) -- late-game encounters needed more recovery options."]
+- **[What Changed]**: [Old value] -> [New value]. [用玩家能理解的语言简要说明设计理由。示例：“治疗药水现在恢复 50 HP（从 30 上调）-- 后期遭遇需要更多恢复选项。”]
 
 - **[What Changed]**: [Description]
 
 ---
 
-## Bug Fixes
+## Bug 修复
 
-- Fixed an issue where [describe the player-visible symptom, not the code fix]
-- Fixed [another player-visible symptom]
-- Fixed [symptom]
-
----
-
-## Known Issues
-
-- [Issue description in player terms]. [Workaround if one exists.] We're working on a fix.
+- 修复了 [描述玩家可见的症状，而不是代码修复] 的问题
+- 修复了 [另一个玩家可见症状]
+- 修复了 [症状]
 
 ---
 
-## Technical Notes (Internal Only -- Remove Before Publishing)
+## 已知问题
 
-### Commits Covered
+- [用玩家语言描述问题]。[如果存在，写出规避方法。] 我们正在修复。
+
+---
+
+## 技术备注（仅内部使用 -- 发布前删除）
+
+### 覆盖的提交
 - Range: `[first-hash]..[last-hash]`
 - Total commits: [N]
 
-### Internal Changes
-- [Refactoring, infrastructure, or tooling changes not visible to players]
+### 内部变更
+- [玩家不可见的重构、基础设施或工具链变更]
 
-### Deferred Items
-- [Features or fixes originally planned for this release but moved to next]
-  - Reason: [why deferred]
+### 延期项
+- [原计划进入本版本但移到下一版本的功能或修复]
+  - Reason: [为什么延期]
   - New target: [version or sprint]
 
 ---
 
-Thank you for playing! Your feedback helps us improve the game.
-Report issues at [support link].
+感谢游玩！你的反馈能帮助我们改进游戏。
+请在 [support link] 报告问题。

@@ -1,9 +1,9 @@
-# Architecture Traceability Index
+# 架构可追溯性索引
 
-<!-- Living document — updated by /architecture-review after each review run.
-     Do not edit manually unless correcting an error. -->
+<!-- 活文档 — 每次 /architecture-review 运行后更新。
+     除非修正错误，否则不要手动编辑。 -->
 
-## Document Status
+## 文档状态
 
 - **Last Updated**: [YYYY-MM-DD]
 - **Engine**: [e.g. Godot 4.6]
@@ -11,7 +11,7 @@
 - **ADRs Indexed**: [M]
 - **Last Review**: [link to docs/architecture/architecture-review-[date].md]
 
-## Coverage Summary
+## 覆盖摘要
 
 | Status | Count | Percentage |
 |--------|-------|-----------|
@@ -22,12 +22,11 @@
 
 ---
 
-## Traceability Matrix
+## 可追溯性矩阵
 
-<!-- One row per technical requirement extracted from a GDD.
-     A "technical requirement" is any GDD statement that implies a specific
-     architectural decision: data structures, performance constraints, engine
-     capabilities needed, cross-system communication, state persistence. -->
+<!-- 每个从 GDD 提取的技术需求一行。
+     “技术需求”指任何暗示特定架构决策的 GDD 陈述：
+     数据结构、性能约束、所需引擎能力、跨系统通信、状态持久化。 -->
 
 | Req ID | GDD | System | Requirement Summary | ADR(s) | Status | Notes |
 |--------|-----|--------|---------------------|--------|--------|-------|
@@ -36,27 +35,27 @@
 
 ---
 
-## Known Gaps
+## 已知缺口
 
-Requirements with no ADR coverage, prioritised by layer (Foundation first):
+未被 ADR 覆盖的需求，按层级优先级排序（Foundation 优先）：
 
-### Foundation Layer Gaps (BLOCKING — must resolve before coding)
+### Foundation Layer Gaps（BLOCKING — 编码前必须解决）
 - [ ] TR-[id]: [requirement] — GDD: [file] — Suggested ADR: "[title]"
 
-### Core Layer Gaps (must resolve before relevant system is built)
+### Core Layer Gaps（构建相关系统前必须解决）
 - [ ] TR-[id]: [requirement] — GDD: [file] — Suggested ADR: "[title]"
 
-### Feature Layer Gaps (should resolve before feature sprint)
+### Feature Layer Gaps（应在功能 sprint 前解决）
 - [ ] TR-[id]: [requirement] — GDD: [file] — Suggested ADR: "[title]"
 
-### Presentation Layer Gaps (can defer to implementation)
+### Presentation Layer Gaps（可推迟到实现阶段）
 - [ ] TR-[id]: [requirement] — GDD: [file] — Suggested ADR: "[title]"
 
 ---
 
-## Cross-ADR Conflicts
+## 跨 ADR 冲突
 
-<!-- Pairs of ADRs that make contradictory claims. Must be resolved. -->
+<!-- 作出矛盾主张的 ADR 对。必须解决。 -->
 
 | Conflict ID | ADR A | ADR B | Type | Status |
 |-------------|-------|-------|------|--------|
@@ -64,9 +63,9 @@ Requirements with no ADR coverage, prioritised by layer (Foundation first):
 
 ---
 
-## ADR → GDD Coverage (Reverse Index)
+## ADR → GDD 覆盖（反向索引）
 
-<!-- For each ADR, which GDD requirements does it address? -->
+<!-- 对每个 ADR，它处理了哪些 GDD 需求？ -->
 
 | ADR | Title | GDD Requirements Addressed | Engine Risk |
 |-----|-------|---------------------------|-------------|
@@ -74,10 +73,10 @@ Requirements with no ADR coverage, prioritised by layer (Foundation first):
 
 ---
 
-## Superseded Requirements
+## 已被取代的需求
 
-<!-- Requirements that existed in a GDD when an ADR was written, but the GDD
-     has since changed. The ADR may need updating. -->
+<!-- ADR 编写时 GDD 中存在、但后来 GDD 已改变的需求。
+     ADR 可能需要更新。 -->
 
 | Req ID | GDD | Change | Affected ADR | Status |
 |--------|-----|--------|-------------|--------|
@@ -85,17 +84,12 @@ Requirements with no ADR coverage, prioritised by layer (Foundation first):
 
 ---
 
-## How to Use This Document
+## 如何使用本文档
 
-**When writing a new ADR**: Add it to the "ADR → GDD Coverage" table and mark
-the requirements it satisfies as ✅ in the matrix.
+**编写新 ADR 时**：将其添加到 “ADR → GDD Coverage” 表，并在矩阵中将其满足的需求标记为 ✅。
 
-**When approving a GDD change**: Scan the matrix for requirements from that GDD
-and check whether the change invalidates any existing ADR. Add to "Superseded
-Requirements" if so.
+**批准 GDD 变更时**：扫描矩阵中来自该 GDD 的需求，检查该变更是否使任何现有 ADR 失效。如是，添加到 “Superseded Requirements”。
 
-**When running `/architecture-review`**: The skill will update this document
-automatically with the current state.
+**运行 `/architecture-review` 时**：该技能会自动用当前状态更新本文档。
 
-**Gate check**: The Pre-Production gate requires this document to exist and to
-have zero Foundation Layer Gaps.
+**Gate check**：Pre-Production gate 要求本文档存在，且 Foundation Layer Gaps 为零。

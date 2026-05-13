@@ -1,6 +1,6 @@
-# Agent Coordination and Delegation Map
+# Agent 协调与委派地图
 
-## Organizational Hierarchy
+## 组织层级
 
 ```
                            [Human Developer]
@@ -21,36 +21,36 @@
                              |       |
                           perf-a   devops   analytics
 
-  Additional Leads (report to producer/directors):
-    release-manager         -- Release pipeline, versioning, deployment
-    localization-lead       -- i18n, string tables, translation pipeline
-    prototyper              -- Rapid throwaway prototypes, concept validation
-    security-engineer       -- Anti-cheat, exploits, data privacy, network security
-    accessibility-specialist -- WCAG, colorblind, remapping, text scaling
-    live-ops-designer       -- Seasons, events, battle passes, retention, live economy
-    community-manager       -- Patch notes, player feedback, crisis comms
+  Additional Leads（向 producer/directors 汇报）：
+    release-manager         -- Release pipeline、versioning、deployment
+    localization-lead       -- i18n、string tables、translation pipeline
+    prototyper              -- 快速 throwaway prototypes、concept validation
+    security-engineer       -- Anti-cheat、exploits、data privacy、network security
+    accessibility-specialist -- WCAG、colorblind、remapping、text scaling
+    live-ops-designer       -- Seasons、events、battle passes、retention、live economy
+    community-manager       -- Patch notes、player feedback、crisis comms
 
-  Engine Specialists (use the SET matching your engine):
-    unreal-specialist  -- UE5 lead: Blueprint/C++, GAS overview, UE subsystems
-      ue-gas-specialist         -- GAS: abilities, effects, attributes, tags, prediction
-      ue-blueprint-specialist   -- Blueprint: BP/C++ boundary, graph standards, optimization
-      ue-replication-specialist -- Networking: replication, RPCs, prediction, bandwidth
-      ue-umg-specialist         -- UI: UMG, CommonUI, widget hierarchy, data binding
+  Engine Specialists（使用与你的引擎匹配的 SET）：
+    unreal-specialist  -- UE5 lead: Blueprint/C++、GAS overview、UE subsystems
+      ue-gas-specialist         -- GAS: abilities、effects、attributes、tags、prediction
+      ue-blueprint-specialist   -- Blueprint: BP/C++ boundary、graph standards、optimization
+      ue-replication-specialist -- Networking: replication、RPCs、prediction、bandwidth
+      ue-umg-specialist         -- UI: UMG、CommonUI、widget hierarchy、data binding
 
-    unity-specialist   -- Unity lead: MonoBehaviour/DOTS, Addressables, URP/HDRP
-      unity-dots-specialist         -- DOTS/ECS: Jobs, Burst, hybrid renderer
-      unity-shader-specialist       -- Shaders: Shader Graph, VFX Graph, SRP customization
-      unity-addressables-specialist -- Assets: async loading, bundles, memory, CDN
-      unity-ui-specialist           -- UI: UI Toolkit, UGUI, UXML/USS, data binding
+    unity-specialist   -- Unity lead: MonoBehaviour/DOTS、Addressables、URP/HDRP
+      unity-dots-specialist         -- DOTS/ECS: Jobs、Burst、hybrid renderer
+      unity-shader-specialist       -- Shaders: Shader Graph、VFX Graph、SRP customization
+      unity-addressables-specialist -- Assets: async loading、bundles、memory、CDN
+      unity-ui-specialist           -- UI: UI Toolkit、UGUI、UXML/USS、data binding
 
-    godot-specialist   -- Godot 4 lead: GDScript, node/scene, signals, resources
-      godot-gdscript-specialist    -- GDScript: static typing, patterns, signals, performance
-      godot-csharp-specialist      -- C#: .NET patterns, [Signal] delegates, async, type-safe node access
-      godot-shader-specialist      -- Shaders: Godot shading language, visual shaders, VFX
-      godot-gdextension-specialist -- Native: C++/Rust bindings, GDExtension, build systems
+    godot-specialist   -- Godot 4 lead: GDScript、node/scene、signals、resources
+      godot-gdscript-specialist    -- GDScript: static typing、patterns、signals、performance
+      godot-csharp-specialist      -- C#: .NET patterns、[Signal] delegates、async、type-safe node access
+      godot-shader-specialist      -- Shaders: Godot shading language、visual shaders、VFX
+      godot-gdextension-specialist -- Native: C++/Rust bindings、GDExtension、build systems
 ```
 
-### Legend
+### 图例
 ```
 sys  = systems-designer       gp  = gameplay-programmer
 lvl  = level-designer         ep  = engine-programmer
@@ -63,219 +63,217 @@ narr-dir = narrative-director perf-a = performance-analyst
 art-dir = art-director
 ```
 
-## Delegation Rules
+## 委派规则
 
-### Who Can Delegate to Whom
+### 谁可以委派给谁
 
 | From | Can Delegate To |
 |------|----------------|
 | creative-director | game-designer, art-director, audio-director, narrative-director |
-| technical-director | lead-programmer, devops-engineer, performance-analyst, technical-artist (technical decisions) |
-| producer | Any agent (task assignment within their domain only) |
+| technical-director | lead-programmer, devops-engineer, performance-analyst, technical-artist（技术决策） |
+| producer | 任何 agent（仅在其领域内分配任务） |
 | game-designer | systems-designer, level-designer, economy-designer |
 | lead-programmer | gameplay-programmer, engine-programmer, ai-programmer, network-programmer, tools-programmer, ui-programmer |
 | art-director | technical-artist, ux-designer |
 | audio-director | sound-designer |
 | narrative-director | writer, world-builder |
 | qa-lead | qa-tester |
-| release-manager | devops-engineer (release builds), qa-lead (release testing) |
-| localization-lead | writer (string review), ui-programmer (text fitting) |
-| prototyper | (works independently, reports findings to producer and relevant leads) |
-| security-engineer | network-programmer (security review), lead-programmer (secure patterns) |
-| accessibility-specialist | ux-designer (accessible patterns), ui-programmer (implementation), qa-tester (a11y testing) |
-| [engine]-specialist | engine sub-specialists (delegates subsystem-specific work) |
-| [engine] sub-specialists | (advises all programmers on engine subsystem patterns and optimization) |
-| live-ops-designer | economy-designer (live economy), community-manager (event comms), analytics-engineer (engagement metrics) |
-| community-manager | (works with producer for approval, release-manager for patch note timing) |
+| release-manager | devops-engineer（release builds）, qa-lead（release testing） |
+| localization-lead | writer（string review）, ui-programmer（text fitting） |
+| prototyper | （独立工作，向 producer 和相关 leads 汇报发现） |
+| security-engineer | network-programmer（security review）, lead-programmer（secure patterns） |
+| accessibility-specialist | ux-designer（accessible patterns）, ui-programmer（implementation）, qa-tester（a11y testing） |
+| [engine]-specialist | engine sub-specialists（委派子系统特定工作） |
+| [engine] sub-specialists | （为所有 programmers 提供 engine subsystem patterns 和 optimization 建议） |
+| live-ops-designer | economy-designer（live economy）, community-manager（event comms）, analytics-engineer（engagement metrics） |
+| community-manager | （与 producer 协作获取 approval，与 release-manager 协作安排 patch note timing） |
 
-### Escalation Paths
+### 升级路径
 
 | Situation | Escalate To |
 |-----------|------------|
-| Two designers disagree on a mechanic | game-designer |
+| 两个 designers 在机制上意见不一致 | game-designer |
 | Game design vs narrative conflict | creative-director |
-| Game design vs technical feasibility | producer (facilitates), then creative-director + technical-director |
+| Game design vs technical feasibility | producer（协调），然后 creative-director + technical-director |
 | Art vs audio tonal conflict | creative-director |
 | Code architecture disagreement | technical-director |
-| Cross-system code conflict | lead-programmer, then technical-director |
+| Cross-system code conflict | lead-programmer，然后 technical-director |
 | Schedule conflict between departments | producer |
-| Scope exceeds capacity | producer, then creative-director for cuts |
-| Quality gate disagreement | qa-lead, then technical-director |
-| Performance budget violation | performance-analyst flags, technical-director decides |
+| Scope exceeds capacity | producer，然后 creative-director 负责 cuts |
+| Quality gate disagreement | qa-lead，然后 technical-director |
+| Performance budget violation | performance-analyst 标记，technical-director 决策 |
 
-## Common Workflow Patterns
+## 常见工作流模式
 
-### Pattern 1: New Feature (Full Pipeline)
+### 模式 1：新 Feature（完整 Pipeline）
 
 ```
-1. creative-director  -- Approves feature concept aligns with vision
-2. game-designer      -- Creates design document with full spec
-3. producer           -- Schedules work, identifies dependencies
-4. lead-programmer    -- Designs code architecture, creates interface sketch
-5. [specialist-programmer] -- Implements the feature
-6. technical-artist   -- Implements visual effects (if needed)
-7. writer             -- Creates text content (if needed)
-8. sound-designer     -- Creates audio event list (if needed)
-9. qa-tester          -- Writes test cases
-10. qa-lead           -- Reviews and approves test coverage
+1. creative-director  -- 批准 feature concept 与愿景一致
+2. game-designer      -- 创建包含完整 spec 的设计文档
+3. producer           -- 安排工作，识别 dependencies
+4. lead-programmer    -- 设计代码架构，创建 interface sketch
+5. [specialist-programmer] -- 实现 feature
+6. technical-artist   -- 实现视觉效果（如需要）
+7. writer             -- 创建文本内容（如需要）
+8. sound-designer     -- 创建 audio event list（如需要）
+9. qa-tester          -- 编写测试用例
+10. qa-lead           -- 评审并批准测试覆盖
 11. lead-programmer   -- Code review
-12. qa-tester         -- Executes tests
-13. producer          -- Marks task complete
+12. qa-tester         -- 执行测试
+13. producer          -- 将任务标记完成
 ```
 
-### Pattern 2: Bug Fix
+### 模式 2：Bug Fix
 
 ```
-1. qa-tester          -- Files bug report with /bug-report
-2. qa-lead            -- Triages severity and priority
-3. producer           -- Assigns to sprint (if not S1)
-4. lead-programmer    -- Identifies root cause, assigns to programmer
-5. [specialist-programmer] -- Fixes the bug
+1. qa-tester          -- 使用 /bug-report 提交 bug report
+2. qa-lead            -- 分流 severity 和 priority
+3. producer           -- 分配到 sprint（如果不是 S1）
+4. lead-programmer    -- 识别 root cause，分配给 programmer
+5. [specialist-programmer] -- 修复 bug
 6. lead-programmer    -- Code review
-7. qa-tester          -- Verifies fix and runs regression
-8. qa-lead            -- Closes bug
+7. qa-tester          -- 验证修复并运行 regression
+8. qa-lead            -- 关闭 bug
 ```
 
-### Pattern 3: Balance Adjustment
+### 模式 3：Balance Adjustment
 
 ```
-1. analytics-engineer -- Identifies imbalance from data (or player reports)
-2. game-designer      -- Evaluates the issue against design intent
-3. economy-designer   -- Models the adjustment
-4. game-designer      -- Approves the new values
-5. [data file update] -- Change configuration values
+1. analytics-engineer -- 从 data（或玩家报告）识别 imbalance
+2. game-designer      -- 根据设计意图评估问题
+3. economy-designer   -- 建模 adjustment
+4. game-designer      -- 批准新 values
+5. [data file update] -- 修改 configuration values
 6. qa-tester          -- Regression test affected systems
-7. analytics-engineer -- Monitor post-change metrics
+7. analytics-engineer -- 监控 post-change metrics
 ```
 
-### Pattern 4: New Area/Level
+### 模式 4：New Area/Level
 
 ```
-1. narrative-director -- Defines narrative purpose and beats for the area
-2. world-builder      -- Creates lore and environmental context
-3. level-designer     -- Designs layout, encounters, pacing
-4. game-designer      -- Reviews mechanical design of encounters
-5. art-director       -- Defines visual direction for the area
-6. audio-director     -- Defines audio direction for the area
+1. narrative-director -- 定义该区域的 narrative purpose 和 beats
+2. world-builder      -- 创建 lore 和 environmental context
+3. level-designer     -- 设计 layout、encounters、pacing
+4. game-designer      -- 评审 encounters 的 mechanical design
+5. art-director       -- 定义该区域的 visual direction
+6. audio-director     -- 定义该区域的 audio direction
 7. [implementation by relevant programmers and artists]
-8. writer             -- Creates area-specific text content
-9. qa-tester          -- Tests the complete area
+8. writer             -- 创建区域特定文本内容
+9. qa-tester          -- 测试完整区域
 ```
 
-### Pattern 5: Sprint Cycle
+### 模式 5：Sprint Cycle
 
 ```
-1. producer           -- Plans sprint with /sprint-plan new
-2. [All agents]       -- Execute assigned tasks
-3. producer           -- Daily status with /sprint-plan status
-4. qa-lead            -- Continuous testing during sprint
-5. lead-programmer    -- Continuous code review during sprint
-6. producer           -- Sprint retrospective with post-sprint hook
-7. producer           -- Plans next sprint incorporating learnings
+1. producer           -- 使用 /sprint-plan new 规划 sprint
+2. [All agents]       -- 执行 assigned tasks
+3. producer           -- 使用 /sprint-plan status 做 daily status
+4. qa-lead            -- Sprint 期间持续测试
+5. lead-programmer    -- Sprint 期间持续 code review
+6. producer           -- 使用 post-sprint hook 做 sprint retrospective
+7. producer           -- 基于经验教训规划下一个 sprint
 ```
 
-### Pattern 6: Milestone Checkpoint
+### 模式 6：Milestone Checkpoint
 
 ```
-1. producer           -- Runs /milestone-review
-2. creative-director  -- Reviews creative progress
-3. technical-director -- Reviews technical health
-4. qa-lead            -- Reviews quality metrics
-5. producer           -- Facilitates go/no-go discussion
-6. [All directors]    -- Agree on scope adjustments if needed
-7. producer           -- Documents decisions and updates plans
+1. producer           -- 运行 /milestone-review
+2. creative-director  -- 评审 creative progress
+3. technical-director -- 评审 technical health
+4. qa-lead            -- 评审 quality metrics
+5. producer           -- 协调 go/no-go discussion
+6. [All directors]    -- 如需要，对 scope adjustments 达成一致
+7. producer           -- 记录决策并更新 plans
 ```
 
-### Pattern 7: Release Pipeline
+### 模式 7：Release Pipeline
 
 ```text
-1. producer             -- Declares release candidate, confirms milestone criteria met
-2. release-manager      -- Cuts release branch, generates /release-checklist
-3. qa-lead              -- Runs full regression, signs off on quality
-4. localization-lead    -- Verifies all strings translated, text fitting passes
-5. performance-analyst  -- Confirms performance benchmarks within targets
-6. devops-engineer      -- Builds release artifacts, runs deployment pipeline
-7. release-manager      -- Generates /changelog, tags release, creates release notes
-8. technical-director   -- Final sign-off on major releases
-9. release-manager      -- Deploys and monitors for 48 hours
-10. producer            -- Marks release complete
+1. producer             -- 宣布 release candidate，确认 milestone criteria 已满足
+2. release-manager      -- 切 release branch，生成 /release-checklist
+3. qa-lead              -- 运行 full regression，质量签核
+4. localization-lead    -- 验证所有 strings 已翻译，text fitting 通过
+5. performance-analyst  -- 确认 performance benchmarks 在 targets 内
+6. devops-engineer      -- 构建 release artifacts，运行 deployment pipeline
+7. release-manager      -- 生成 /changelog，标记 release，创建 release notes
+8. technical-director   -- 重大 releases 的最终签核
+9. release-manager      -- 部署并监控 48 小时
+10. producer            -- 标记 release complete
 ```
 
-### Pattern 8: Concept Prototype (early — before GDDs)
+### 模式 8：Concept Prototype（早期 — GDDs 之前）
 
 ```text
-1. game-designer        -- Defines the hypothesis and success criteria
-2. prototyper           -- Scaffolds concept prototype with /prototype
-3. prototyper           -- Builds minimal implementation (1-3 days)
-4. game-designer        -- Evaluates prototype against criteria
-5. prototyper           -- Documents findings in REPORT.md
-6. creative-director    -- PROCEED / PIVOT / KILL decision (full mode only)
-7. game-designer        -- Informs GDD writing with prototype learnings if PROCEED
+1. game-designer        -- 定义 hypothesis 和 success criteria
+2. prototyper           -- 使用 /prototype 搭建 concept prototype
+3. prototyper           -- 构建最小实现（1-3 天）
+4. game-designer        -- 根据 criteria 评估 prototype
+5. prototyper           -- 在 REPORT.md 中记录发现
+6. creative-director    -- PROCEED / PIVOT / KILL 决策（仅 full mode）
+7. game-designer        -- 如果 PROCEED，用 prototype learnings 指导 GDD 撰写
 ```
 
-### Pattern 8b: Vertical Slice (pre-production — after GDDs and architecture)
+### 模式 8b：Vertical Slice（pre-production — GDDs 和 architecture 之后）
 
 ```text
-1. game-designer        -- Confirms slice scope against GDDs
-2. prototyper           -- Builds production-quality end-to-end build with /vertical-slice
-3. prototyper           -- Conducts internal playtest sessions (minimum 1)
-4. prototyper           -- Documents findings in REPORT.md
-5. creative-director    -- Go/no-go decision on proceeding to Production (full mode)
-6. producer             -- Schedules Production epics/sprints if PROCEED
+1. game-designer        -- 对照 GDDs 确认 slice scope
+2. prototyper           -- 使用 /vertical-slice 构建 production-quality 端到端 build
+3. prototyper           -- 进行 internal playtest sessions（至少 1 次）
+4. prototyper           -- 在 REPORT.md 中记录发现
+5. creative-director    -- 是否进入 Production 的 go/no-go 决策（full mode）
+6. producer             -- 如果 PROCEED，安排 Production epics/sprints
 ```
 
-### Pattern 9: Live Event / Season Launch
+### 模式 9：Live Event / Season Launch
 
 ```text
-1. live-ops-designer     -- Designs event/season content, rewards, schedule
-2. game-designer         -- Validates gameplay mechanics for event
-3. economy-designer      -- Balances event economy and reward values
-4. narrative-director    -- Provides seasonal narrative theme
-5. writer                -- Creates event descriptions and lore
-6. producer              -- Schedules implementation work
+1. live-ops-designer     -- 设计 event/season content、rewards、schedule
+2. game-designer         -- 验证 event 的 gameplay mechanics
+3. economy-designer      -- 平衡 event economy 和 reward values
+4. narrative-director    -- 提供 seasonal narrative theme
+5. writer                -- 创建 event descriptions 和 lore
+6. producer              -- 安排 implementation work
 7. [implementation by relevant programmers]
-8. qa-lead               -- Test event flow end-to-end
-9. community-manager     -- Drafts event announcement and patch notes
-10. release-manager      -- Deploys event content
-11. analytics-engineer   -- Monitors event participation and metrics
-12. live-ops-designer    -- Post-event analysis and learnings
+8. qa-lead               -- 端到端测试 event flow
+9. community-manager     -- 起草 event announcement 和 patch notes
+10. release-manager      -- 部署 event content
+11. analytics-engineer   -- 监控 event participation 和 metrics
+12. live-ops-designer    -- Post-event analysis 和 learnings
 ```
 
-## Cross-Domain Communication Protocols
+## 跨领域沟通协议
 
 ### Design Change Notification
 
-When a design document changes, the game-designer must notify:
-- lead-programmer (implementation impact)
-- qa-lead (test plan update needed)
-- producer (schedule impact assessment)
-- Relevant specialist agents depending on the change
+当设计文档变更时，game-designer 必须通知：
+- lead-programmer（implementation impact）
+- qa-lead（需要更新 test plan）
+- producer（schedule impact assessment）
+- 取决于变更内容的相关 specialist agents
 
 ### Architecture Change Notification
 
-When an ADR is created or modified, the technical-director must notify:
-- lead-programmer (code changes needed)
-- All affected specialist programmers
-- qa-lead (testing strategy may change)
-- producer (schedule impact)
+当 ADR 创建或修改时，technical-director 必须通知：
+- lead-programmer（需要 code changes）
+- 所有受影响的 specialist programmers
+- qa-lead（testing strategy 可能改变）
+- producer（schedule impact）
 
 ### Asset Standard Change Notification
 
-When the art bible or asset standards change, the art-director must notify:
-- technical-artist (pipeline changes)
-- All content creators working with affected assets
-- devops-engineer (if build pipeline is affected)
+当 art bible 或 asset standards 变更时，art-director 必须通知：
+- technical-artist（pipeline changes）
+- 所有使用受影响 assets 的 content creators
+- devops-engineer（如果 build pipeline 受影响）
 
-## Anti-Patterns to Avoid
+## 需要避免的反模式
 
-1. **Bypassing the hierarchy**: A specialist agent should never make decisions
-   that belong to their lead without consultation.
-2. **Cross-domain implementation**: An agent should never modify files outside
-   their designated area without explicit delegation from the relevant owner.
-3. **Shadow decisions**: All decisions must be documented. Verbal agreements
-   without written records lead to contradictions.
-4. **Monolithic tasks**: Every task assigned to an agent should be completable
-   in 1-3 days. If it is larger, it must be broken down first.
-5. **Assumption-based implementation**: If a spec is ambiguous, the implementer
-   must ask the specifier rather than guessing. Wrong guesses are more expensive
-   than a question.
+1. **Bypassing the hierarchy**：specialist agent 不应在未咨询的情况下，
+   做出属于其 lead 的决策。
+2. **Cross-domain implementation**：agent 不应在没有相关 owner 明确委派的情况下，
+   修改其指定区域之外的文件。
+3. **Shadow decisions**：所有决策都必须记录。没有书面记录的口头协议会导致矛盾。
+4. **Monolithic tasks**：分配给 agent 的每个任务都应能在 1-3 天内完成。
+   如果更大，必须先拆分。
+5. **Assumption-based implementation**：如果 spec 有歧义，实现者必须询问 specifier，
+   而不是猜测。错误猜测的成本高于提问。

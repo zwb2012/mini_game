@@ -1,4 +1,4 @@
-# Economy Model: [System Name]
+# 经济模型：[System Name]
 
 *Created: [Date]*
 *Owner: economy-designer*
@@ -6,14 +6,13 @@
 
 ---
 
-## Overview
+## 概览
 
-[What resources, currencies, and exchange systems does this economy cover?
-What player behaviors does it incentivize?]
+[该经济覆盖哪些资源、货币和交换系统？它鼓励哪些玩家行为？]
 
 ---
 
-## Currencies
+## 货币
 
 | Currency | Type | Earn Rate | Sink Rate | Cap | Notes |
 | ---- | ---- | ---- | ---- | ---- | ---- |
@@ -21,14 +20,14 @@ What player behaviors does it incentivize?]
 | [Gems] | Premium | [per day F2P] | [varies] | [max] | [Premium currency, purchasable] |
 | [XP] | Progression | [per action] | [level-up cost] | [none] | [Cannot be traded] |
 
-### Currency Rules
-- [Rule 1 — e.g., "Soft currency has no cap but inflation is controlled via sinks"]
-- [Rule 2 — e.g., "Premium currency cannot be converted back to real money"]
+### 货币规则
+- [Rule 1 — 例如，“软货币无上限，但通过消耗项控制通胀”]
+- [Rule 2 — 例如，“高级货币不能兑换回真钱”]
 - [Rule 3]
 
 ---
 
-## Sources (Faucets)
+## 来源（Faucets）
 
 | Source | Currency | Amount | Frequency | Conditions |
 | ---- | ---- | ---- | ---- | ---- |
@@ -39,7 +38,7 @@ What player behaviors does it incentivize?]
 
 ---
 
-## Sinks (Drains)
+## 消耗（Drains）
 
 | Sink | Currency | Cost | Frequency | Purpose |
 | ---- | ---- | ---- | ---- | ---- |
@@ -50,7 +49,7 @@ What player behaviors does it incentivize?]
 
 ---
 
-## Balance Targets
+## 平衡目标
 
 | Metric | Target | Rationale |
 | ---- | ---- | ---- |
@@ -62,9 +61,9 @@ What player behaviors does it incentivize?]
 
 ---
 
-## Progression Curves
+## 进度曲线
 
-### Level XP Requirements
+### 等级 XP 需求
 | Level | XP Required | Cumulative XP | Estimated Time |
 | ---- | ---- | ---- | ---- |
 | 1→2 | [100] | [100] | [10 min] |
@@ -74,12 +73,12 @@ What player behaviors does it incentivize?]
 
 *Formula*: `XP(n) = [formula, e.g., 100 * n^1.5]`
 
-### Item Price Scaling
+### 物品价格缩放
 *Formula*: `Price(tier) = [formula, e.g., base_price * 2^(tier-1)]`
 
 ---
 
-## Loot Tables
+## 掉落表
 
 ### [Drop Source Name]
 | Item | Rarity | Drop Rate | Pity Timer | Notes |
@@ -89,12 +88,12 @@ What player behaviors does it incentivize?]
 | [Rare item] | Rare | [12%] | [10 drops] | [Exciting, build-defining] |
 | [Legendary item] | Legendary | [3%] | [30 drops] | [Game-changing, celebration moment] |
 
-### Pity System
-[Describe how the pity system works to prevent extreme bad luck streaks.]
+### 保底系统
+[描述保底系统如何工作，以防止极端坏运气连败。]
 
 ---
 
-## Economy Health Metrics
+## 经济健康指标
 
 | Metric | Healthy Range | Warning Threshold | Action if Breached |
 | ---- | ---- | ---- | ---- |
@@ -106,24 +105,23 @@ What player behaviors does it incentivize?]
 
 ---
 
-## Ethical Guardrails
+## 伦理护栏
 
-- [No pay-to-win: premium currency cannot buy gameplay power advantages]
-- [Pity timers on all random drops: guaranteed outcome within X attempts]
-- [Transparent drop rates displayed to players]
-- [Spending limits for minor accounts]
-- [No artificial scarcity pressure (FOMO timers) on essential items]
-
----
-
-## Simulation Results
-
-[Include results from economy simulations if available: player wealth
-distribution over time, sink effectiveness, inflation rate, etc.]
+- [无 pay-to-win：高级货币不能购买玩法强度优势]
+- [所有随机掉落都有保底：X 次尝试内保证结果]
+- [向玩家透明显示掉率]
+- [未成年人账户消费限制]
+- [核心物品不使用人为稀缺压力（FOMO 计时器）]
 
 ---
 
-## Dependencies
+## 模拟结果
+
+[如有经济模拟结果，在此包含：玩家财富随时间分布、消耗项有效性、通胀率等。]
+
+---
+
+## 依赖
 
 - Depends on: [combat balance, quest design, crafting system]
 - Affects: [difficulty curve, player retention, monetization]

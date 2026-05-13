@@ -1,4 +1,4 @@
-# Vertical Slice Report: [Concept Name]
+# 垂直切片报告：[Concept Name]
 
 > **Date**: [YYYY-MM-DD]
 > **Slice Duration**: [N days]
@@ -7,18 +7,16 @@
 
 ---
 
-## Validation Question
+## 验证问题
 
-[The full game loop question this build was proving — both experience AND feasibility:
-"Does a player, starting from nothing, experience [core fantasy] within [N] minutes,
-without developer guidance — and can we build one such loop in [X] days at
-representative quality?"]
+[该构建要证明的完整游戏循环问题——同时包含体验与可行性：
+“从零开始的玩家，是否能在 [N] 分钟内、无需开发者指导，体验到 [core fantasy]；并且我们是否能在 [X] 天内以代表性质量构建一个这样的循环？”]
 
 ---
 
-## Scope Built
+## 已构建范围
 
-[Systems implemented, art quality level, what was intentionally omitted.]
+[已实现系统、美术质量层级、刻意省略的内容。]
 
 **Systems included:**
 - [System 1]
@@ -31,25 +29,23 @@ representative quality?"]
 
 ---
 
-## Build Velocity Log
+## 构建速度日志
 
-[Day-by-day record of what was completed. This is your real production rate data —
-use it in sprint planning.]
+[逐日记录完成内容。这是你的真实生产速度数据——在冲刺计划中使用它。]
 
 | Day | Completed |
 |-----|-----------|
-| Day 1 | [What was built] |
-| Day 2 | [What was built] |
-| Day 3 | [What was built] |
+| Day 1 | [构建了什么] |
+| Day 2 | [构建了什么] |
+| Day 3 | [构建了什么] |
 | ... | ... |
 
 **Total elapsed:** [N days] for [scope summary]
-**Velocity estimate:** [N hours per equivalent scope unit — e.g., "1 day per combat
-encounter, 0.5 days per UI screen"]
+**Velocity estimate:** [每等价范围单位 N 小时——例如，“每个战斗遭遇 1 天，每个 UI 屏幕 0.5 天”]
 
 ---
 
-## Playtest Results
+## 试玩结果
 
 | Attribute | Value |
 |-----------|-------|
@@ -61,22 +57,22 @@ encounter, 0.5 days per UI screen"]
 
 ---
 
-## Observations
+## 观察
 
-[Specific, non-opinion observations from playtest sessions. Quote testers where useful.]
+[来自试玩会话的具体、非观点观察。必要时引用测试者原话。]
 
-**Where testers succeeded without guidance:**
+**测试者无需指导即可成功的地方：**
 - [...]
 
-**Where testers were confused or stuck:**
+**测试者困惑或卡住的地方：**
 - [...]
 
-**Emotional reactions observed:**
+**观察到的情绪反应：**
 - [...]
 
 ---
 
-## Metrics
+## 指标
 
 | Metric | Target | Actual |
 |--------|--------|--------|
@@ -86,84 +82,79 @@ encounter, 0.5 days per UI screen"]
 | Pipeline blockers found | 0 | [N] |
 | Architecture surprises | 0 | [N] |
 
-**Feel assessment:** [Specific — "combat feedback weak; no impact sound on hit" not "felt rough"]
+**Feel assessment:** [具体描述——“战斗反馈弱；命中时没有打击音”，不要写“感觉粗糙”]
 
 ---
 
-## Recommendation: [PROCEED / PIVOT / KILL]
+## 建议：[PROCEED / PIVOT / KILL]
 
-[One paragraph with evidence — reference the validation question directly. Did a
-player experience the core fantasy within the target time, without developer guidance?
-Can the team build at this quality on the projected schedule?]
+[用一段话给出证据——直接引用验证问题。玩家是否在目标时间内、无需开发者指导体验到核心幻想？团队是否能按预计排期构建出这种质量？]
 
 ---
 
-## If Proceeding
+## 如果继续推进
 
-**Production requirements** (what must change from slice to production):
-- [e.g., "Replace placeholder art with shipped assets"]
-- [e.g., "Combat system needs 2 more weapon types"]
+**Production requirements**（从切片到生产必须改变什么）：
+- [例如，“用可发布资源替换占位美术”]
+- [例如，“战斗系统需要再增加 2 种武器类型”]
 
 **Architecture adjustments needed:**
-- [ADR to update or create]
+- [要更新或创建的 ADR]
 
 **Sprint velocity estimate based on slice data:**
-- [e.g., "1 day per enemy type, 2 days per level section, 0.5 days per UI screen"]
+- [例如，“每种敌人 1 天，每个关卡段落 2 天，每个 UI 屏幕 0.5 天”]
 
 **Scope adjustments from original design:**
-- [What the slice revealed about the true production scope]
+- [切片揭示的真实生产范围]
 
-**Performance targets:** [Confirmed / Revised — list changes if revised]
+**Performance targets:** [Confirmed / Revised — 如果修订，请列出变化]
 
-**Playtest note:** Run `/playtest-report` to structure additional session data
-before running `/gate-check pre-production`.
+**Playtest note:** 在运行 `/gate-check pre-production` 前，运行 `/playtest-report` 来整理更多会话数据。
 
 **Next steps:**
-1. `/gate-check pre-production` — formally advance to Production
-2. `/create-epics layer:foundation` — plan Foundation layer epics
-3. `/create-epics layer:core` — plan Core layer epics
-4. `/sprint-plan` — use velocity data from this report in the estimate
+1. `/gate-check pre-production` — 正式推进到 Production
+2. `/create-epics layer:foundation` — 规划 Foundation 层 epic
+3. `/create-epics layer:core` — 规划 Core 层 epic
+4. `/sprint-plan` — 在估算中使用本报告的速度数据
 
 ---
 
-## If Pivoting
+## 如果转向
 
-[Which GDDs need revision and why — be specific about the failure mode observed.]
+[哪些 GDD 需要修订以及为什么——具体说明观察到的失败模式。]
 
 **Systems requiring GDD revision:** [List]
 **Architecture decisions to revisit:** [List — use `/architecture-decision` to update]
-**Core loop change needed:** [What specifically to change]
+**Core loop change needed:** [具体要改变什么]
 
 **Next steps:**
-1. `/design-system [mechanic]` — revise affected GDDs
-2. `/architecture-decision [decision]` — address architecture issues
-3. `/vertical-slice` — re-validate after revisions
+1. `/design-system [mechanic]` — 修订受影响的 GDD
+2. `/architecture-decision [decision]` — 处理架构问题
+3. `/vertical-slice` — 修订后重新验证
 
 ---
 
-## If Killing
+## 如果终止
 
-[Why the full game loop does not work at this quality level. What specifically
-prevented the player from experiencing the core fantasy. What to do instead.]
+[为什么完整游戏循环在该质量层级下行不通。具体是什么阻止玩家体验到核心幻想。改做什么。]
 
-**Next step:** `/brainstorm` to explore a new direction, or `/prototype [new-concept]`
-to test a different concept cheaply before investing in another vertical slice.
+**Next step:** `/brainstorm` 探索新方向，或 `/prototype [new-concept]` 先低成本测试不同概念，再投资另一个垂直切片。
 
 ---
 
-## Lessons Learned
+## 经验教训
 
-- **What assumptions were broken by building to near-production quality?**
+- **构建到近生产质量后，哪些假设被打破？**
   [...]
 
-- **What surprised us about the pipeline or architecture?**
+- **关于管线或架构，有什么让我们意外？**
   [...]
 
-- **What would we change about the slice scope if we ran this again?**
+- **如果重新运行一次，我们会如何改变切片范围？**
   [...]
 
 ---
 
 > *Vertical slice code location: `prototypes/[concept-name]-vertical-slice/`*
-> *This code is reference material only. Production implementation is written from scratch.*
-> *Never import or refactor this code into production.*
+> *此代码仅作为参考材料。生产实现从零编写。*
+> *绝不要将此代码导入或重构进生产。*

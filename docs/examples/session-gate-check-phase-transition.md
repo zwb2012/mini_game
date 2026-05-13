@@ -1,28 +1,28 @@
-# Example Session: /gate-check Phase Transition — Systems Design → Technical Setup
+# 示例会话：/gate-check 阶段转换 — Systems Design → Technical Setup
 
-**Context:** Solo indie dev, end of week 5. The Systems Design phase feels complete — 6 MVP GDDs written, cross-review done, engine set up. User wants to formally advance to Technical Setup.
+**背景：** 独立开发者，第 5 周末。Systems Design 阶段看起来已经完成——6 个 MVP GDD 已写完，cross-review 已完成，引擎已设置。User 想正式推进到 Technical Setup。
 
-**Starting State:**
-- `production/stage.txt` — currently `systems-design`
-- `design/gdd/systems-index.md` — 6 MVP systems listed, all marked `Status: GDD Complete`
-- `design/gdd/` — 6 GDD files present
-- `design/gdd/gdd-cross-review-2026-03-10.md` — cross-review report, verdict: CONCERNS (1 low-priority note)
-- Engine configured (Godot 4.6, `/setup-engine` complete)
+**起始状态：**
+- `production/stage.txt` — 当前为 `systems-design`
+- `design/gdd/systems-index.md` — 列出 6 个 MVP 系统，全部标记为 `Status: GDD Complete`
+- `design/gdd/` — 存在 6 个 GDD 文件
+- `design/gdd/gdd-cross-review-2026-03-10.md` — cross-review 报告，verdict: CONCERNS（1 条低优先级备注）
+- 引擎已配置（Godot 4.6，`/setup-engine` 完成）
 
-**Session Duration:** ~20 minutes
-**Turns:** 7
-**Outcome:** Gate passed, `stage.txt` updated to `technical-setup`, clear list of what comes next
+**会话时长：** 约 20 分钟
+**轮次：** 7
+**结果：** Gate 通过，`stage.txt` 更新为 `technical-setup`，并给出清晰的后续清单
 
 ---
 
-## Turn 1: User Initiates Gate Check
+## Turn 1: User 发起 Gate Check
 
 **User:**
 > /gate-check
 
-## Turn 2: Agent Detects Current Phase and Runs the Check
+## Turn 2: Agent 检测当前阶段并运行检查
 
-**Agent (via /gate-check):**
+**Agent（通过 /gate-check）:**
 > Reading `production/stage.txt` — current phase: **systems-design**
 >
 > Running gate: **Systems Design → Technical Setup**
@@ -61,16 +61,16 @@
 > ---
 > **Verdict: PASS**
 >
-> All required artifacts present. Cross-review concern is LOW severity and can be resolved during Technical Setup via an ADR. This is a normal finding at this stage.
+> 所有必需 artifact 都存在。Cross-review concern 是 LOW severity，可在 Technical Setup 中通过 ADR 解决。这在此阶段是正常发现。
 >
 > **May I advance `production/stage.txt` to `technical-setup`?**
 
-## Turn 3: User Confirms
+## Turn 3: User 确认
 
 **User:**
 > Yes, advance it.
 
-## Turn 4: Agent Updates Stage and Presents Next Steps
+## Turn 4: Agent 更新阶段并提出下一步
 
 **Agent:**
 > Updated `production/stage.txt` → `technical-setup`
@@ -78,75 +78,75 @@
 > ---
 > **You are now in: Technical Setup**
 >
-> This phase establishes the technical foundation before production coding starts. Your goal is a complete, approved architecture so that every story written in Pre-Production has clear, unambiguous technical guidance.
+> 该阶段会在生产编码开始前建立技术基础。你的目标是形成完整、已批准的架构，使 Pre-Production 中编写的每个 story 都有清晰、无歧义的技术指导。
 >
 > **Required steps this phase (in order):**
 >
-> 1. **`/create-architecture`** — Author the master architecture document. Covers system decomposition, data flow, layer boundaries, and module responsibilities.
+> 1. **`/create-architecture`** — 编写主架构文档。覆盖 system decomposition、data flow、layer boundaries 和 module responsibilities。
 >
-> 2. **`/architecture-decision` (one per significant technical choice)** — At minimum:
->    - Rendering approach (2D camera, viewport, etc.)
+> 2. **`/architecture-decision`（每个重要技术选择一份）** — 至少包括：
+>    - Rendering approach（2D camera、viewport 等）
 >    - Save/load strategy
 >    - Audio bus architecture
->    - The "item stack size authority" issue from cross-review (crafting vs inventory)
+>    - Cross-review 中的 “item stack size authority” 问题（crafting vs inventory）
 >
-> 3. **`/architecture-review`** — Validates all ADRs for completeness, dependency ordering, and GDD traceability. Produces the TR-registry.
+> 3. **`/architecture-review`** — 验证所有 ADR 的完整性、依赖顺序和 GDD traceability。生成 TR-registry。
 >
-> 4. **`/create-control-manifest`** — Converts Accepted ADRs into a flat programmer rules sheet. This is what implementation agents will consult during coding.
+> 4. **`/create-control-manifest`** — 将 Accepted ADR 转换为扁平的 programmer rules sheet。实现 agent 编码时会参考它。
 >
-> 5. **`/gate-check`** — Technical Setup → Pre-Production gate. Requires: architecture doc, all ADRs Accepted, control manifest, and dependency ordering resolved.
+> 5. **`/gate-check`** — Technical Setup → Pre-Production gate。要求：architecture doc、所有 ADR Accepted、control manifest、依赖顺序已解决。
 >
 > **Optional but recommended:**
-> - `/tech-debt` scan if you have any prototype code you plan to carry forward
-> - `/setup-engine` re-run if you haven't yet fetched Godot 4.6 API snapshots
+> - 如果你有计划保留的 prototype code，运行 `/tech-debt` scan
+> - 如果尚未获取 Godot 4.6 API snapshots，重新运行 `/setup-engine`
 >
-> **Tip:** Start with `/architecture-decision` for the item stack size conflict. It's a quick win that closes an open question before it creates ambiguity in two ADRs later.
+> **Tip:** 从 item stack size conflict 的 `/architecture-decision` 开始。这是一个 quick win，可以在它之后造成两个 ADR 歧义前关闭一个开放问题。
 
-## Turn 5: User Asks About the Cross-Review Concern
+## Turn 5: User 询问 Cross-Review Concern
 
 **User:**
 > What do I actually write in the ADR for the stack size conflict?
 
-## Turn 6: Agent Advises
+## Turn 6: Agent 建议
 
 **Agent:**
-> The ADR decision is: **which system owns the canonical `max_stack_size` value?**
+> ADR 的决策是：**哪个系统拥有 canonical `max_stack_size` value？**
 >
-> Two options to consider:
+> 可以考虑两个选项：
 >
 > **Option A: Inventory owns it**
-> - `ItemData` resource (owned by inventory) gets `max_stack_size: int = 64`
-> - Crafting system reads from `ItemData`, never sets its own value
-> - Pros: inventory is the source of truth for all item properties
-> - Cons: crafting team needs to know to look at inventory data
+> - `ItemData` resource（由 inventory 拥有）获得 `max_stack_size: int = 64`
+> - Crafting system 从 `ItemData` 读取，永不设置自己的值
+> - Pros: inventory 是所有 item properties 的 source of truth
+> - Cons: crafting team 需要知道去 inventory data 中查找
 >
 > **Option B: Item data resource owns it (shared resource)**
-> - `ItemData.max_stack_size` is the authority for both systems
-> - Both crafting and inventory import from `ItemData`
-> - Pros: single source, no coupling between crafting and inventory modules
-> - Cons: one more thing in the shared data layer
+> - `ItemData.max_stack_size` 是两个系统的权威来源
+> - Crafting 和 inventory 都从 `ItemData` 导入
+> - Pros: 单一来源，crafting 和 inventory modules 之间无耦合
+> - Cons: shared data layer 中多一个内容
 >
-> Most studios go with B (shared resource) once they have >2 systems touching item data. But either is valid for a solo project.
+> 大多数 studio 在超过 2 个系统接触 item data 时会选择 B（shared resource）。但对于 solo project，两者都有效。
 >
-> Run `/architecture-decision` and it will guide you through the ADR format, including the Dependencies section that links this ADR back to the two GDDs.
+> 运行 `/architecture-decision`，它会引导你完成 ADR 格式，包括将此 ADR 链接回两个 GDD 的 Dependencies 章节。
 
-## Turn 7: User Wraps Up
+## Turn 7: User 收尾
 
 **User:**
 > Got it. I'll start with /architecture-decision for this.
 
 **Agent:**
-> Good starting point. The ADR will document the decision, the reasoning, and the GDD requirements it addresses — so when you write code months from now, the rationale is preserved.
+> 很好的起点。ADR 会记录决策、理由和它处理的 GDD requirements——这样几个月后写代码时，rationale 仍被保留下来。
 >
-> Your phase gate is logged. Run `/help` at any time during Technical Setup to see your current progress against the required checklist.
+> 你的 phase gate 已记录。Technical Setup 期间可随时运行 `/help`，查看你针对必需清单的当前进度。
 
 ---
 
-## What This Example Demonstrates
+## 此示例展示了什么
 
-- **Gate check is automated, not manual**: agent reads artifacts and checks them — user doesn't fill out a form
-- **CONCERNS ≠ FAIL**: the cross-review concern is LOW severity and passes the gate. A FAIL would require resolution before advancing.
-- **Stage.txt is the authority**: the status line, `/help`, and all skills read from `production/stage.txt` — updating it here changes what every subsequent skill sees
-- **Next steps are phase-specific**: the agent doesn't give a generic "good luck" — it gives the ordered checklist for Technical Setup specifically
-- **Gate check surfaces carry-forward work**: the stack size conflict was a cross-review note; the gate check ensures it becomes a concrete ADR rather than getting lost
-- **One advance per gate**: the user confirmed advancement explicitly. The gate doesn't auto-advance; human confirmation is required.
+- **Gate check 是自动化的，不是手动表格**：agent 读取 artifacts 并检查它们——user 不需要填写表单
+- **CONCERNS ≠ FAIL**：cross-review concern 是 LOW severity，因此 gate 通过。FAIL 会要求先解决才能推进。
+- **Stage.txt 是权威来源**：status line、`/help` 和所有技能都读取 `production/stage.txt`——在这里更新它会改变后续每个技能看到的阶段
+- **Next steps 是阶段专属的**：agent 不会给泛泛的 “good luck”——它会给 Technical Setup 专属的有序清单
+- **Gate check 会浮现延续工作**：stack size conflict 原本是 cross-review note；gate check 确保它变成具体 ADR，而不是丢失
+- **每个 gate 只推进一次**：user 明确确认推进。gate 不会自动推进；需要人类确认。

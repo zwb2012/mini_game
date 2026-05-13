@@ -1,7 +1,7 @@
 # Skill Flow Diagrams
 
-Visual maps of how skills chain together across the 7 development phases.
-These show what runs before and after each skill, and what artifacts flow between them.
+展示 skills 如何在 7 个开发阶段中串联的可视化地图。
+这些图说明每个 skill 前后会运行什么，以及 artifacts 如何在它们之间流动。
 
 ---
 
@@ -120,7 +120,7 @@ PHASE 7: RELEASE
 
 ## Skill Chain: /design-system in Detail
 
-How a single GDD gets authored, reviewed, and handed to architecture:
+单个 GDD 如何被编写、review，并交接给 architecture：
 
 ```
 systems-index.md (input)
@@ -155,8 +155,7 @@ upstream GDDs (input, if any)
 
 ## Skill Chain: UX / UI Pipeline in Detail
 
-UX specs are authored in Phase 4 (Pre-Production), before epics are written, so
-that story acceptance criteria can reference specific UX artifacts.
+UX specs 在 Phase 4（Pre-Production）编写，早于 epics，这样 story acceptance criteria 就能引用具体 UX artifacts。
 
 ```
 design/gdd/*.md (UI/UX requirements extracted)
@@ -191,7 +190,7 @@ Note: /ux-design and /ux-review belong in Phase 4 (Pre-Production).
 
 ## Skill Chain: Dev Story Flow in Detail
 
-How a story moves from backlog to closed:
+Story 如何从 backlog 移动到 closed：
 
 ```
 /story-readiness [story]
@@ -225,7 +224,7 @@ How a story moves from backlog to closed:
 
 ## Skill Chain: Story Lifecycle (Backlog to Closed)
 
-How a story gets from backlog to closed (summary view):
+Story 如何从 backlog 走到 closed（摘要视图）：
 
 ```
 /create-epics [layer]
@@ -304,7 +303,7 @@ How a story gets from backlog to closed (summary view):
 
 ## Brownfield Onboarding Flow
 
-For projects with existing work (use `/start` option D or run directly):
+对于已有工作的项目（使用 `/start` option D 或直接运行）：
 
 ```
 /project-stage-detect    → stage detection report
@@ -327,21 +326,21 @@ For projects with existing work (use `/start` option D or run directly):
 
 ---
 
-## How to Read These Diagrams
+## 如何阅读这些图
 
 | Symbol | Meaning |
 |--------|---------|
-| `──►` | Produces this artifact |
-| `│ ▼` | Flows into next step |
-| `├──` | Branch (multiple possible outcomes) |
-| `×N` | Runs N times (once per system, story, etc.) |
-| `(input)` | Read by the skill but not produced here |
-| `[optional]` | Not required for the gate to pass |
-| `WRITE` (caps) | File written to disk immediately |
+| `──►` | 产出此 artifact |
+| `│ ▼` | 流向下一步 |
+| `├──` | 分支（多种可能结果） |
+| `×N` | 运行 N 次（每个 system、story 等一次） |
+| `(input)` | 被 skill 读取，但不是这里产出的内容 |
+| `[optional]` | gate 通过不要求它 |
+| `WRITE` (caps) | 文件立即写入磁盘 |
 
 ---
 
-## Common Entry Points
+## 常见入口点
 
 | Where you are | Run this |
 |---------------|---------|

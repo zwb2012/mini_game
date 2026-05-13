@@ -1,103 +1,96 @@
-# Release Notes: [Game Title] v[Version]
+# 发布说明：[Game Title] v[Version]
 
 *Released: [Date]*
 
 ---
 
-## Headline
+## 标题亮点
 
-> [One compelling sentence summarizing the most exciting part of this release.
-> This is what appears in store update notifications and social media.]
+> [一句引人注目的话，总结本次发布最令人兴奋的部分。这会出现在商店更新通知和社交媒体中。]
 
 ---
 
-## What's New
+## 新内容
 
 ### [Major Feature 1 Name]
-[2-4 sentences describing the feature. Focus on what players can DO, not
-how it works internally. Include a screenshot or GIF reference if applicable.]
+[用 2-4 句话描述该特性。聚焦玩家可以做什么，而不是内部如何运作。如适用，包含截图或 GIF 引用。]
 
 ### [Major Feature 2 Name]
 [Description]
 
 ---
 
-## Gameplay Changes
+## 游戏玩法变更
 
-### Balance Adjustments
+### 平衡调整
 
 | Target | Change | Before | After | Context |
 | ---- | ---- | ---- | ---- | ---- |
-| [Weapon/Ability/Item] | [What changed] | [Old value] | [New value] | [Why — 1 sentence] |
+| [Weapon/Ability/Item] | [改了什么] | [Old value] | [New value] | [为什么——一句话] |
 | | | | | |
 
-### Mechanic Changes
-- **[Change Name]**: [What changed and how it affects gameplay. Be specific
-  about what players will experience differently.]
+### 机制变更
+- **[Change Name]**: [改了什么，以及它如何影响游戏玩法。具体说明玩家会体验到哪些不同。]
 
 ---
 
-## Quality of Life
+## 体验优化
 
-- [Improvement 1 — describe the player benefit, not the technical change]
-- [Improvement 2]
-- [Improvement 3]
+- [改进 1——描述玩家收益，而不是技术变更]
+- [改进 2]
+- [改进 3]
 
 ---
 
-## Bug Fixes
+## Bug 修复
 
-### Critical Fixes
-- Fixed [describe what players experienced, e.g., "a crash when loading
-  saved games from version 1.0"]
+### 关键修复
+- Fixed [描述玩家遇到的问题，例如“从 1.0 版本加载存档时崩溃”]
 
-### Gameplay Fixes
-- Fixed [describe the incorrect behavior and the correct behavior now]
+### 游戏玩法修复
+- Fixed [描述此前的错误行为，以及现在的正确行为]
 
-### UI Fixes
+### UI 修复
 - Fixed [description]
 
-### Audio Fixes
+### 音频修复
 - Fixed [description]
 
-### Platform-Specific Fixes
+### 平台特定修复
 - **[Platform]**: Fixed [description]
 
 ---
 
-## Performance Improvements
+## 性能改进
 
-- [Improvement players will notice, e.g., "Reduced load times by approximately
-  30% on all platforms"]
+- [玩家会注意到的改进，例如“所有平台加载时间约减少 30%”]
 - [Improvement]
 
 ---
 
-## Known Issues
+## 已知问题
 
-We are aware of the following issues and are working on fixes for a future update:
+我们已知晓以下问题，并正在为未来更新准备修复：
 
-- **[Issue]**: [Brief description and workaround if available]
+- **[Issue]**: [简要描述和可用的临时解决方法]
 - **[Issue]**: [Description]
 
 ---
 
-## Coming Next
+## 接下来
 
-[Optional — tease upcoming content to build anticipation. Keep it vague enough
-to not create binding commitments.]
+[可选——预告即将到来的内容以建立期待。保持足够模糊，避免形成绑定承诺。]
 
-> [1-2 sentences about what the team is working on next]
-
----
-
-## Thank You
-
-[Brief message thanking the community. Reference specific community feedback
-that influenced changes in this release if applicable.]
+> [关于团队接下来正在做什么的 1-2 句话]
 
 ---
 
-*For the full changelog with technical details, see the [developer changelog](link).*
+## 感谢
+
+[简短感谢社区。如适用，提及影响本次发布改动的具体社区反馈。]
+
+---
+
+*如需包含技术细节的完整变更日志，请查看 [developer changelog](link)。*
 *Report bugs: [link to bug report channel/form]*
 *Join the community: [link to Discord/forum]*

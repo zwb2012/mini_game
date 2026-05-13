@@ -1,6 +1,6 @@
-# Level: [Level Name]
+# 关卡：[Level Name]
 
-## Quick Reference
+## 快速参考
 
 - **Area/Region**: [Where in the game world]
 - **Type**: [Combat / Exploration / Puzzle / Hub / Boss / Mixed]
@@ -9,16 +9,16 @@
 - **Prerequisite**: [What the player must have done to reach this level]
 - **Status**: [Concept | Layout | Graybox | Art Pass | Polish | Final]
 
-## Narrative Context
+## 叙事背景
 
 - **Story Moment**: [Where in the narrative arc does this level occur]
 - **Narrative Purpose**: [What story beat this level delivers]
 - **Emotional Target**: [What the player should feel during this level]
 - **Lore Discoveries**: [What world-building the player can find here]
 
-## Layout
+## 布局
 
-### Overview Map
+### 概览地图
 
 ```
 [ASCII diagram of the level layout. Use these symbols:]
@@ -35,39 +35,39 @@
 [B] = Boss encounter
 ```
 
-### Critical Path
+### 关键路径
 
-[The mandatory route through the level, step by step.]
+[逐步描述穿过该关卡的必经路线。]
 
-1. Player enters at [S]
+1. 玩家从 [S] 进入
 2. [Description of what happens along the path]
-3. Player exits at [E]
+3. 玩家从 [E] 离开
 
-### Optional Paths
+### 可选路径
 
 | Path | Access Requirement | Reward | Discovery Hint |
 |------|-------------------|--------|---------------|
 
-### Points of Interest
+### 兴趣点
 
 | Location | Type | Description | Purpose |
 |----------|------|-------------|---------|
 
-## Encounters
+## 遭遇
 
-### Combat Encounters
+### 战斗遭遇
 
 | ID | Position | Enemy Composition | Difficulty | Arena Notes |
 |----|----------|------------------|-----------|-------------|
-| E-01 | [Map ref] | [2x Grunt, 1x Ranged] | 3/10 | Open area, cover on flanks |
-| E-02 | [Map ref] | [1x Elite, 3x Grunt] | 5/10 | Narrow corridor, no retreat |
+| E-01 | [Map ref] | [2x Grunt, 1x Ranged] | 3/10 | 开阔区域，两翼有掩体 |
+| E-02 | [Map ref] | [1x Elite, 3x Grunt] | 5/10 | 狭窄走廊，无法撤退 |
 
-### Non-Combat Encounters
+### 非战斗遭遇
 
 | ID | Position | Type | Description | Solution Hint |
 |----|----------|------|-------------|---------------|
 
-## Pacing Chart
+## 节奏图
 
 ```
 Intensity
@@ -80,9 +80,9 @@ Intensity
      [Start]    [Mid]              [Climax] [Exit]
 ```
 
-[Describe the intended rhythm: where are the peaks, valleys, rest points?]
+[描述预期节奏：峰值、低谷、休息点在哪里？]
 
-## Audio Direction
+## 音频方向
 
 | Zone/Moment | Music Track | Ambience | Key SFX |
 |-------------|------------|----------|---------|
@@ -90,20 +90,20 @@ Intensity
 | [Combat] | [Combat music] | [Muted ambience] | [Combat SFX] |
 | [Post-combat] | [Calm transition] | [Return to ambience] | |
 
-## Visual Direction
+## 视觉方向
 
-- **Lighting**: [Key, fill, ambient description]
-- **Color Palette**: [Dominant colors and why]
-- **Mood Board References**: [Description of visual references]
-- **Landmarks**: [Visible navigation aids and their locations]
-- **Sight Lines**: [What the player should see from key positions]
+- **Lighting**: [主光、补光、环境光描述]
+- **Color Palette**: [主导颜色及原因]
+- **Mood Board References**: [视觉参考描述]
+- **Landmarks**: [可见导航辅助及其位置]
+- **Sight Lines**: [玩家应从关键位置看到什么]
 
-## Collectibles and Secrets
+## 收集品和秘密
 
 | Item | Location | Visibility | Hint | Required For |
 |------|----------|-----------|------|-------------|
 
-## Technical Notes
+## 技术备注
 
 - **Estimated Object Count**: [N]
 - **Streaming Zones**: [Where to break the level for streaming]

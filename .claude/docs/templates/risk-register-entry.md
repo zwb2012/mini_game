@@ -1,58 +1,58 @@
-# Risk: [Short Title]
+# 风险：[Short Title]
 
-## Identification
+## 识别
 
 - **ID**: RISK-[NNNN]
 - **Identified By**: [Agent or person]
 - **Date Identified**: [Date]
 - **Category**: [Technical | Design | Schedule | Resource | External | Quality]
 
-## Assessment
+## 评估
 
 - **Probability**: [Very Low | Low | Medium | High | Very High]
 - **Impact**: [Minimal | Minor | Moderate | Major | Critical]
 - **Risk Score**: [Probability x Impact = Low / Medium / High / Critical]
 
-## Description
+## 描述
 
-[Detailed description of the risk. What could go wrong? Under what conditions?]
+[风险的详细描述。什么可能出错？在什么条件下会出错？]
 
-## Trigger Conditions
+## 触发条件
 
-[What observable conditions would indicate this risk is materializing?]
+[哪些可观察条件表明该风险正在发生？]
 
 - [Condition 1]
 - [Condition 2]
 
-## Impact Analysis
+## 影响分析
 
-### If This Risk Materializes
+### 如果该风险发生
 
-- **Schedule Impact**: [How many days/weeks of delay]
-- **Quality Impact**: [What quality degradation]
-- **Scope Impact**: [What features affected]
-- **Cost Impact**: [Resource cost of dealing with it]
+- **Schedule Impact**: [会造成多少天/周的延迟]
+- **Quality Impact**: [会造成什么质量下降]
+- **Scope Impact**: [会影响哪些功能]
+- **Cost Impact**: [处理该风险的资源成本]
 
-### Affected Systems/Features
+### 受影响的系统/功能
 
 - [System 1]
 - [System 2]
 
-## Mitigation Strategy
+## 缓解策略
 
-### Prevention (reduce probability)
+### 预防（降低概率）
 
-- [Action to prevent this risk from occurring]
-- [Owner and deadline for prevention action]
+- [防止该风险发生的行动]
+- [预防行动的负责人和截止日期]
 
-### Contingency (reduce impact if it occurs)
+### 应急（发生时降低影响）
 
-- [Action to take if this risk materializes]
-- [Owner responsible for contingency execution]
+- [该风险发生时采取的行动]
+- [负责执行应急方案的负责人]
 
-## Current Status
+## 当前状态
 
 - **Status**: [Open | Mitigating | Occurred | Closed]
 - **Last Reviewed**: [Date]
 - **Trend**: [Increasing | Stable | Decreasing]
-- **Notes**: [Any updates]
+- **Notes**: [任何更新]

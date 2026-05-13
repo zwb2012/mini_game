@@ -1,24 +1,24 @@
 # Sprint [N] — [Start Date] to [End Date]
 
-## Sprint Goal
+## 冲刺目标
 
-[One sentence: what does this sprint achieve toward the current milestone?]
+[一句话：本冲刺为当前里程碑实现什么？]
 
-## Milestone Context
+## 里程碑背景
 
 - **Current Milestone**: [Name]
 - **Milestone Deadline**: [Date]
 - **Sprints Remaining**: [N]
 
-## Capacity
+## 容量
 
 - **Total days**: [X]
 - **Buffer (20%)**: [Y days reserved for unplanned work]
 - **Available**: [Z days]
 
-## Tasks
+## 任务
 
-### Must Have (Critical Path)
+### Must Have（关键路径）
 
 | ID | Task | Agent/Owner | Est. Days | Dependencies | Acceptance Criteria | Status |
 |----|------|-------------|-----------|-------------|-------------------|--------|
@@ -31,36 +31,36 @@
 |----|------|-------------|-----------|-------------|-------------------|--------|
 | S[N]-010 | | | | | | Not Started |
 
-### Nice to Have (Cut First)
+### Nice to Have（优先裁剪）
 
 | ID | Task | Agent/Owner | Est. Days | Dependencies | Acceptance Criteria | Status |
 |----|------|-------------|-----------|-------------|-------------------|--------|
 | S[N]-020 | | | | | | Not Started |
 
-## Carryover from Sprint [N-1]
+## 从 Sprint [N-1] 结转
 
 | Original ID | Task | Reason for Carryover | New Estimate | Priority Change |
 |------------|------|---------------------|-------------|----------------|
 
-## Risks to This Sprint
+## 本冲刺风险
 
 | Risk | Probability | Impact | Mitigation | Owner |
 |------|------------|--------|-----------|-------|
 
-## External Dependencies
+## 外部依赖
 
 | Dependency | Status | Impact if Delayed | Contingency |
 |-----------|--------|------------------|-------------|
 
-## Definition of Done
+## 完成定义
 
-- [ ] All Must Have tasks completed
-- [ ] All tasks pass acceptance criteria
-- [ ] QA plan exists (`production/qa/qa-plan-sprint-[N].md`)
-- [ ] All Logic/Integration stories have passing unit/integration tests
-- [ ] Smoke check passed (`/smoke-check sprint`)
-- [ ] QA sign-off report: APPROVED or APPROVED WITH CONDITIONS (`/team-qa sprint`)
-- [ ] No S1 or S2 bugs in delivered features
-- [ ] Design documents updated for any deviations
-- [ ] Code reviewed and merged
+- [ ] 所有 Must Have 任务完成
+- [ ] 所有任务通过验收标准
+- [ ] QA 计划存在（`production/qa/qa-plan-sprint-[N].md`）
+- [ ] 所有 Logic/Integration 故事都有通过的单元/集成测试
+- [ ] 冒烟检查通过（`/smoke-check sprint`）
+- [ ] QA 签署报告：APPROVED 或 APPROVED WITH CONDITIONS（`/team-qa sprint`）
+- [ ] 交付功能中没有 S1 或 S2 bug
+- [ ] 设计文档已根据任何偏差更新
+- [ ] 代码已审查并合并
 

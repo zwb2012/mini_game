@@ -1,47 +1,45 @@
-# Milestone: [Name]
+# 里程碑：[Name]
 
-## Overview
+## 概览
 
 - **Target Date**: [Date]
 - **Type**: [Prototype | Vertical Slice | Alpha | Beta | Gold | Post-Launch]
 - **Duration**: [N weeks]
 - **Number of Sprints**: [N]
 
-## Milestone Goal
+## 里程碑目标
 
-[2-3 sentences describing what this milestone achieves and why it matters.
-What can we demonstrate or evaluate at the end of this milestone?]
+[用 2-3 句话描述该里程碑达成什么以及为什么重要。该里程碑结束时，我们能展示或评估什么？]
 
-## Success Criteria
+## 成功标准
 
-[Specific, measurable criteria. The milestone is complete ONLY when all of
-these are met.]
+[具体、可衡量的标准。只有全部满足时，里程碑才算完成。]
 
 - [ ] [Criterion 1 -- specific and testable]
 - [ ] [Criterion 2]
 - [ ] [Criterion 3]
-- [ ] All S1 and S2 bugs resolved
-- [ ] Performance within budget on target hardware
-- [ ] Build stable for [X] consecutive days
+- [ ] 所有 S1 和 S2 bug 已解决
+- [ ] 目标硬件上性能在预算内
+- [ ] 构建连续 [X] 天稳定
 
-## Feature List
+## 功能列表
 
-### Must Ship (Milestone Fails Without These)
+### 必须交付（没有这些则里程碑失败）
 
 | Feature | Design Doc | Owner | Sprint Target | Status |
 |---------|-----------|-------|--------------|--------|
 
-### Should Ship (Planned but Cuttable)
+### 应该交付（已计划但可裁剪）
 
 | Feature | Design Doc | Owner | Sprint Target | Cut Impact | Status |
 |---------|-----------|-------|--------------|-----------|--------|
 
-### Stretch Goals (Only if Ahead of Schedule)
+### 延展目标（仅在进度超前时）
 
 | Feature | Design Doc | Owner | Value Add |
 |---------|-----------|-------|----------|
 
-## Quality Gates
+## 质量门槛
 
 | Gate | Threshold | Measurement Method |
 |------|-----------|-------------------|
@@ -52,24 +50,24 @@ these are met.]
 | Major bugs | < [X] open S2 | Bug tracker |
 | Test coverage | > [X]% | Test framework report |
 
-## Risk Register
+## 风险登记
 
 | Risk | Probability | Impact | Mitigation | Owner | Status |
 |------|------------|--------|-----------|-------|--------|
 
-## Dependencies
+## 依赖
 
-### Internal Dependencies
+### 内部依赖
 
 | Feature | Depends On | Owner of Dependency | Status |
 |---------|-----------|-------------------|--------|
 
-### External Dependencies
+### 外部依赖
 
 | Dependency | Provider | Status | Risk if Delayed |
 |-----------|---------|--------|----------------|
 
-## Review Schedule
+## 评审日程
 
 | Date | Review Type | Attendees |
 |------|-----------|-----------|

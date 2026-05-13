@@ -1,19 +1,19 @@
-# Technical Preferences
+# 技术偏好
 
-<!-- Populated by /setup-engine. Updated as the user makes decisions throughout development. -->
-<!-- All agents reference this file for project-specific standards and conventions. -->
+<!-- 由 /setup-engine 填充。随着用户在开发过程中做出决定而更新。 -->
+<!-- 所有 agents 都会引用此文件以获取项目特定标准和约定。 -->
 
-## Engine & Language
+## 引擎与语言
 
 - **Engine**: [TO BE CONFIGURED — run /setup-engine]
 - **Language**: [TO BE CONFIGURED]
 - **Rendering**: [TO BE CONFIGURED]
 - **Physics**: [TO BE CONFIGURED]
 
-## Input & Platform
+## 输入与平台
 
-<!-- Written by /setup-engine. Read by /ux-design, /ux-review, /test-setup, /team-ui, and /dev-story -->
-<!-- to scope interaction specs, test helpers, and implementation to the correct input methods. -->
+<!-- 由 /setup-engine 写入。由 /ux-design、/ux-review、/test-setup、/team-ui 和 /dev-story 读取 -->
+<!-- 用于将交互规格、测试辅助工具和实现范围限定到正确的输入方式。 -->
 
 - **Target Platforms**: [TO BE CONFIGURED — e.g., PC, Console, Mobile, Web]
 - **Input Methods**: [TO BE CONFIGURED — e.g., Keyboard/Mouse, Gamepad, Touch, Mixed]
@@ -22,7 +22,7 @@
 - **Touch Support**: [TO BE CONFIGURED — Full / Partial / None]
 - **Platform Notes**: [TO BE CONFIGURED — any platform-specific UX constraints]
 
-## Naming Conventions
+## 命名约定
 
 - **Classes**: [TO BE CONFIGURED]
 - **Variables**: [TO BE CONFIGURED]
@@ -31,39 +31,39 @@
 - **Scenes/Prefabs**: [TO BE CONFIGURED]
 - **Constants**: [TO BE CONFIGURED]
 
-## Performance Budgets
+## 性能预算
 
 - **Target Framerate**: [TO BE CONFIGURED]
 - **Frame Budget**: [TO BE CONFIGURED]
 - **Draw Calls**: [TO BE CONFIGURED]
 - **Memory Ceiling**: [TO BE CONFIGURED]
 
-## Testing
+## 测试
 
 - **Framework**: [TO BE CONFIGURED]
 - **Minimum Coverage**: [TO BE CONFIGURED]
 - **Required Tests**: Balance formulas, gameplay systems, networking (if applicable)
 
-## Forbidden Patterns
+## 禁用模式
 
-<!-- Add patterns that should never appear in this project's codebase -->
+<!-- 添加本项目代码库中绝不应出现的模式 -->
 - [None configured yet — add as architectural decisions are made]
 
-## Allowed Libraries / Addons
+## 允许的库 / Addons
 
-<!-- Add approved third-party dependencies here -->
+<!-- 在此添加已批准的第三方依赖 -->
 - [None configured yet — add as dependencies are approved]
 
-## Architecture Decisions Log
+## 架构决策日志
 
-<!-- Quick reference linking to full ADRs in docs/architecture/ -->
+<!-- 快速参考，链接到 docs/architecture/ 中的完整 ADR -->
 - [No ADRs yet — use /architecture-decision to create one]
 
-## Engine Specialists
+## 引擎专家
 
-<!-- Written by /setup-engine when engine is configured. -->
-<!-- Read by /code-review, /architecture-decision, /architecture-review, and team skills -->
-<!-- to know which specialist to spawn for engine-specific validation. -->
+<!-- 配置引擎时由 /setup-engine 写入。 -->
+<!-- 由 /code-review、/architecture-decision、/architecture-review 和 team skills 读取 -->
+<!-- 用于了解应生成哪个 specialist 来进行引擎特定验证。 -->
 
 - **Primary**: [TO BE CONFIGURED — run /setup-engine]
 - **Language/Code Specialist**: [TO BE CONFIGURED]
@@ -72,10 +72,10 @@
 - **Additional Specialists**: [TO BE CONFIGURED]
 - **Routing Notes**: [TO BE CONFIGURED]
 
-### File Extension Routing
+### 文件扩展名路由
 
-<!-- Skills use this table to select the right specialist per file type. -->
-<!-- If a row says [TO BE CONFIGURED], fall back to Primary for that file type. -->
+<!-- Skills 使用此表按文件类型选择正确的 specialist。 -->
+<!-- 如果某行显示 [TO BE CONFIGURED]，则该文件类型回退到 Primary。 -->
 
 | File Extension / Type | Specialist to Spawn |
 |-----------------------|---------------------|

@@ -1,50 +1,50 @@
-# Post-Mortem: [Milestone/Project Name]
+# 复盘：[Milestone/Project Name]
 
-## Document Status
+## 文档状态
 - **Date**: [Date]
 - **Facilitator**: producer
-- **Participants**: [List of agents/people involved]
+- **Participants**: [参与的代理/人员列表]
 - **Period Covered**: [Start date] to [End date]
 
-## Summary
-[2-3 sentence summary of what this milestone/project accomplished]
+## 总结
+[用 2-3 句话总结该里程碑/项目完成了什么]
 
-## Goals vs Results
+## 目标 vs 结果
 
 | Goal | Target | Result | Status |
 | ---- | ------ | ------ | ------ |
 | [Goal 1] | [Metric] | [Actual] | [Met / Partially / Missed] |
 
-## Timeline
+## 时间线
 
 | Date | Event | Impact |
 | ---- | ----- | ------ |
-| [Date] | [What happened] | [How it affected the project] |
+| [Date] | [发生了什么] | [它如何影响项目] |
 
-## What Went Well
+## 做得好的地方
 
-### [Category 1: e.g., Technical Execution]
-**What**: [Description]
-**Why it worked**: [Root cause of success]
-**How to repeat**: [What to keep doing]
+### [Category 1: 例如，技术执行]
+**What**: [描述]
+**Why it worked**: [成功的根因]
+**How to repeat**: [需要继续做什么]
 
-### [Category 2: e.g., Team Coordination]
-**What**: [Description]
-**Why it worked**: [Root cause]
-**How to repeat**: [Action]
+### [Category 2: 例如，团队协调]
+**What**: [描述]
+**Why it worked**: [根因]
+**How to repeat**: [行动]
 
-## What Went Poorly
+## 做得不好的地方
 
-### [Category 1: e.g., Scope Management]
-**What**: [Description]
-**Root cause**: [Why this happened]
-**Impact**: [Time/quality/morale cost]
-**Prevention**: [How to avoid next time]
+### [Category 1: 例如，范围管理]
+**What**: [描述]
+**Root cause**: [为什么会发生]
+**Impact**: [时间/质量/士气成本]
+**Prevention**: [下次如何避免]
 
 ### [Category 2]
-[Same structure]
+[相同结构]
 
-## Key Metrics
+## 关键指标
 
 | Metric | Target | Actual | Notes |
 | ------ | ------ | ------ | ----- |
@@ -54,16 +54,16 @@
 | Estimation accuracy | 100% | [N%] | |
 | Scope changes | 0 | [N] | |
 
-## Lessons Learned
+## 经验教训
 
-1. **[Lesson]**: [Explanation and how it changes future work]
-2. **[Lesson]**: [Explanation]
+1. **[Lesson]**: [说明，以及它如何改变未来工作]
+2. **[Lesson]**: [说明]
 
-## Action Items
+## 行动项
 
 | # | Action | Owner | Deadline | Status |
 | - | ------ | ----- | -------- | ------ |
 | 1 | [Action] | [Who] | [When] | [Open/Done] |
 
-## Acknowledgments
-[Call out exceptional contributions]
+## 致谢
+[点名表扬杰出贡献]
