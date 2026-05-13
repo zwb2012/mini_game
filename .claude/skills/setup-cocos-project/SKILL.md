@@ -37,7 +37,25 @@ Before generating anything, check:
 
 ## Phase 2: Generate Project Files
 
-### 2a: Settings + Profiles
+### 2a: Package Version
+
+Verify root `package.json` contains the `creator.version` field. This is how the
+Cocos Dashboard identifies the project engine version. Without it, the Dashboard
+misreads the npm `version` field and shows "creator3D 0.1.0".
+
+```json
+{
+  "creator": {
+    "version": "3.8.8"
+  }
+}
+```
+
+If missing, add it after `"version"` in `package.json`. Also verify the template
+`templates/cocos-game-base/package.json` has this field — it is the source of
+truth for project init.
+
+### 2b: Settings + Profiles
 
 Copy from template:
 
@@ -46,7 +64,7 @@ templates/cocos-game-base/settings/  →  settings/
 templates/cocos-game-base/profiles/  →  profiles/
 ```
 
-### 2b: Scene Files
+### 2c: Scene Files
 
 Copy GameScene.scene from template to `assets/scenes/GameScene.scene`.
 Generate a project-specific UUID for the .meta file (deterministic, namespace-based).
@@ -57,7 +75,7 @@ The scene contains:
 - GridEngine node (placeholder — user mounts GridConnectionEngine in editor)
 - LabelContainer child node
 
-### 2c: Scripts Symlink
+### 2d: Scripts Symlink
 
 Create a symlink: `assets/scripts/core → ../../src/core`
 
@@ -76,7 +94,7 @@ imports, and update `tsconfig.json` with a `paths` entry:
 }
 ```
 
-### 2d: .meta Files
+### 2e: .meta Files
 
 Generate `.meta` files for every asset directory and file that Cocos Creator
 needs to recognize:
@@ -111,6 +129,8 @@ Run these checks after generation:
 1. `settings/v2/packages/project.json` exists
 2. `assets/scenes/GameScene.scene` exists
 3. `assets/scripts/ → ../../src/core/` symlink is valid (or tsconfig paths entry exists)
+4. `package.json` contains `"creator": { "version": "3.8.8" }` — **critical** for
+   Dashboard version detection. Missing this causes "creator3D 0.1.0".
 
 Report: "Cocos project skeleton initialized. Open this directory in Cocos Creator
 3.8.8, then mount @ccclass components to the GridEngine node in GameScene."

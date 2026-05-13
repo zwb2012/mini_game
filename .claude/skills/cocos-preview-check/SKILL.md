@@ -23,6 +23,9 @@ validates TypeScript logic (Jest), this validates editor integration.
 - [ ] `settings/v2/packages/project.json` exists
 - [ ] `settings/v2/packages/engine.json` exists
 - [ ] `settings/v2/packages/builder.json` exists
+- [ ] `package.json` contains `"creator": { "version": "3.8.8" }` — **CRITICAL**:
+      without this, Cocos Dashboard misreads npm `version` as engine version and
+      shows "creator3D 0.1.0" instead of 3.8.8
 
 ### 1.2 Scene Files
 - [ ] At least one `.scene` file exists in `assets/scenes/`
