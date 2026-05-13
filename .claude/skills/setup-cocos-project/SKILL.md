@@ -1,6 +1,6 @@
 ---
 name: setup-cocos-project
-description: "Initialize the Cocos Creator 3.8.8 project skeleton from the cocos-game-base template. Creates settings/, GameScene, editor profiles, and the scripts/ → src/core/ symlink. Run once during Technical Setup, after architecture review is complete."
+description: "Initialize the Cocos Creator 3.8.8 project skeleton from the cocos-game-base template. Creates settings/, GameScene, editor profiles, and copies src/core/ scripts into assets/scripts/. Run once during Technical Setup, after architecture review is complete."
 argument-hint: "[--force]"
 user-invocable: true
 allowed-tools: Read, Glob, Grep, Write, Bash
@@ -75,24 +75,28 @@ The scene contains:
 - GridEngine node (placeholder — user mounts GridConnectionEngine in editor)
 - LabelContainer child node
 
-### 2d: Scripts Symlink
+### 2d: Scripts Copy (NOT symlink)
 
-Create a symlink: `assets/scripts/core → ../../src/core`
+**Do NOT use symlinks** — they break on Windows (Git creates text files containing
+link targets as content; Cocos Creator parses them as TypeScript and crashes).
 
-On Windows, this requires admin privileges or Developer Mode. If symlink fails,
-fall back to creating a `typings/cc.d.ts` in the project root that maps `cc`
-imports, and update `tsconfig.json` with a `paths` entry:
+Instead, copy each `src/core/` .ts file to the corresponding subdirectory under
+`assets/scripts/`. The `src/core/` directory remains the canonical source of truth;
+`assets/scripts/` is a working copy for Cocos Creator.
 
-```json
-{
-  "compilerOptions": {
-    "paths": {
-      "cc": ["./typings/cc.d.ts"],
-      "@core/*": ["./src/core/*"]
-    }
-  }
-}
-```
+For each .ts file under `src/core/`:
+1. Create the matching subdirectory under `assets/scripts/` if it doesn't exist
+2. Copy the .ts file (not symlink)
+3. Generate a .meta file with a project-specific UUID
+
+On **Windows**: no special configuration needed. Copies work natively.
+
+On **Linux/Mac**: copies work natively. Avoid symlinks even though they work —
+consistency across platforms is more important.
+
+> **Sync warning**: When editing source files in `src/core/`, copy the changes
+> to `assets/scripts/` before opening Cocos Creator. The `.meta` files must be
+> preserved (copy only the .ts content, not the .meta).
 
 ### 2e: .meta Files
 
@@ -128,7 +132,7 @@ Run these checks after generation:
 
 1. `settings/v2/packages/project.json` exists
 2. `assets/scenes/GameScene.scene` exists
-3. `assets/scripts/ → ../../src/core/` symlink is valid (or tsconfig paths entry exists)
+3. `assets/scripts/` contains real .ts file copies (not symlinks) for all src/core/ modules
 4. `package.json` contains `"creator": { "version": "3.8.8" }` — **critical** for
    Dashboard version detection. Missing this causes "creator3D 0.1.0".
 
