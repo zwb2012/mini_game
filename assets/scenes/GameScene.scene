@@ -226,6 +226,9 @@
     "_children": [
       {
         "__id__": 4
+      },
+      {
+        "__id__": 5
       }
     ],
     "_active": true,
@@ -303,11 +306,7 @@
     "_parent": {
       "__id__": 3
     },
-    "_children": [
-      {
-        "__id__": 5
-      }
-    ],
+    "_children": [],
     "_active": true,
     "_components": [
       {
@@ -417,7 +416,7 @@
     "_objFlags": 0,
     "__editorExtras__": {},
     "_parent": {
-      "__id__": 4
+      "__id__": 3
     },
     "_children": [],
     "_active": true,
