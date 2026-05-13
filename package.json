@@ -1,6 +1,9 @@
 {
   "name": "number-link",
   "version": "0.1.0",
+  "creator": {
+    "version": "3.8.8"
+  },
   "private": true,
   "description": "数字连线 — Number Link puzzle game (Cocos Creator 3.8.8 + WeChat Mini Game)",
   "scripts": {

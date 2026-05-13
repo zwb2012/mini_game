@@ -1,6 +1,9 @@
 {
   "name": "cocos-game-base",
   "version": "0.1.0",
+  "creator": {
+    "version": "3.8.8"
+  },
   "private": true,
   "description": "微信小游戏与 Android 共用的 Cocos 基础设施骨架",
   "scripts": {
