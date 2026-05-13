@@ -35,6 +35,23 @@ dist/
 *.dylib
 *.app
 
+# === Engine: Cocos Creator ===
+# Editor-generated runtime cache — never commit
+[Ll]ibrary/
+[Tt]emp/
+[Nn]ative/
+# Local build profiles (team-specific)
+profiles/v2/packages/local-*.json
+# Import artifacts (auto-generated from .meta)
+*.import
+# settings/ and profiles/ are tracked (project configuration)
+# assets/ is tracked (scenes, scripts, resources)
+!settings/
+!profiles/
+!assets/scenes/
+!assets/scripts/
+!assets/resources/
+
 # === Engine: Godot ===
 .godot/
 *.translation

@@ -29,8 +29,8 @@
 #   All forbidden patterns: Grep pattern="^  - pattern:" (forbidden_patterns section)
 #   Superseded entries:     Grep pattern="status: superseded"
 
-version: 1
-last_updated: ""
+version: 2
+last_updated: "2026-05-11"
 
 # ─── STATE OWNERSHIP ─────────────────────────────────────────────────────────
 # Who is the authoritative owner of each piece of shared game state.
@@ -43,7 +43,61 @@ last_updated: ""
 # interface: how other systems access this state (read-only property, method call,
 #   signal, shared resource, etc.) — this is the contract other ADRs depend on.
 
-state_ownership: []
+state_ownership:
+  - state: currentState
+    status: active
+    owner_system: game-state-machine
+    adr: docs/architecture/adr-001-state-machine.md
+    interface: "GameStateMachine.getState(): GameState (read-only); 唯一写入通过 transition()"
+    write_access: game-state-machine-only
+    referenced_by:
+      - docs/architecture/adr-001-state-machine.md
+    added: "2026-05-10"
+    revised: ""
+
+  - state: platformStorage
+    status: active
+    owner_system: platform-adapter
+    adr: docs/architecture/adr-004-platform-adapter.md
+    interface: "IPlatformStorage (只读注入) —— set/get/remove/getInfo 方法，模块级单例"
+    write_access: platform-adapter-only
+    referenced_by:
+      - docs/architecture/adr-004-platform-adapter.md
+    added: "2026-05-11"
+    revised: ""
+
+  - state: _layoutParams
+    status: active
+    owner_system: input-manager
+    adr: docs/architecture/adr-005-input-pipeline.md
+    interface: "setLayoutParams(params: LayoutParams): void —— 引擎在初始化时写入"
+    write_access: "grid-connection-engine (唯一写入者)"
+    referenced_by:
+      - docs/architecture/adr-005-input-pipeline.md
+    added: "2026-05-11"
+    revised: ""
+
+  - state: _levelData
+    status: active
+    owner_system: level-data-schema
+    adr: docs/architecture/adr-006-level-data-schema.md
+    interface: "ILevelDataProvider.getLevel(id): Level | null (read-only); 唯一写入通过 loadLevels()"
+    write_access: level-data-schema-only
+    referenced_by:
+      - docs/architecture/adr-006-level-data-schema.md
+    added: "2026-05-11"
+    revised: ""
+
+  - state: muted
+    status: active
+    owner_system: audio-manager
+    adr: docs/architecture/adr-010-audio-preload-degradation.md
+    interface: "AudioManager.isMuted(): bool (read-only); 唯一写入通过 setMuted(bool) —— 静音偏好经 IPlatformStorage 持久化"
+    write_access: audio-manager-only
+    referenced_by:
+      - docs/architecture/adr-010-audio-preload-degradation.md
+    added: "2026-05-11"
+    revised: ""
 
 # Example:
 #
@@ -71,11 +125,81 @@ state_ownership: []
 #
 # pattern options: signal | direct_call | event_bus | shared_resource | rpc | none
 
-interfaces: []
+interfaces:
+  - contract: state_transition
+    status: active
+    pattern: direct_call
+    producer: game-state-machine
+    consumers:
+      - grid-connection-engine
+      - scene-manager
+      - input-manager
+      - in-game-hud
+      - level-complete-overlay
+      - audio-manager
+    adr: docs/architecture/adr-001-state-machine.md
+    signal_signature: "onEnter(state: GameState, cb: StateCallback): () => void; onExit(state: GameState, cb: StateCallback): () => void"
+    referenced_by:
+      - docs/architecture/adr-001-state-machine.md
+    added: "2026-05-10"
+    revised: ""
+
+  - contract: storage_access
+    status: active
+    pattern: direct_call
+    producer: platform-adapter
+    consumers:
+      - local-storage
+    adr: docs/architecture/adr-004-platform-adapter.md
+    signal_signature: "IPlatformStorage.set(key: string, value: string): void; get(key: string): string | null; remove(key: string): void; getInfo(): StorageInfo"
+    referenced_by:
+      - docs/architecture/adr-004-platform-adapter.md
+    added: "2026-05-11"
+    revised: ""
+
+  - contract: input_events
+    status: active
+    pattern: direct_call
+    producer: input-manager
+    consumers:
+      - grid-connection-engine
+    adr: docs/architecture/adr-005-input-pipeline.md
+    signal_signature: "subscribe(cb: (type: InputEventType, coord: GridCoord) => void): () => void"
+    referenced_by:
+      - docs/architecture/adr-005-input-pipeline.md
+    added: "2026-05-11"
+    revised: ""
+
+  - contract: level_data_access
+    status: active
+    pattern: direct_call
+    producer: level-data-schema
+    consumers:
+      - grid-connection-engine
+      - step-scoring
+      - level-select-ui
+    adr: docs/architecture/adr-006-level-data-schema.md
+    signal_signature: "ILevelDataProvider.getLevel(id: number): Level | null; getLevelCount(): number; loadLevels(): Promise<LevelData>"
+    referenced_by:
+      - docs/architecture/adr-006-level-data-schema.md
+    added: "2026-05-11"
+    revised: ""
+
+  - contract: audio_playback
+    status: active
+    pattern: direct_call
+    producer: audio-manager
+    consumers:
+      - grid-connection-engine
+      - game-state-machine
+    adr: docs/architecture/adr-010-audio-preload-degradation.md
+    signal_signature: "play(eventId: AudioEventId): void; setMuted(muted: boolean): void; isMuted(): boolean"
+    referenced_by:
+      - docs/architecture/adr-010-audio-preload-degradation.md
+    added: "2026-05-11"
+    revised: ""
 
 # Example:
-#
-# interfaces:
 #   - contract: damage_delivery
 #     status: active
 #     pattern: signal          # how the producer notifies consumers
@@ -131,7 +255,83 @@ performance_budgets: []
 # Register an API decision when the choice is non-obvious and other ADRs might
 # make a different choice for the same purpose without knowing this was decided.
 
-api_decisions: []
+api_decisions:
+  - purpose: game_state_management
+    status: active
+    api: "纯 TypeScript 实现（零引擎依赖）"
+    not: "Cocos EventTarget / 外部 FSM 库 (XState 等)"
+    adr: docs/architecture/adr-001-state-machine.md
+    reason: "4 状态 8 转换的简单模型不需要引擎耦合或外部依赖；脱离 Cocos 运行时可单元测试"
+    referenced_by:
+      - docs/architecture/adr-001-state-machine.md
+    added: "2026-05-10"
+    revised: ""
+
+  - purpose: platform_storage_abstraction
+    status: active
+    api: "IPlatformStorage 接口 + WeChatStorage / WebStorage 双实现（依赖注入切换）"
+    not: "条件分支 (if wx) / cc.sys 统一抽象"
+    adr: docs/architecture/adr-004-platform-adapter.md
+    reason: "平台 API 隔离到适配器层——微信 API 变更仅影响 WeChatStorage.ts (~40行)，Web 预览可完整测试存储逻辑"
+    referenced_by:
+      - docs/architecture/adr-004-platform-adapter.md
+    added: "2026-05-11"
+    revised: ""
+
+  - purpose: touch_coordinate_api
+    status: active
+    api: "touch.getUILocation() —— UI 坐标系，与 Canvas 设计分辨率一致"
+    not: "touch.getLocation() (世界坐标) / touch.getLocationInView() (OpenGL 视口坐标)"
+    adr: docs/architecture/adr-005-input-pipeline.md
+    reason: "getUILocation() 返回与网格渲染坐标系一致的 UI 坐标——无需额外矩阵变换，减少延迟和出错概率"
+    referenced_by:
+      - docs/architecture/adr-005-input-pipeline.md
+    added: "2026-05-11"
+    revised: ""
+
+  - purpose: data_flow_hybrid
+    status: active
+    api: "混合 Push/Pull —— 事件/变化通知用 subscribe() 推送，状态查询/快照用 getter() 拉取"
+    not: "全 Push (Event Sourcing) / 全 Pull (轮询) / 全局 EventBus"
+    adr: docs/architecture/adr-003-data-flow.md
+    reason: "\"谁变了就 Push，谁想知道就 Pull\"——11 系统的极简游戏不需要 event sourcing 或全局总线"
+    referenced_by:
+      - docs/architecture/adr-003-data-flow.md
+    added: "2026-05-11"
+    revised: ""
+
+  - purpose: grid_rendering_graphics
+    status: active
+    api: "cc.Graphics (rect+fill/stroke) + cc.Label 节点池 (SystemFont 14px)"
+    not: "Sprite 节点方案 / RenderTexture 离屏缓存 / 混合方案"
+    adr: docs/architecture/adr-002-grid-rendering.md
+    reason: "极简几何风定位——纯代码绘制与视觉方向一致；零纹理资源节省包体；100 格 Graphics 重绘 <3ms"
+    referenced_by:
+      - docs/architecture/adr-002-grid-rendering.md
+    added: "2026-05-11"
+    revised: ""
+
+  - purpose: level_data_loading
+    status: active
+    api: "resources.load('levels', JsonAsset) —— 单 JSON 文件全量加载全部 50 关"
+    not: "Asset Bundle 按章分包 / 远程配置下发 / JSON Schema 库 (ajv)"
+    adr: docs/architecture/adr-006-level-data-schema.md
+    reason: "50 关 ~25KB 全量加载内存 <100KB——分包和远程下发的复杂度远超收益；手写校验函数 ~100 行零依赖，节省 ajv 的 ~30KB 包体"
+    referenced_by:
+      - docs/architecture/adr-006-level-data-schema.md
+    added: "2026-05-11"
+    revised: ""
+
+  - purpose: audio_preload_degradation
+    status: active
+    api: "resources.load() 预加载音频 + _lastFramePlayed 帧计数器防抖（同帧合并）"
+    not: "节流（setInterval 定时器）/ 队列播放（Queue 消费方案）"
+    adr: docs/architecture/adr-010-audio-preload-degradation.md
+    reason: "同帧防抖用单行整数比较解决快速滑动的音效堆叠问题；节流和队列方案增加了定时器或队列复杂度，但同帧防抖已覆盖所有实际需求"
+    referenced_by:
+      - docs/architecture/adr-010-audio-preload-degradation.md
+    added: "2026-05-11"
+    revised: ""
 
 # Example:
 #
@@ -157,7 +357,48 @@ api_decisions: []
 # Register a pattern when an ADR explicitly bans it AND other ADRs might
 # unknowingly use it (i.e., it's a tempting but wrong approach for this project).
 
-forbidden_patterns: []
+forbidden_patterns:
+  - pattern: direct_state_write
+    status: active
+    description: "系统必须通过 GameStateMachine.transition() 触发状态转换，禁止直接修改 currentState 字段或绕过状态机进行状态切换"
+    why: "绕过状态机会跳过 onEnter/onExit 回调链，导致系统处于不一致状态（如引擎在非 Playing 态运行）"
+    adr: docs/architecture/adr-001-state-machine.md
+    added: "2026-05-10"
+
+  - pattern: direct_wx_api_call
+    status: active
+    description: "系统禁止直接调用 wx.setStorage / wx.getStorage / wx.removeStorage —— 必须通过 IPlatformStorage 接口访问存储"
+    why: "直接调用 wx.* 使平台代码散布在业务逻辑中——Web 预览崩溃、微信 API 变更需修改多个文件、存储策略与平台调用混杂"
+    adr: docs/architecture/adr-004-platform-adapter.md
+    added: "2026-05-11"
+
+  - pattern: direct_touch_listener
+    status: active
+    description: "引擎和其他系统禁止直接在 Cocos Node 上注册 TOUCH_MOVE/TOUCH_START/TOUCH_END —— 必须通过 IInputManager.subscribe() 获取已处理的网格坐标输入"
+    why: "直接监听原始触摸事件绕过坐标映射和状态守卫——导致引擎与其他系统需要各自处理像素坐标转换，不可测试且重复实现"
+    adr: docs/architecture/adr-005-input-pipeline.md
+    added: "2026-05-11"
+
+  - pattern: push_poll_duality
+    status: active
+    description: "同一数据禁止同时暴露 Push (subscribe) 和 Pull (getter) 给同一消费者——必须选一种且仅一种"
+    why: "双重真理源——当 Push 推送的值与 Pull 查询的值不一致时（中间状态），消费者无法判断哪个是正确的"
+    adr: docs/architecture/adr-003-data-flow.md
+    added: "2026-05-11"
+
+  - pattern: push_chain_depth_3
+    status: active
+    description: "Push 回调链深度不得超过 3 层（A subscribe → B subscribe → C subscribe → D 禁止）"
+    why: "超过 3 层的 Push 链导致单帧延迟累积和调试困难——第 4 层必须改用 Pull 读取"
+    adr: docs/architecture/adr-003-data-flow.md
+    added: "2026-05-11"
+
+  - pattern: sprite_per_cell
+    status: active
+    description: "禁止每格使用独立 Sprite 节点渲染网格单元——必须通过 cc.Graphics 程序化绘制"
+    why: "100 个 Sprite Node = 100 draw call + 100 Cocos 对象，违反 <20 draw call 预算和极简几何风定位"
+    adr: docs/architecture/adr-002-grid-rendering.md
+    added: "2026-05-11"
 
 # Example:
 #

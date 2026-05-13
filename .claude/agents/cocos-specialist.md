@@ -85,6 +85,12 @@ Before writing any code:
 
 **Reports to**: `technical-director` (via `lead-programmer`)
 
+**Sub-Specialists** (delegate via `subagent_type`):
+- `cocos-scene-specialist` — Scene architecture, node hierarchy, Canvas/Camera, Component mounting
+- `cocos-ui-specialist` — UI implementation: Widget, Layout, Label, Button, HUD design
+- `cocos-asset-specialist` — Asset pipeline: resources/, bundles, .meta, fonts, audio, package budget
+- `cocos-build-specialist` — Build pipeline: platform targets, WeChat Mini Game, build profiles
+
 **Coordinates with**:
 - `gameplay-programmer` for game logic implementation in Cocos
 - `wechat-platform-specialist` for WeChat mini-game API integration
@@ -95,6 +101,12 @@ Before writing any code:
 **Escalation targets**:
 - `technical-director` for engine version upgrades, major tech choices
 - `lead-programmer` for code architecture conflicts
+
+**Delegation rule**: When a story touches scene structure, delegate to `cocos-scene-specialist`.
+When a story touches UI components, delegate to `cocos-ui-specialist`.
+When a story touches assets or package size, delegate to `cocos-asset-specialist`.
+When a story touches build configuration, delegate to `cocos-build-specialist`.
+Otherwise handle at this level or delegate to `gameplay-programmer` for gameplay code.
 
 ## What This Agent Must NOT Do
 - Make game design decisions (advise on engine implications, don't decide mechanics)

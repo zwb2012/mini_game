@@ -243,6 +243,10 @@ Present a concise implementation summary:
 - `src/[path]` — created / modified ([brief description])
 - `tests/[path]` — test file ([N] test functions)
 
+**@ccclass components created/modified**:
+[DETECT via: grep "^@ccclass" in files changed this story]
+- [ComponentName] — scene mount: [✓ assets/scenes/*.scene] or [✗ NOT MOUNTED]
+
 **Acceptance criteria covered**:
 - [x] [criterion] — implemented in [file:function]
 - [x] [criterion] — covered by test [test_name]
@@ -251,8 +255,57 @@ Present a concise implementation summary:
 **Deviations from scope**: [None] or [list files touched outside story boundary]
 **Engine risks flagged**: [None] or [specialist finding]
 **Blockers**: [None] or [describe]
+```
 
-Ready for: `/code-review [file1] [file2]` then `/story-done [story-path]`
+### Scene Integration Gap Detection
+
+After collecting the summary, run two checks:
+
+1. **Detect @ccclass components**: grep changed files for `@ccclass('...')` decorators.
+2. **Check scene files**: glob `assets/scenes/*.scene`.
+
+If `@ccclass` components were created and scene files exist:
+  - Search scene JSON for each component class name. Mark as ✓ or ✗.
+
+If `@ccclass` components were created but NO scene files exist:
+  - Insert this block before "### Next Steps":
+
+```
+⚠️  **Scene Integration Gap Detected**
+
+This story created Cocos `@ccclass` components that are not mounted in any scene
+file. The project will not display anything when opened in Cocos Creator.
+
+| Component | File | Scene Status |
+|-----------|------|-------------|
+| [ComponentName] | [file path] | Not in any .scene |
+
+→ Resolve: `/setup-cocos-project` — generates GameScene and mounts components
+```
+
+If no `@ccclass` components were created: skip the gap block entirely.
+
+### Next Steps
+
+If scene gap detected:
+```
+1. `/setup-cocos-project` — required before editor preview
+2. Then: Cocos Creator → Open project → Preview GameScene
+3. `/code-review [files]`
+4. `/story-done [story-path]`
+```
+
+If all components are mounted in scenes:
+```
+1. `/code-review [files]`
+2. Cocos Creator → Preview GameScene → verify visual ACs
+3. `/story-done [story-path]`
+```
+
+If no @ccclass components (pure logic/config story):
+```
+1. `/code-review [files]`
+2. `/story-done [story-path]`
 ```
 
 ---

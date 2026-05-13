@@ -1,0 +1,15 @@
+{
+  "__version__": "1.0.8",
+  "modules": {
+    "includeModules": [
+      "2d",
+      "audio",
+      "ui",
+      "graphics",
+      "label",
+      "tween",
+      "profiler"
+    ]
+  },
+  "macroConfig": {}
+}

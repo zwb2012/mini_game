@@ -148,6 +148,15 @@ phases:
           glob: "design/accessibility-requirements.md"
         description: "Commit accessibility tier (Basic/Standard/Comprehensive/Exemplary) and feature matrix. UX specs (Phase 4) reference this tier."
 
+      - id: cocos-project-init
+        name: "Cocos Project Initialization"
+        command: /setup-cocos-project
+        required: true
+        artifact:
+          glob: "assets/scenes/*.scene"
+          min_count: 1
+        description: "Initialize Cocos Creator 3.8.8 project skeleton from templates/cocos-game-base. Creates settings/, scene files, editor profiles, and scripts symlink to src/core. Run after architecture review and control manifest are complete, before pre-production."
+
   pre-production:
     label: "Pre-Production"
     description: "UX specs, asset specs, prototype the core mechanic, define stories, validate fun"
