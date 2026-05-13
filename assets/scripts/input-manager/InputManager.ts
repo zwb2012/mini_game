@@ -128,6 +128,23 @@ export class InputManager {
     };
   }
 
+  /** 启用/停用输入——仅管理触摸事件绑定，保留订阅者列表以支持暂停/恢复。 */
+  setActive(active: boolean): void {
+    if (active) {
+      this.bind();
+    } else {
+      this._node.off('touchstart', this._onTouchStart, this);
+      this._node.off('touchmove', this._onTouchMove, this);
+      this._node.off('touchend', this._onTouchEnd, this);
+      this._activeTouchId = null;
+    }
+  }
+
+  /** 销毁输入管理器——解绑所有事件并清空订阅者。 */
+  destroy(): void {
+    this.unbind();
+  }
+
   // ---- Touch Handlers ----
 
   private _onTouchStart(event: any): void {

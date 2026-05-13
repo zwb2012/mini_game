@@ -20,7 +20,7 @@
  * @ccclass GameBootstrap
  */
 
-import { _decorator, Component, Node } from 'cc';
+import { _decorator, AudioSource, Component, Node } from 'cc';
 import { GridConnectionEngine } from '../grid-connection-engine/GridConnectionEngine';
 import { GameStateMachine, GameState } from '../game-state-machine/GameStateMachine';
 import { InputManager } from '../input-manager/InputManager';
@@ -95,7 +95,7 @@ export class GameBootstrap extends Component {
 
   async start(): Promise<void> {
     // 创建音频管理器并预加载
-    this._audioManager = new AudioManager(this.node.getComponent('cc.AudioSource') as any, platformStorage);
+    this._audioManager = new AudioManager(this.node.getComponent(AudioSource)!, platformStorage);
     await this._audioManager.preload();
 
     // 启动：进入菜单
@@ -188,7 +188,6 @@ export class GameBootstrap extends Component {
 
     // 注册输入管理器
     this._inputManager.bind();
-    this._inputManager.setActive(true);
 
     // 4. 注册引擎事件 → 音频同步
     if (this._audioManager) {
