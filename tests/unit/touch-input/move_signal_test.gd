@@ -18,6 +18,7 @@ func before_each() -> void:
 	_touch_input.aim_position = Vector2.ZERO
 	_touch_input.shoot_held = false
 	_touch_input.is_aiming = false
+	_touch_input._shoot_tapped_pulse = false
 	_touch_input.split_x = 540.0  # Standard split for 1080px screen
 
 	# Set up test config with known values
