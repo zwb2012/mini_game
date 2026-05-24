@@ -38,4 +38,4 @@ This epic is complete when:
 | # | Story | Type | Status | ADR |
 |---|-------|------|--------|-----|
 | 001 | [状态机核心逻辑与转换验证](story-001-core-logic.md) | Logic | Complete | ADR-0010 |
-| 002 | [配置驱动转换表与启动验证](story-002-config-driven.md) | Config/Data | Ready | ADR-0010 |
+| 002 | [配置驱动转换表与启动验证](story-002-config-driven.md) | Config/Data | Complete | ADR-0010 |

@@ -1,0 +1,10 @@
+{
+  "transitions": {
+    "MAIN_MENU": ["PLAYING"],
+    "PLAYING": ["PAUSED", "DEAD", "LEVEL_COMPLETE"],
+    "PAUSED": ["PLAYING"],
+    "DEAD": ["PLAYING", "MAIN_MENU"],
+    "LEVEL_COMPLETE": ["PLAYING", "MAIN_MENU"]
+  },
+  "initial_state": "PLAYING"
+}
