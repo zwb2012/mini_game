@@ -14,7 +14,7 @@ goal: "完成 Touch Input Epic 并建立开发基础设施（GUT 测试运行器
 start: "2026-05-24"
 end: "2026-05-30"
 generated: "2026-05-24"
-updated: "2026-05-24"
+updated: "2026-05-24T15:00"
 
 stories:
   - id: "1-1"
@@ -48,14 +48,14 @@ stories:
     completed: "2026-05-24"
 
   - id: "1-4"
-    name: "提交 Stories 001-004 累积更改"
+    name: "提交 Stories 001-006 累积更改"
     file: ""
     priority: must-have
-    status: ready-for-dev
+    status: done
     owner: ""
     estimate_days: 0.1
     blocker: ""
-    completed: ""
+    completed: "2026-05-24"
 
   - id: "1-5"
     name: "GameStateMachine Autoload 骨架"
@@ -71,11 +71,31 @@ stories:
     name: "/create-stories → game-state-machine epic"
     file: "production/epics/game-state-machine/EPIC.md"
     priority: should-have
-    status: backlog
+    status: done
     owner: ""
     estimate_days: 0.4
     blocker: ""
-    completed: ""
+    completed: "2026-05-24"
+
+  - id: "1-8"
+    name: "GSM Story 001: 状态机核心逻辑与转换验证"
+    file: "production/epics/game-state-machine/story-001-core-logic.md"
+    priority: should-have
+    status: done
+    owner: ""
+    estimate_days: 0.3
+    blocker: ""
+    completed: "2026-05-24"
+
+  - id: "1-9"
+    name: "GSM Story 002: 配置驱动转换表与启动验证"
+    file: "production/epics/game-state-machine/story-002-config-driven.md"
+    priority: should-have
+    status: done
+    owner: ""
+    estimate_days: 0.2
+    blocker: ""
+    completed: "2026-05-24"
 
   - id: "1-7"
     name: "/create-stories → physics-config epic"

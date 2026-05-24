@@ -25,32 +25,754 @@
 # STATUS VALUES: active | deprecated | superseded-by: TR-[system]-NNN
 
 version: 1
-last_updated: ""
+last_updated: "2026-05-22"
 
-requirements: []
+requirements:
+  # ── Foundation Layer ──
 
-# --- EXAMPLE ENTRIES (remove when first real entries are added) ---
-#
-# - id: TR-combat-001
-#   system: combat
-#   gdd: design/gdd/combat-system.md
-#   requirement: "Player takes damage from enemies based on attack power minus defence"
-#   created: 2026-03-10
-#   revised: ""
-#   status: active
-#
-# - id: TR-combat-002
-#   system: combat
-#   gdd: design/gdd/combat-system.md
-#   requirement: "Combo window timing is 0.4 seconds between hits"
-#   created: 2026-03-10
-#   revised: "2026-04-01"
-#   status: active
-#
-# - id: TR-combat-003
-#   system: combat
-#   gdd: design/gdd/combat-system.md
-#   requirement: "Old damage formula using raw stats"
-#   created: 2026-03-10
-#   revised: ""
-#   status: superseded-by: TR-combat-001
+  # Touch Input (touch-input)
+  - id: TR-touch-input-001
+    system: touch-input
+    gdd: design/gdd/touch-input.md
+    requirement: "5 standardized output signals: move_direction(Vector2), aim_position(Vector2), shoot_tapped(bool pulse), shoot_held(bool), is_aiming(bool)"
+    created: 2026-05-22
+    revised: ""
+    status: active
+
+  - id: TR-touch-input-002
+    system: touch-input
+    gdd: design/gdd/touch-input.md
+    requirement: "Screen split at split_x = screen_width / 2; left=move, right=aim+shoot; touch point locked to zone on press"
+    created: 2026-05-22
+    revised: ""
+    status: active
+
+  - id: TR-touch-input-003
+    system: touch-input
+    gdd: design/gdd/touch-input.md
+    requirement: "2-finger simultaneous support: 1 left (move) + 1 right (aim/shoot); 3rd finger ignored; same-zone 2nd touch ignored"
+    created: 2026-05-22
+    revised: ""
+    status: active
+
+  - id: TR-touch-input-004
+    system: touch-input
+    gdd: design/gdd/touch-input.md
+    requirement: "Tap vs hold discrimination: is_tap when duration < tap_threshold(200ms) AND distance < deadzone; is_hold when duration ≥ tap_threshold"
+    created: 2026-05-22
+    revised: ""
+    status: active
+
+  - id: TR-touch-input-005
+    system: touch-input
+    gdd: design/gdd/touch-input.md
+    requirement: "Move deadzone: offset length < deadzone(default 20px) → move_direction = Vector2.ZERO"
+    created: 2026-05-22
+    revised: ""
+    status: active
+
+  - id: TR-touch-input-006
+    system: touch-input
+    gdd: design/gdd/touch-input.md
+    requirement: "Game state integration: only process input in PLAYING state; suppress in PAUSED/DEAD; pass-through to UI in MAIN_MENU"
+    created: 2026-05-22
+    revised: ""
+    status: active
+
+  - id: TR-touch-input-007
+    system: touch-input
+    gdd: design/gdd/touch-input.md
+    requirement: "All tuning params (deadzone, max_radius, tap_threshold, split_x) from config file — no hardcoded values"
+    created: 2026-05-22
+    revised: ""
+    status: active
+
+  # Physics Config (physics-config)
+  - id: TR-physics-config-001
+    system: physics-config
+    gdd: design/gdd/physics-config.md
+    requirement: "5 collision layers: Player(1), Enemy(2), Projectile(3), World(4), PhysicsObject(5)"
+    created: 2026-05-22
+    revised: ""
+    status: active
+
+  - id: TR-physics-config-002
+    system: physics-config
+    gdd: design/gdd/physics-config.md
+    requirement: "Collision matrix: Player↔Enemy/World/PhysicsObject, Enemy↔Player/Projectile/World/PhysicsObject, Projectile↔Enemy/World/PhysicsObject, World↔Player/Enemy/Projectile, PhysicsObject↔Player/Enemy/Projectile/PhysicsObject"
+    created: 2026-05-22
+    revised: ""
+    status: active
+
+  - id: TR-physics-config-003
+    system: physics-config
+    gdd: design/gdd/physics-config.md
+    requirement: "4 physics materials: wood(friction=0.6, bounce=0.3), metal(0.3, 0.1), concrete(0.9, 0.0, rough=true), organic(0.5, 0.05)"
+    created: 2026-05-22
+    revised: ""
+    status: active
+
+  - id: TR-physics-config-004
+    system: physics-config
+    gdd: design/gdd/physics-config.md
+    requirement: "Debris RigidBody2D object pool: size=50, FIFO recycle when exhausted"
+    created: 2026-05-22
+    revised: ""
+    status: active
+
+  - id: TR-physics-config-005
+    system: physics-config
+    gdd: design/gdd/physics-config.md
+    requirement: "physics_ticks_per_second=60, max_physics_steps_per_frame=8"
+    created: 2026-05-22
+    revised: ""
+    status: active
+
+  - id: TR-physics-config-006
+    system: physics-config
+    gdd: design/gdd/physics-config.md
+    requirement: "CCD (CD_MODE_CAST_RAY) enabled only for projectile RigidBody2D — prevents high-speed bullet tunneling"
+    created: 2026-05-22
+    revised: ""
+    status: active
+
+  - id: TR-physics-config-007
+    system: physics-config
+    gdd: design/gdd/physics-config.md
+    requirement: "Body type assignment: Player=CharacterBody2D, enemies=CharacterBody2D or RigidBody2D (knockback-able), projectiles=RigidBody2D, destructibles=StaticBody2D→RigidBody2D, debris=RigidBody2D, world=StaticBody2D"
+    created: 2026-05-22
+    revised: ""
+    status: active
+
+  # Game State Machine (game-state-machine)
+  - id: TR-game-state-001
+    system: game-state-machine
+    gdd: design/gdd/game-state-machine.md
+    requirement: "5 mutually exclusive states: MAIN_MENU, PLAYING, PAUSED, DEAD, LEVEL_COMPLETE"
+    created: 2026-05-22
+    revised: ""
+    status: active
+
+  - id: TR-game-state-002
+    system: game-state-machine
+    gdd: design/gdd/game-state-machine.md
+    requirement: "transition_to(new_state) is the only way to change state; direct assignment forbidden; emits state_changed(old, new) signal on every transition"
+    created: 2026-05-22
+    revised: ""
+    status: active
+
+  - id: TR-game-state-003
+    system: game-state-machine
+    gdd: design/gdd/game-state-machine.md
+    requirement: "Invalid transitions rejected: DEAD→PAUSED, LEVEL_COMPLETE→PAUSED; same-state transition ignored with warning"
+    created: 2026-05-22
+    revised: ""
+    status: active
+
+  # Scene Manager (scene-manager)
+  - id: TR-scene-manager-001
+    system: scene-manager
+    gdd: design/gdd/scene-manager.md
+    requirement: "load_room(id): validate JSON → change_scene_to_file() → setup (camera, enemies, physics_objects) → FADE_IN → room_active signal"
+    created: 2026-05-22
+    revised: ""
+    status: active
+
+  - id: TR-scene-manager-002
+    system: scene-manager
+    gdd: design/gdd/scene-manager.md
+    requirement: "reset_current_room(): call room root reset() method — enemies respawn, one_shot=false objects restore, one_shot=true remain destroyed"
+    created: 2026-05-22
+    revised: ""
+    status: active
+
+  - id: TR-scene-manager-003
+    system: scene-manager
+    gdd: design/gdd/scene-manager.md
+    requirement: "Transition: FADE_OUT 150ms + FADE_IN 150ms = 300ms total; death reset is instant (no transition)"
+    created: 2026-05-22
+    revised: ""
+    status: active
+
+  - id: TR-scene-manager-004
+    system: scene-manager
+    gdd: design/gdd/scene-manager.md
+    requirement: "Load timeout 5s → room_load_failed signal → error UI → allow return to main menu"
+    created: 2026-05-22
+    revised: ""
+    status: active
+
+  - id: TR-scene-manager-005
+    system: scene-manager
+    gdd: design/gdd/scene-manager.md
+    requirement: "is_loading guard flag + request queue (max depth 2); reject duplicate load requests during active load"
+    created: 2026-05-22
+    revised: ""
+    status: active
+
+  # ── Core Layer ──
+
+  # Hit Detection (hit-detection)
+  - id: TR-hit-detection-001
+    system: hit-detection
+    gdd: design/gdd/hit-detection.md
+    requirement: "Unified HitData structure: hit_point, hit_normal, hit_object, hit_layer, impulse, source_object, source_layer, damage_type, source_entity (9 fields)"
+    created: 2026-05-22
+    revised: ""
+    status: active
+
+  - id: TR-hit-detection-002
+    system: hit-detection
+    gdd: design/gdd/hit-detection.md
+    requirement: "Collision detection via _integrate_forces + custom collision_hit signal (not body_entered) for complete contact data (position, normal, impulse)"
+    created: 2026-05-22
+    revised: ""
+    status: active
+
+  - id: TR-hit-detection-003
+    system: hit-detection
+    gdd: design/gdd/hit-detection.md
+    requirement: "AOE query_area(center, radius, layer_mask, exclude_rids) via PhysicsDirectSpaceState2D.intersect_shape() for explosion/chain propagation"
+    created: 2026-05-22
+    revised: ""
+    status: active
+
+  - id: TR-hit-detection-004
+    system: hit-detection
+    gdd: design/gdd/hit-detection.md
+    requirement: "Raycast raycast(from, to, collision_mask) for enemy AI vision only — direct return, not through hit_detected signal"
+    created: 2026-05-22
+    revised: ""
+    status: active
+
+  - id: TR-hit-detection-005
+    system: hit-detection
+    gdd: design/gdd/hit-detection.md
+    requirement: "Bullet single-hit default: first collision_hit → build HitData → emit hit_detected → bullet release. No penetration (Alpha feature)"
+    created: 2026-05-22
+    revised: ""
+    status: active
+
+  - id: TR-hit-detection-006
+    system: hit-detection
+    gdd: design/gdd/hit-detection.md
+    requirement: "Callable bind/disconnect pattern for pooled objects: store bound Callable via set_meta('hit_callback'), use same ref for disconnect"
+    created: 2026-05-22
+    revised: ""
+    status: active
+
+  # Player Controller (player-controller)
+  - id: TR-player-controller-001
+    system: player-controller
+    gdd: design/gdd/player-controller.md
+    requirement: "Move: velocity = move_direction * move_speed (default 400 px/s) in _physics_process via CharacterBody2D.move_and_slide()"
+    created: 2026-05-22
+    revised: ""
+    status: active
+
+  - id: TR-player-controller-002
+    system: player-controller
+    gdd: design/gdd/player-controller.md
+    requirement: "Facing: face_right = aim_position.x > screen_center_x; look_ahead_offset for camera; sprite flip"
+    created: 2026-05-22
+    revised: ""
+    status: active
+
+  - id: TR-player-controller-003
+    system: player-controller
+    gdd: design/gdd/player-controller.md
+    requirement: "Shooting: shoot_tapped → WeaponSystem.fire_current() via signal; shoot_held → poll per frame → fire_current() (CD delegated to WeaponSystem)"
+    created: 2026-05-22
+    revised: ""
+    status: active
+
+  - id: TR-player-controller-004
+    system: player-controller
+    gdd: design/gdd/player-controller.md
+    requirement: "Scene node (not Autoload) — instantiated per room .tscn; reset() method for death respawn: position=spawn_point, velocity=Vector2.ZERO"
+    created: 2026-05-22
+    revised: ""
+    status: active
+
+  - id: TR-player-controller-005
+    system: player-controller
+    gdd: design/gdd/player-controller.md
+    requirement: "Squeeze damage: when slide_collision_count ≥ 2 AND move_dir = zero for 1.0s → 1 HP/s crush damage via hit_detected"
+    created: 2026-05-22
+    revised: ""
+    status: active
+
+  # Camera System (camera-system)
+  - id: TR-camera-system-001
+    system: camera-system
+    gdd: design/gdd/camera-system.md
+    requirement: "Horizontal follow: lerp(camera.x, player.x + look_ahead_offset(±100px), follow_speed(5.0) * delta)"
+    created: 2026-05-22
+    revised: ""
+    status: active
+
+  - id: TR-camera-system-002
+    system: camera-system
+    gdd: design/gdd/camera-system.md
+    requirement: "Vertical deadzone: 30% screen height; camera y only follows when player exceeds deadzone bounds"
+    created: 2026-05-22
+    revised: ""
+    status: active
+
+  - id: TR-camera-system-003
+    system: camera-system
+    gdd: design/gdd/camera-system.md
+    requirement: "Scene boundary limits via Camera2D.limit_left/right/top/bottom — set from room config on load"
+    created: 2026-05-22
+    revised: ""
+    status: active
+
+  - id: TR-camera-system-004
+    system: camera-system
+    gdd: design/gdd/camera-system.md
+    requirement: "shake(intensity: 0-1, duration: 0-500ms) — decaying oscillation; concurrent shakes: use max intensity"
+    created: 2026-05-22
+    revised: ""
+    status: active
+
+  - id: TR-camera-system-005
+    system: camera-system
+    gdd: design/gdd/camera-system.md
+    requirement: "hit_stop(duration, time_scale: 0.1-0.3) — slow-motion effect; concurrent: use min time_scale and max duration; debounce 50ms"
+    created: 2026-05-22
+    revised: ""
+    status: active
+
+  # ── Core Gameplay Layer ──
+
+  # Shooting & Projectile (shooting-projectile)
+  - id: TR-shooting-001
+    system: shooting-projectile
+    gdd: design/gdd/shooting-projectile.md
+    requirement: "fire(origin, target, bullet_type, source_entity) → acquire from pool → set velocity → connect collision_hit → start lifetime timer"
+    created: 2026-05-22
+    revised: ""
+    status: active
+
+  - id: TR-shooting-002
+    system: shooting-projectile
+    gdd: design/gdd/shooting-projectile.md
+    requirement: "Standard bullet: speed=2000px/s, mass=0.5, impact_force=500, gravity_scale=0.3, max_distance=1500, lifetime=3s, hit_stop_duration=50ms"
+    created: 2026-05-22
+    revised: ""
+    status: active
+
+  - id: TR-shooting-003
+    system: shooting-projectile
+    gdd: design/gdd/shooting-projectile.md
+    requirement: "Sticky bullet: speed=1500px/s, mass=1.0, impact_force=200, fuse_duration=1.5s, explosion_radius=150, explosion_force=1000"
+    created: 2026-05-22
+    revised: ""
+    status: active
+
+  - id: TR-shooting-004
+    system: shooting-projectile
+    gdd: design/gdd/shooting-projectile.md
+    requirement: "Bullet states: FLYING→HIT(standard)/ATTACHED→DETONATING(sticky)/EXPIRED→release to pool"
+    created: 2026-05-22
+    revised: ""
+    status: active
+
+  - id: TR-shooting-005
+    system: shooting-projectile
+    gdd: design/gdd/shooting-projectile.md
+    requirement: "source_entity behavior matrix: player→hit_stop+Enemy layer collision ON; enemy→no hit_stop+Enemy layer collision OFF (防止友军伤害)"
+    created: 2026-05-22
+    revised: ""
+    status: active
+
+  - id: TR-shooting-006
+    system: shooting-projectile
+    gdd: design/gdd/shooting-projectile.md
+    requirement: "Lifetime tracking via Tween+set_loops() every 0.5s (not recursive create_timer); kill tween on release"
+    created: 2026-05-22
+    revised: ""
+    status: active
+
+  # Material Destruction (material-destruction)
+  - id: TR-material-destruction-001
+    system: material-destruction
+    gdd: design/gdd/material-destruction.md
+    requirement: "5 materials: wood(threshold=200, debris=3-5), metal(500, 2-3), concrete(1000, 5-8), organic(300, 1-2), composite(1500, 6-10)"
+    created: 2026-05-22
+    revised: ""
+    status: active
+
+  - id: TR-material-destruction-002
+    system: material-destruction
+    gdd: design/gdd/material-destruction.md
+    requirement: "Damage accumulation: accumulated_damage += hit.impulse; destroy when accumulated ≥ threshold; crack_stage_changed(stage) signal for crack stages (0/1/2)"
+    created: 2026-05-22
+    revised: ""
+    status: active
+
+  - id: TR-material-destruction-003
+    system: material-destruction
+    gdd: design/gdd/material-destruction.md
+    requirement: "Collapse direction: gravity_down (suspended), impact_direction (default: -hit_normal), impact_reverse (metal bounce)"
+    created: 2026-05-22
+    revised: ""
+    status: active
+
+  - id: TR-material-destruction-004
+    system: material-destruction
+    gdd: design/gdd/material-destruction.md
+    requirement: "Debris: acquired from PhysicsObjectPool.acquire_debris(); debris generated BEFORE object_destroyed signal emitted"
+    created: 2026-05-22
+    revised: ""
+    status: active
+
+  - id: TR-material-destruction-005
+    system: material-destruction
+    gdd: design/gdd/material-destruction.md
+    requirement: "All material parameters (threshold, debris_count, collapse_bias) from material_config.json — data-driven"
+    created: 2026-05-22
+    revised: ""
+    status: active
+
+  # Weapon System (weapon-system)
+  - id: TR-weapon-system-001
+    system: weapon-system
+    gdd: design/gdd/weapon-system.md
+    requirement: "Weapon data: weapon_id, weapon_name, bullet_type, shoot_interval, magazine_size, reload_time — from weapon_config.json"
+    created: 2026-05-22
+    revised: ""
+    status: active
+
+  - id: TR-weapon-system-002
+    system: weapon-system
+    gdd: design/gdd/weapon-system.md
+    requirement: "MVP weapons: standard_rifle (standard, 0.3s, 20mag, 1.5s reload) + sticky_launcher (sticky, 0.8s, 3mag, 2.0s reload)"
+    created: 2026-05-22
+    revised: ""
+    status: active
+
+  - id: TR-weapon-system-003
+    system: weapon-system
+    gdd: design/gdd/weapon-system.md
+    requirement: "fire_current → CD check → ammo check → ShootingSystem.fire(); CD denied if state=RELOADING or within shoot_interval"
+    created: 2026-05-22
+    revised: ""
+    status: active
+
+  - id: TR-weapon-system-004
+    system: weapon-system
+    gdd: design/gdd/weapon-system.md
+    requirement: "Per-weapon independent ammo state preserved on switch; reload interruptible by weapon switch (ammo stays at 0)"
+    created: 2026-05-22
+    revised: ""
+    status: active
+
+  - id: TR-weapon-system-005
+    system: weapon-system
+    gdd: design/gdd/weapon-system.md
+    requirement: "Room reset → all weapon ammo restored to magazine_size; state → READY"
+    created: 2026-05-22
+    revised: ""
+    status: active
+
+  # Chain Propagation (chain-propagation)
+  - id: TR-chain-propagation-001
+    system: chain-propagation
+    gdd: design/gdd/chain-propagation.md
+    requirement: "3 propagation types: debris(r=100, eff=0.85, exp=3.0), explosion(r=250, eff=0.70, exp=1.5), collapse(r=200, eff=1.00, exp=1.0)"
+    created: 2026-05-22
+    revised: ""
+    status: active
+
+  - id: TR-chain-propagation-002
+    system: chain-propagation
+    gdd: design/gdd/chain-propagation.md
+    requirement: "Two-phase model: Phase 1 physics (same frame, iterative queue) + Phase 2 visual playback (staggered every 2-3 frames)"
+    created: 2026-05-22
+    revised: ""
+    status: active
+
+  - id: TR-chain-propagation-003
+    system: chain-propagation
+    gdd: design/gdd/chain-propagation.md
+    requirement: "F_source = D_threshold + max(0, I_incoming - D_threshold) × 0.25; F_received = F_source × C_type × DepthMult(depth) × Attn_dist(d, r)"
+    created: 2026-05-22
+    revised: ""
+    status: active
+
+  - id: TR-chain-propagation-004
+    system: chain-propagation
+    gdd: design/gdd/chain-propagation.md
+    requirement: "DepthMult(depth) = 1 - (depth/20)²; depth ≥ 20 → 0 (hard cap). Iterative queue, not recursive signal chain."
+    created: 2026-05-22
+    revised: ""
+    status: active
+
+  - id: TR-chain-propagation-005
+    system: chain-propagation
+    gdd: design/gdd/chain-propagation.md
+    requirement: "De-duplication via _processed_in_chain set; exclude_rids from query_area; COOLDOWN 0.1s + pending queue (max 5)"
+    created: 2026-05-22
+    revised: ""
+    status: active
+
+  # Health & Damage (health-damage)
+  - id: TR-health-damage-001
+    system: health-damage
+    gdd: design/gdd/health-damage.md
+    requirement: "final_damage = floor(impulse × type_factor × dtc); type_factors: bullet=0.20, explosion=0.15, fragment=0.25, crush=0.30, environment=0.20"
+    created: 2026-05-22
+    revised: ""
+    status: active
+
+  - id: TR-health-damage-002
+    system: health-damage
+    gdd: design/gdd/health-damage.md
+    requirement: "Entity HP pools: Player=1000(dtc=1.0), Light enemy=200(1.0), Medium=400(0.8), Heavy=800(0.5), Boss=3000(0.3)"
+    created: 2026-05-22
+    revised: ""
+    status: active
+
+  - id: TR-health-damage-003
+    system: health-damage
+    gdd: design/gdd/health-damage.md
+    requirement: "health_changed(entity, old_hp, new_hp) and entity_died(entity, killer_source) signals; DEAD guard rejects subsequent hits"
+    created: 2026-05-22
+    revised: ""
+    status: active
+
+  # Death & Respawn (death-respawn)
+  - id: TR-death-respawn-001
+    system: death-respawn
+    gdd: design/gdd/death-respawn.md
+    requirement: "Player death flow: entity_died → DEAD state → death anim(0.5s) → death pause(1.0s) → reset_current_room() → PLAYING → spawn point + full HP"
+    created: 2026-05-22
+    revised: ""
+    status: active
+
+  - id: TR-death-respawn-002
+    system: death-respawn
+    gdd: design/gdd/death-respawn.md
+    requirement: "Infinite retries (no life limit); respawn invulnerability 1.0s; no death penalty"
+    created: 2026-05-22
+    revised: ""
+    status: active
+
+  - id: TR-death-respawn-003
+    system: death-respawn
+    gdd: design/gdd/death-respawn.md
+    requirement: "Enemy death flow: death anim(0.3s) → remove from physics space → corpse particles(1s) → notify enemy-spawn (count -1)"
+    created: 2026-05-22
+    revised: ""
+    status: active
+
+  # ── Feature Layer ──
+
+  # Enemy AI (enemy-ai)
+  - id: TR-enemy-ai-001
+    system: enemy-ai
+    gdd: design/gdd/enemy-ai.md
+    requirement: "4 archetypes: Scout(HP=200, speed=350, stun=150), Soldier(400, 200, 300), Heavy(800, 100, 600), Carrier(200, 300, 100) with distinct AI behaviors"
+    created: 2026-05-22
+    revised: ""
+    status: active
+
+  - id: TR-enemy-ai-002
+    system: enemy-ai
+    gdd: design/gdd/enemy-ai.md
+    requirement: "Vision cone: range=600px, angle=120°, 3 raycasts (head/torso/feet), detection_delay=0.3s, memory_duration=3s"
+    created: 2026-05-22
+    revised: ""
+    status: active
+
+  - id: TR-enemy-ai-003
+    system: enemy-ai
+    gdd: design/gdd/enemy-ai.md
+    requirement: "NavigationAgent2D + NavigationRegion2D pathfinding; pre-baked nav polygon per room; hazard travel cost modification"
+    created: 2026-05-22
+    revised: ""
+    status: active
+
+  - id: TR-enemy-ai-004
+    system: enemy-ai
+    gdd: design/gdd/enemy-ai.md
+    requirement: "State machine: IDLE→COMBAT→SEARCHING→IDLE; STUNNED and DEAD from any state; cover selection scoring for Scout; target priority formula"
+    created: 2026-05-22
+    revised: ""
+    status: active
+
+  - id: TR-enemy-ai-005
+    system: enemy-ai
+    gdd: design/gdd/enemy-ai.md
+    requirement: "Enemy shooting via fire(enemy_muzzle, target, 'standard', self) — reuses player bullet system; spread based on distance (base 5-15° × distance factor)"
+    created: 2026-05-22
+    revised: ""
+    status: active
+
+  - id: TR-enemy-ai-006
+    system: enemy-ai
+    gdd: design/gdd/enemy-ai.md
+    requirement: "AI frame budget: ≤ 2ms for 15 active enemies @ 60fps on mid-tier mobile"
+    created: 2026-05-22
+    revised: ""
+    status: active
+
+  # Boss AI (boss-ai)
+  - id: TR-boss-ai-001
+    system: boss-ai
+    gdd: design/gdd/boss-ai.md
+    requirement: "5 body parts (2 legs=Concrete/1000, 2 arms=Metal/500, 1 core=Composite/1500) as independent RigidBody2D with top_level=true under CharacterBody2D root"
+    created: 2026-05-22
+    revised: ""
+    status: active
+
+  - id: TR-boss-ai-002
+    system: boss-ai
+    gdd: design/gdd/boss-ai.md
+    requirement: "Phase system: Phase 1 (HP>50%, legs=0) → Phase 2 (HP≤50% OR legs≥1) → DOWNED (legs=2, permanent VULNERABLE, 20s collapse countdown)"
+    created: 2026-05-22
+    revised: ""
+    status: active
+
+  - id: TR-boss-ai-003
+    system: boss-ai
+    gdd: design/gdd/boss-ai.md
+    requirement: "Pillar 4 bullet separation: dtc_effective=0.0 for bullet damage_type (bullet never reduces BossTotalHP); crush penetration dtc_effective=1.0"
+    created: 2026-05-22
+    revised: ""
+    status: active
+
+  - id: TR-boss-ai-004
+    system: boss-ai
+    gdd: design/gdd/boss-ai.md
+    requirement: "VULNERABLE state: vuln_mult=2.0, 5.0s window; STUNNED: 2.0s fixed. Arm protection: core immune to crush while both arms intact"
+    created: 2026-05-22
+    revised: ""
+    status: active
+
+  - id: TR-boss-ai-005
+    system: boss-ai
+    gdd: design/gdd/boss-ai.md
+    requirement: "6 attacks: Ground Slam(CD 4s), Debris Throw(6s), Arm Sweep(5s, P1 only), Self-Destruct Throw(8s, P2), Collapse Charge(10s, P2), Doom Pulse(4s, DOWNED)"
+    created: 2026-05-22
+    revised: ""
+    status: active
+
+  - id: TR-boss-ai-006
+    system: boss-ai
+    gdd: design/gdd/boss-ai.md
+    requirement: "Anchor point path movement (5-8 anchors per boss room); not free navigation; move_speed 80(P1)/30(P2)/0(DOWNED) px/s"
+    created: 2026-05-22
+    revised: ""
+    status: active
+
+  # Level Design Data (level-design-data)
+  - id: TR-level-design-data-001
+    system: level-design-data
+    gdd: design/gdd/level-design-data.md
+    requirement: "Room JSON schema: room_id, room_type(combat/boss/transition), scene_path, camera_bounds, navigation.polygon_path, enemies[], physics_objects[], room_transitions"
+    created: 2026-05-22
+    revised: ""
+    status: active
+
+  - id: TR-level-design-data-002
+    system: level-design-data
+    gdd: design/gdd/level-design-data.md
+    requirement: "5 physics object types: explosive_barrel, hanging_object, destructible_wall, acid_pool, unstable_structure. Pillar 2 constraint: ≥2 types per room"
+    created: 2026-05-22
+    revised: ""
+    status: active
+
+  - id: TR-level-design-data-003
+    system: level-design-data
+    gdd: design/gdd/level-design-data.md
+    requirement: "Boss room extensions: boss_archetype, anchor_points[], body_parts[], room_center, trigger_zone — schema defined"
+    created: 2026-05-22
+    revised: ""
+    status: active
+
+  # Enemy Spawn & Wave (enemy-spawn-wave)
+  - id: TR-enemy-spawn-001
+    system: enemy-spawn-wave
+    gdd: design/gdd/enemy-spawn-wave.md
+    requirement: "MVP: one-shot batch spawn with stagger (default 0.3s per enemy); spawn_room_enemies(room_id) → sequential instantiation → all_enemies_spawned"
+    created: 2026-05-22
+    revised: ""
+    status: active
+
+  - id: TR-enemy-spawn-002
+    system: enemy-spawn-wave
+    gdd: design/gdd/enemy-spawn-wave.md
+    requirement: "Boss separate path: activate_boss(boss_id, room_config) — bypasses enemy spawn queue; issues boss_spawned signal"
+    created: 2026-05-22
+    revised: ""
+    status: active
+
+  - id: TR-enemy-spawn-003
+    system: enemy-spawn-wave
+    gdd: design/gdd/enemy-spawn-wave.md
+    requirement: "Room clear detection: active_enemy_count=0 AND spawn_queue empty AND state ∈ {ACTIVE, BOSS_ACTIVE} → room_cleared signal"
+    created: 2026-05-22
+    revised: ""
+    status: active
+
+  # ── Presentation Layer ──
+
+  # HUD (hud)
+  - id: TR-hud-001
+    system: hud
+    gdd: design/gdd/hud.md
+    requirement: "3-tier information hierarchy: Persistent(HP bar, weapon icon), Event(chain counter, phase text, room clear), Boss(Boss HP, parts, timers)"
+    created: 2026-05-22
+    revised: ""
+    status: active
+
+  - id: TR-hud-002
+    system: hud
+    gdd: design/gdd/hud.md
+    requirement: "10 MVP HUD elements with defined positions, dimensions, signal sources, and animations — layout from hud_layout.json"
+    created: 2026-05-22
+    revised: ""
+    status: active
+
+  - id: TR-hud-003
+    system: hud
+    gdd: design/gdd/hud.md
+    requirement: "Signal subscription registry: config-driven wiring of upstream signals to HUD elements; CanvasLayer rendering independent of camera movement"
+    created: 2026-05-22
+    revised: ""
+    status: active
+
+  - id: TR-hud-004
+    system: hud
+    gdd: design/gdd/hud.md
+    requirement: "Low health edge pulse: HP ≤ max_hp × 0.3 → red edge overlay pulsing at 0.5Hz; HP bar green→yellow→red gradient"
+    created: 2026-05-22
+    revised: ""
+    status: active
+
+  # Touch Control UI (touch-control-ui)
+  - id: TR-touch-control-ui-001
+    system: touch-control-ui
+    gdd: design/gdd/touch-control-ui.md
+    requirement: "Dynamic joystick: center at finger drop point, outer ring(60px radius), inner dot(24px), max drag 80px. Read-only consumer of TouchInput signals — does not output game signals."
+    created: 2026-05-22
+    revised: ""
+    status: active
+
+  - id: TR-touch-control-ui-002
+    system: touch-control-ui
+    gdd: design/gdd/touch-control-ui.md
+    requirement: "Crosshair: 24×24px cross, follows right finger position; hidden when no right touch"
+    created: 2026-05-22
+    revised: ""
+    status: active
+
+  - id: TR-touch-control-ui-003
+    system: touch-control-ui
+    gdd: design/gdd/touch-control-ui.md
+    requirement: "Shoot feedback: tap → white pulse ring 24→48px (0.1s); hold → repeating pulse at shoot_interval. Screen space: top 48px to HUD, rest to touch controls"
+    created: 2026-05-22
+    revised: ""
+    status: active

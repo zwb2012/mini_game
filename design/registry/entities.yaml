@@ -37,7 +37,7 @@
 #   Each entry: name, status, source, referenced_by[], attributes{}, added, revised
 
 version: 1
-last_updated: ""
+last_updated: "2026-05-21"
 
 # ─── ENTITIES ────────────────────────────────────────────────────────────────
 # Named game-world objects: enemies, NPCs, characters, factions, bosses.
@@ -48,25 +48,116 @@ last_updated: ""
 # Attribute fields: any key stats that could appear in another GDD
 #   (health, damage, drops, faction, etc.)
 
-entities: []
+entities:
+  - name: scout
+    status: active
+    source: design/gdd/enemy-ai.md
+    referenced_by:
+      - design/gdd/enemy-ai.md
+    archetype: light
+    max_hp: 200
+    dtc: 1.0
+    move_speed: 350
+    stun_threshold: 150
+    fire_rate: 3.0
+    base_spread_deg: 15
+    body_type: CharacterBody2D
+    behavior: fast_cover_seeker
+    added: 2026-05-21
+    revised: ""
 
-# Example (remove when first real entry is added):
-#
-# entities:
-#   - name: goblin
-#     status: active              # active | deprecated
-#     source: design/gdd/combat.md
-#     referenced_by:
-#       - design/gdd/combat.md
-#       - design/gdd/inventory.md
-#     health: 40
-#     damage: 8
-#     drops:
-#       - item: goblin_arm        # must match an entry in items section
-#         qty: 1
-#         drop_rate: 0.8          # 0.0–1.0
-#     added: 2026-03-26
-#     revised: ""
+  - name: soldier
+    status: active
+    source: design/gdd/enemy-ai.md
+    referenced_by:
+      - design/gdd/enemy-ai.md
+    archetype: medium
+    max_hp: 400
+    dtc: 0.8
+    move_speed: 200
+    stun_threshold: 300
+    fire_rate: 1.5
+    base_spread_deg: 8
+    body_type: CharacterBody2D
+    behavior: group_advance
+    added: 2026-05-21
+    revised: ""
+
+  - name: heavy
+    status: active
+    source: design/gdd/enemy-ai.md
+    referenced_by:
+      - design/gdd/enemy-ai.md
+    archetype: heavy
+    max_hp: 800
+    dtc: 0.5
+    move_speed: 100
+    stun_threshold: 600
+    fire_rate: 2.0
+    base_spread_deg: 5
+    body_type: CharacterBody2D
+    behavior: tank_advance
+    added: 2026-05-21
+    revised: ""
+
+  - name: carrier
+    status: active
+    source: design/gdd/enemy-ai.md
+    referenced_by:
+      - design/gdd/enemy-ai.md
+    archetype: light
+    max_hp: 200
+    dtc: 1.0
+    move_speed: 300
+    stun_threshold: 100
+    fire_rate: 0
+    base_spread_deg: 0
+    body_type: RigidBody2D
+    behavior: suicide_rush
+    explosion_aoe: 150
+    explosion_impulse: 800
+    added: 2026-05-21
+    revised: ""
+
+  - name: ruin_colossus
+    status: active
+    source: design/gdd/boss-ai.md
+    referenced_by:
+      - design/gdd/boss-ai.md
+    archetype: boss
+    max_hp: 3000
+    dtc: 0.3
+    move_speed_p1: 80
+    move_speed_p2: 30
+    move_speed_downed: 0
+    body_type: CharacterBody2D
+    behavior: anchor_path_movement
+    parts:
+      - name: left_leg
+        material: concrete
+        threshold: 1000
+        hp_share: 0.25
+      - name: right_leg
+        material: concrete
+        threshold: 1000
+        hp_share: 0.25
+      - name: core_body
+        material: composite
+        threshold: 1500
+        hp_share: 0.40
+      - name: left_arm
+        material: metal
+        threshold: 500
+        hp_share: 0.05
+      - name: right_arm
+        material: metal
+        threshold: 500
+        hp_share: 0.05
+    vulnerability_multiplier: 2.0
+    stun_duration: 2.0
+    vulnerable_duration: 5.0
+    added: 2026-05-21
+    revised: ""
 
 
 # ─── ITEMS ───────────────────────────────────────────────────────────────────
@@ -106,7 +197,69 @@ items: []
 #   output_range[min, max], added
 # Optional: expression (the actual formula), notes
 
-formulas: []
+formulas:
+  - name: chain_score
+    status: active
+    source: design/gdd/chain-propagation.md
+    referenced_by:
+      - design/gdd/chain-propagation.md
+    variables:
+      - destroyed_value
+      - total_damage
+      - chain_depth
+    output_range: [0, 100000]
+    expression: "(Σ destroyed_value × 100 + total_damage × 0.5) × chain_depth^1.5"
+    notes: "Consumed by scoring/rating system. depth_bonus uses chain_depth^1.5. Output feeds into level-end rating calculation."
+    added: 2026-05-20
+    revised: ""
+
+  - name: damage_formula
+    status: active
+    source: design/gdd/health-damage.md
+    referenced_by:
+      - design/gdd/health-damage.md
+    variables:
+      - impulse
+      - type_factor
+      - dtc
+    output_range: [0, null]
+    expression: "floor(impulse × type_factor × dtc)"
+    notes: "Consumed by enemy AI, scoring, and analytics. type_factors: bullet=0.20, explosion=0.15, fragment=0.25, crush=0.30."
+    added: 2026-05-21
+    revised: ""
+
+  - name: boss_damage
+    status: active
+    source: design/gdd/boss-ai.md
+    referenced_by:
+      - design/gdd/boss-ai.md
+    variables:
+      - impulse
+      - type_factor
+      - dtc_effective
+      - vuln_mult
+    output_range: [0, 3000]
+    expression: "floor(impulse × type_factor × dtc_effective × vuln_mult)"
+    notes: "Extends damage_formula. dtc_effective = 1.0 for crush, 0.0 for bullet (Pillar 4), 0.3 for explosion/fragment. vuln_mult = 2.0 during VULNERABLE else 1.0. Consumed by health-damage system."
+    added: 2026-05-21
+    revised: ""
+
+  - name: stun_duration
+    status: active
+    source: design/gdd/enemy-ai.md
+    referenced_by:
+      - design/gdd/enemy-ai.md
+    variables:
+      - impulse
+      - stun_threshold
+      - BASE_STUN
+      - FALLOFF_K
+      - MAX_MULT
+    output_range: [0.3, 1.2]
+    expression: "BASE_STUN × clamp(1.0 + (max(impulse/stun_threshold-1, 0) / (max(impulse/stun_threshold-1, 0) + FALLOFF_K)) × (MAX_MULT-1.0), 0.75, 3.0)"
+    notes: "Diminishing returns curve. Consumed by hit-detection for applying stun state. MAX_STUN hard cap at 1.2s."
+    added: 2026-05-21
+    revised: ""
 
 # Example:
 #
@@ -139,7 +292,135 @@ formulas: []
 #
 # Required fields: name, status, source, referenced_by, value, unit, added
 
-constants: []
+constants:
+  - name: max_chain_depth
+    status: active
+    source: design/gdd/chain-propagation.md
+    referenced_by:
+      - design/gdd/chain-propagation.md
+    value: 20
+    unit: steps
+    added: 2026-05-20
+    revised: ""
+  - name: overkill_coefficient
+    status: active
+    source: design/gdd/chain-propagation.md
+    referenced_by:
+      - design/gdd/chain-propagation.md
+    value: 0.25
+    unit: ratio
+    added: 2026-05-20
+    revised: ""
+
+  - name: player_max_hp
+    status: active
+    source: design/gdd/health-damage.md
+    referenced_by:
+      - design/gdd/health-damage.md
+    value: 1000
+    unit: hp
+    added: 2026-05-21
+    revised: ""
+
+  - name: low_health_threshold
+    status: active
+    source: design/gdd/health-damage.md
+    referenced_by:
+      - design/gdd/health-damage.md
+    value: 0.3
+    unit: ratio
+    added: 2026-05-21
+    revised: ""
+
+  - name: base_stun_duration
+    status: active
+    source: design/gdd/enemy-ai.md
+    referenced_by:
+      - design/gdd/enemy-ai.md
+    value: 0.4
+    unit: seconds
+    added: 2026-05-21
+    revised: ""
+
+  - name: max_stun_duration
+    status: active
+    source: design/gdd/enemy-ai.md
+    referenced_by:
+      - design/gdd/enemy-ai.md
+    value: 1.2
+    unit: seconds
+    added: 2026-05-21
+    revised: ""
+
+  - name: default_vision_range
+    status: active
+    source: design/gdd/enemy-ai.md
+    referenced_by:
+      - design/gdd/enemy-ai.md
+    value: 600
+    unit: px
+    added: 2026-05-21
+    revised: ""
+
+  - name: carrier_explosion_impulse
+    status: active
+    source: design/gdd/enemy-ai.md
+    referenced_by:
+      - design/gdd/enemy-ai.md
+    value: 800
+    unit: impulse
+    added: 2026-05-21
+    revised: ""
+
+  - name: boss_dtc
+    status: active
+    source: design/gdd/boss-ai.md
+    referenced_by:
+      - design/gdd/boss-ai.md
+    value: 0.3
+    unit: ratio
+    added: 2026-05-21
+    revised: ""
+
+  - name: boss_max_hp
+    status: active
+    source: design/gdd/boss-ai.md
+    referenced_by:
+      - design/gdd/boss-ai.md
+    value: 3000
+    unit: hp
+    added: 2026-05-21
+    revised: ""
+
+  - name: vulnerability_multiplier
+    status: active
+    source: design/gdd/boss-ai.md
+    referenced_by:
+      - design/gdd/boss-ai.md
+    value: 2.0
+    unit: ratio
+    added: 2026-05-21
+    revised: ""
+
+  - name: boss_stun_duration
+    status: active
+    source: design/gdd/boss-ai.md
+    referenced_by:
+      - design/gdd/boss-ai.md
+    value: 2.0
+    unit: seconds
+    added: 2026-05-21
+    revised: ""
+
+  - name: boss_vulnerable_duration
+    status: active
+    source: design/gdd/boss-ai.md
+    referenced_by:
+      - design/gdd/boss-ai.md
+    value: 5.0
+    unit: seconds
+    added: 2026-05-21
+    revised: ""
 
 # Example:
 #

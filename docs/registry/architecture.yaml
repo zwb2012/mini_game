@@ -30,7 +30,9 @@
 #   Superseded entries:     Grep pattern="status: superseded"
 
 version: 1
-last_updated: ""
+last_updated: "2026-05-22"
+
+# ADR-0006 写入记录: chain_step_processed, chain_ended, chain_started, chain_depth_milestone 4 个 signal 契约 + chain-propagation 性能预算
 
 # ─── STATE OWNERSHIP ─────────────────────────────────────────────────────────
 # Who is the authoritative owner of each piece of shared game state.
@@ -43,7 +45,18 @@ last_updated: ""
 # interface: how other systems access this state (read-only property, method call,
 #   signal, shared resource, etc.) — this is the contract other ADRs depend on.
 
-state_ownership: []
+state_ownership:
+  - state: game_state
+    status: active
+    owner_system: game-state-machine
+    adr: docs/architecture/adr-0010-game-state-machine.md
+    interface: "GameStateMachine.current_state (read-only GameState enum — 5 值: MAIN_MENU, PLAYING, PAUSED, DEAD, LEVEL_COMPLETE)"
+    write_access: game-state-machine-only  # 唯一写入入口: transition_to()
+    referenced_by:
+      - docs/architecture/adr-0010-game-state-machine.md
+      - docs/architecture/adr-0002-scene-loading-strategy.md   # 读取状态决定加载/重置
+    added: 2026-05-23
+    revised: ""
 
 # Example:
 #
@@ -71,7 +84,305 @@ state_ownership: []
 #
 # pattern options: signal | direct_call | event_bus | shared_resource | rpc | none
 
-interfaces: []
+interfaces:
+  - contract: room_active
+    status: active
+    pattern: signal
+    producer: scene-manager
+    consumers:
+      - camera-system         # 设置摄像机边界
+      - enemy-spawn-wave      # 触发生成房间敌人
+    adr: docs/architecture/adr-0002-scene-loading-strategy.md
+    signal_signature: "room_active(room_id: String)"
+    referenced_by:
+      - docs/architecture/adr-0002-scene-loading-strategy.md
+    added: 2026-05-22
+    revised: ""
+
+  - contract: room_load_failed
+    status: active
+    pattern: signal
+    producer: scene-manager
+    consumers:
+      - hud                   # 显示错误提示
+    adr: docs/architecture/adr-0002-scene-loading-strategy.md
+    signal_signature: "room_load_failed(room_id: String, error: String)"
+    referenced_by:
+      - docs/architecture/adr-0002-scene-loading-strategy.md
+    added: 2026-05-22
+    revised: ""
+
+  - contract: room_reset
+    status: active
+    pattern: direct_call
+    producer: scene-manager
+    consumers:
+      - room-root-scenes      # each room .tscn root node implements reset()
+    adr: docs/architecture/adr-0002-scene-loading-strategy.md
+    signal_signature: "N/A — direct method call: RoomRoot.reset()"
+    referenced_by:
+      - docs/architecture/adr-0002-scene-loading-strategy.md
+    added: 2026-05-22
+    revised: ""
+
+  - contract: pool_exhausted
+    status: active
+    pattern: signal
+    producer: physics-object-pool
+    consumers:
+      - hud                   # 显示"物理对象过多"警告
+    adr: docs/architecture/adr-0003-physics-object-pool.md
+    signal_signature: "pool_exhausted(type: String)"
+    referenced_by:
+      - docs/architecture/adr-0003-physics-object-pool.md
+    added: 2026-05-22
+    revised: ""
+
+  - contract: pool_recovered
+    status: active
+    pattern: signal
+    producer: physics-object-pool
+    consumers:
+      - hud                   # 隐藏"物理对象过多"警告
+    adr: docs/architecture/adr-0003-physics-object-pool.md
+    signal_signature: "pool_recovered(type: String)"
+    referenced_by:
+      - docs/architecture/adr-0003-physics-object-pool.md
+    added: 2026-05-22
+    revised: ""
+
+  - contract: hit_detected
+    status: active
+    pattern: signal
+    producer: hit-detection
+    consumers:
+      - health-damage         # 根据 damage_type 查表 type_factor 计算伤害
+      - material-destruction  # 根据 impulse 判断破坏阈值
+      - shooting-projectile   # 子弹命中后销毁/回收
+      - chain-propagation     # 连锁传播入口（碎片命中触发二次破坏）
+      - enemy-ai              # 被命中通知——AI 可据此改变行为
+      - death-respawn         # 致命命中触发死亡流程
+      - camera-system         # hit-stop + 屏幕震动
+    adr: docs/architecture/adr-0004-hit-detection.md
+    signal_signature: "hit_detected(hit_data: Dictionary) — 9 字段: hit_point, hit_normal, hit_object, hit_layer, impulse, source_object, source_layer, damage_type, source_entity"
+    referenced_by:
+      - docs/architecture/adr-0004-hit-detection.md
+      - docs/architecture/adr-0006-chain-propagation-recursion.md
+    added: 2026-05-22
+    revised: ""
+
+  - contract: object_destroyed
+    status: active
+    pattern: signal
+    producer: material-destruction
+    consumers:
+      - chain-propagation     # 连锁传播入口——接收 debris_list 开始传播
+      - camera-system         # 触发屏幕震动（根据材质和冲击力）
+    adr: docs/architecture/adr-0005-material-destruction-pipeline.md
+    signal_signature: "object_destroyed(position: Vector2, material: String, debris_list: Array)"
+    referenced_by:
+      - docs/architecture/adr-0005-material-destruction-pipeline.md
+      - docs/architecture/adr-0006-chain-propagation-recursion.md
+    added: 2026-05-22
+    revised: ""
+
+  - contract: crack_stage_changed
+    status: active
+    pattern: signal
+    producer: material-destruction
+    consumers:
+      - visual-feedback       # Alpha 阶段——裂缝纹理递增（0→1→2 阶段）
+    adr: docs/architecture/adr-0005-material-destruction-pipeline.md
+    signal_signature: "crack_stage_changed(instance_id: int, stage: int, material: String)"
+    referenced_by:
+      - docs/architecture/adr-0005-material-destruction-pipeline.md
+    added: 2026-05-22
+    revised: ""
+
+  - contract: chain_started
+    status: active
+    pattern: signal
+    producer: chain-propagation
+    consumers:
+      - hud                   # 显示连锁 UI（Chain ×N 计数器）
+    adr: docs/architecture/adr-0006-chain-propagation-recursion.md
+    signal_signature: "chain_started(trigger_weapon: String, origin: Vector2)"
+    referenced_by:
+      - docs/architecture/adr-0006-chain-propagation-recursion.md
+    added: 2026-05-22
+    revised: ""
+
+  - contract: chain_step_processed
+    status: active
+    pattern: signal
+    producer: chain-propagation
+    consumers:
+      - camera-system         # 每个传播步骤触发屏幕震动（intensity 随深度递减）
+      - hud                   # 更新连锁深度计数 + 里程碑提示
+      - audio                 # 传播步骤音效（低音脉冲，音高随深度递减）
+    adr: docs/architecture/adr-0006-chain-propagation-recursion.md
+    signal_signature: "chain_step_processed(step_data: Dictionary) — {position, propagation_type, depth, affected_count}"
+    referenced_by:
+      - docs/architecture/adr-0006-chain-propagation-recursion.md
+    added: 2026-05-22
+    revised: ""
+
+  - contract: chain_depth_milestone
+    status: active
+    pattern: signal
+    producer: chain-propagation
+    consumers:
+      - hud                   # 显示 "3-STEP" / "5-STEP" / "10-STEP" 里程碑弹出
+      - audio                 # 递增音阶（每级提高半音）
+    adr: docs/architecture/adr-0006-chain-propagation-recursion.md
+    signal_signature: "chain_depth_milestone(depth: int)"
+    referenced_by:
+      - docs/architecture/adr-0006-chain-propagation-recursion.md
+    added: 2026-05-22
+    revised: ""
+
+  - contract: chain_ended
+    status: active
+    pattern: signal
+    producer: chain-propagation
+    consumers:
+      - scoring               # 消费 ChainSummary 计算连锁评分
+      - hud                   # 显示连锁总结弹出（深度/破坏数/伤害量）
+    adr: docs/architecture/adr-0006-chain-propagation-recursion.md
+    signal_signature: "chain_ended(summary: Dictionary) — {chain_depth, total_destroyed, total_damage, trigger_weapon, terminated_by_depth_limit}"
+    referenced_by:
+      - docs/architecture/adr-0006-chain-propagation-recursion.md
+    added: 2026-05-22
+    revised: ""
+
+  - contract: bullet_fired
+    status: active
+    pattern: signal
+    producer: shooting-system
+    consumers:
+      - hud                   # 显示弹药计数减少
+      - audio                 # 播放射击音效
+    adr: docs/architecture/adr-0007-bullet-lifecycle.md
+    signal_signature: "bullet_fired(bullet_type: String, source_entity: String, origin: Vector2)"
+    referenced_by:
+      - docs/architecture/adr-0007-bullet-lifecycle.md
+    added: 2026-05-22
+    revised: ""
+
+  - contract: bullet_destroyed
+    status: active
+    pattern: signal
+    producer: shooting-system
+    consumers:
+      - weapon-system         # 确认子弹已销毁——可继续射击（用于弹匣武器）
+      - hud                   # 更新命中反馈
+    adr: docs/architecture/adr-0007-bullet-lifecycle.md
+    signal_signature: "bullet_destroyed(bullet_type: String, destroy_reason: String)"
+    referenced_by:
+      - docs/architecture/adr-0007-bullet-lifecycle.md
+    added: 2026-05-22
+    revised: ""
+
+  - contract: weapon_changed
+    status: active
+    pattern: signal
+    producer: weapon-system
+    consumers:
+      - hud                   # 更新武器图标 + 弹药显示
+      - player-controller     # 更新后坐力参数（不同武器不同 recoil）
+    adr: docs/architecture/adr-0008-weapon-system-ammo.md
+    signal_signature: "weapon_changed(weapon_id: String, weapon_name: String, ammo: int, magazine_size: int)"
+    referenced_by:
+      - docs/architecture/adr-0008-weapon-system-ammo.md
+    added: 2026-05-22
+    revised: ""
+
+  - contract: ammo_changed
+    status: active
+    pattern: signal
+    producer: weapon-system
+    consumers:
+      - hud                   # 更新弹药数字显示 + 空弹匣闪烁警告
+    adr: docs/architecture/adr-0008-weapon-system-ammo.md
+    signal_signature: "ammo_changed(weapon_id: String, ammo: int, magazine_size: int)"
+    referenced_by:
+      - docs/architecture/adr-0008-weapon-system-ammo.md
+    added: 2026-05-22
+    revised: ""
+
+  - contract: weapon_state_changed
+    status: active
+    pattern: signal
+    producer: weapon-system
+    consumers:
+      - hud                   # 显示换弹进度条
+      - audio                 # 换弹音效
+    adr: docs/architecture/adr-0008-weapon-system-ammo.md
+    signal_signature: "weapon_state_changed(weapon_id: String, state: String)"
+    referenced_by:
+      - docs/architecture/adr-0008-weapon-system-ammo.md
+    added: 2026-05-22
+    revised: ""
+
+  - contract: state_changed
+    status: active
+    pattern: signal
+    producer: game-state-machine
+    consumers:
+      - touch-input           # 仅在 PLAYING 时处理触控事件
+      - physics-config        # PAUSED/LEVEL_COMPLETE 时冻结物理
+      - scene-manager         # DEAD 触发场景重置
+      - death-respawn         # DEAD 触发死亡流程
+      - hud                   # 根据状态切换界面
+    adr: docs/architecture/adr-0010-game-state-machine.md
+    signal_signature: "state_changed(old: GameState, new: GameState)"
+    referenced_by:
+      - docs/architecture/adr-0010-game-state-machine.md
+    added: 2026-05-23
+    revised: ""
+
+  - contract: camera_shake
+    status: active
+    pattern: direct_call
+    producer: camera-system
+    consumers:
+      - material-destruction  # 破坏事件触发屏幕震动
+      - chain-propagation     # 每个传播步骤触发震动
+      - hit-detection         # 命中事件触发震动
+    adr: docs/architecture/adr-0011-camera-system.md
+    signal_signature: "shake(intensity: float, duration: float) -> void"
+    referenced_by:
+      - docs/architecture/adr-0011-camera-system.md
+    added: 2026-05-23
+    revised: ""
+
+  - contract: camera_hit_stop
+    status: active
+    pattern: direct_call
+    producer: camera-system
+    consumers:
+      - chain-propagation     # 深处连锁时触发慢动作
+      - hit-detection         # Boss 类命中触发 hit_stop
+    adr: docs/architecture/adr-0011-camera-system.md
+    signal_signature: "hit_stop(duration: float, time_scale: float) -> void"
+    referenced_by:
+      - docs/architecture/adr-0011-camera-system.md
+    added: 2026-05-23
+    revised: ""
+
+  - contract: boss_body_part_destroyed
+    status: active
+    pattern: signal
+    producer: boss-ai
+    consumers:
+      - hud                   # 更新部件状态指示器（完整/损伤/破坏三态）
+      - material-destruction  # 登记部件 debris 到破坏追踪
+    adr: docs/architecture/adr-0012-boss-body-part-architecture.md
+    signal_signature: "body_part_destroyed(part_id: String)"
+    referenced_by:
+      - docs/architecture/adr-0012-boss-body-part-architecture.md
+    added: 2026-05-23
+    revised: ""
 
 # Example:
 #
@@ -100,7 +411,96 @@ interfaces: []
 # Register a budget when an ADR explicitly claims a frame time allocation.
 # The registry lets /architecture-review verify the total doesn't exceed the target.
 
-performance_budgets: []
+performance_budgets:
+  - system: scene-manager
+    status: active
+    budget_ms: 2000
+    adr: docs/architecture/adr-0002-scene-loading-strategy.md
+    notes: "场景加载（卸载旧 + 加载新）总耗时目标 ≤ 2s（中端移动设备）；死亡重置 ≤ 0.1s"
+    referenced_by:
+      - docs/architecture/adr-0002-scene-loading-strategy.md
+    added: 2026-05-22
+    revised: ""
+
+  - system: physics-object-pool
+    status: active
+    budget_ms: 0.5
+    adr: docs/architecture/adr-0003-physics-object-pool.md
+    notes: "acquire_*() / release_*() 操作 <0.01ms/次；最坏情况（FIFO 回收遍历 50 个活跃对象）<0.05ms。总帧预算 <0.5ms"
+    referenced_by:
+      - docs/architecture/adr-0003-physics-object-pool.md
+    added: 2026-05-22
+    revised: ""
+
+  - system: hit-detection
+    status: active
+    budget_ms: 0.5
+    adr: docs/architecture/adr-0004-hit-detection.md
+    notes: "build_hit_data() + emit hit_detected <0.01ms/次。峰值 50 次/帧（20 子弹 + 30 碎片 AOE）= <0.5ms 总开销"
+    referenced_by:
+      - docs/architecture/adr-0004-hit-detection.md
+    added: 2026-05-22
+    revised: ""
+
+  - system: material-destruction
+    status: active
+    budget_ms: 0.2
+    adr: docs/architecture/adr-0005-material-destruction-pipeline.md
+    notes: "_on_hit() 每次 <0.001ms（Dictionary 查表）。破坏时 acquire_debris() × N <0.1ms。总帧预算 <0.2ms"
+    referenced_by:
+      - docs/architecture/adr-0005-material-destruction-pipeline.md
+    added: 2026-05-22
+    revised: ""
+
+  - system: chain-propagation
+    status: active
+    budget_ms: 2.0
+    adr: docs/architecture/adr-0006-chain-propagation-recursion.md
+    notes: "Phase 1 物理判定同帧完成——最坏情况（深度 20 × 10 objects = 200 次 shape query 处理）<2.0ms。正常游戏场景（深度 3-8，30-80 次命中）0.5-1.0ms。Phase 2 视觉播放每 3 帧一次 signal emit <0.01ms"
+    referenced_by:
+      - docs/architecture/adr-0006-chain-propagation-recursion.md
+    added: 2026-05-22
+    revised: ""
+
+  - system: shooting-system
+    status: active
+    budget_ms: 0.1
+    adr: docs/architecture/adr-0007-bullet-lifecycle.md
+    notes: "fire() 单次 <0.02ms（pool acquire + config + velocity）。_on_bullet_hit() <0.02ms（build_hit_data + deferred hit_stop）。20 颗活跃子弹的 _integrate_forces 开销由 Godot 物理引擎内部处理——不在 GDScript 层"
+    referenced_by:
+      - docs/architecture/adr-0007-bullet-lifecycle.md
+    added: 2026-05-22
+    revised: ""
+
+  - system: weapon-system
+    status: active
+    budget_ms: 0.01
+    adr: docs/architecture/adr-0008-weapon-system-ammo.md
+    notes: "fire_current() 单次 <0.005ms（CD 数值比较 + Dictionary 查表 + 委托）。CD 拒绝路径 <0.001ms。reload Tween 零 CPU 开销"
+    referenced_by:
+      - docs/architecture/adr-0008-weapon-system-ammo.md
+    added: 2026-05-22
+    revised: ""
+
+  - system: player-controller
+    status: active
+    budget_ms: 0.01
+    adr: docs/architecture/adr-0009-player-controller-touch-shooting.md
+    notes: "_physics_process: velocity 赋值 <0.001ms + move_and_slide() (C++ 引擎层)。_process: poll TouchInput + _fire() <0.005ms。无 GDScript 层性能开销"
+    referenced_by:
+      - docs/architecture/adr-0009-player-controller-touch-shooting.md
+    added: 2026-05-22
+    revised: ""
+
+  - system: camera-system
+    status: active
+    budget_ms: 0.01
+    adr: docs/architecture/adr-0011-camera-system.md
+    notes: "自定义 _process(): 一次 lerp + 条件检查 <0.001ms。Tween 回调: randf_range × 2 + Vector2 <0.001ms。总帧开销 <0.01ms（GDD 要求 ≤ 1ms）"
+    referenced_by:
+      - docs/architecture/adr-0011-camera-system.md
+    added: 2026-05-23
+    revised: ""
 
 # Example:
 #
@@ -131,7 +531,139 @@ performance_budgets: []
 # Register an API decision when the choice is non-obvious and other ADRs might
 # make a different choice for the same purpose without knowing this was decided.
 
-api_decisions: []
+api_decisions:
+  - purpose: room_scene_switching
+    status: active
+    api: SceneTree.change_scene_to_file()
+    not: PackedScene.instantiate() + manual node management
+    adr: docs/architecture/adr-0002-scene-loading-strategy.md
+    reason: "Autoload 系统（ADR-0001）在 change_scene_to_file() 期间存活——不需要手动管理持久节点。Godot 原生场景切换，代码量 <100 行 vs 手动管理 >200 行。"
+    referenced_by:
+      - docs/architecture/adr-0002-scene-loading-strategy.md
+    added: 2026-05-22
+    revised: ""
+
+  - purpose: alpha_preloading
+    status: active
+    api: ResourceLoader.load_threaded_request() + SceneTree.change_scene_to_packed()
+    not: N/A — MVP 不实现预加载，接口预留
+    adr: docs/architecture/adr-0002-scene-loading-strategy.md
+    reason: "Alpha 阶段若需后台预加载，此为 Godot 4.6 标准路径。SceneManager 接口已预留 preload_room() / cancel_preload()。"
+    referenced_by:
+      - docs/architecture/adr-0002-scene-loading-strategy.md
+    added: 2026-05-22
+    revised: ""
+
+  - purpose: debris_creation
+    status: active
+    api: PhysicsObjectPool.acquire_debris()
+    not: PackedScene.instantiate()
+    adr: docs/architecture/adr-0003-physics-object-pool.md
+    reason: "碎片 RigidBody2D 从预分配池获取——避免 _physics_process 中的运行时分配尖峰。池容量 50，FIFO 回收。"
+    referenced_by:
+      - docs/architecture/adr-0003-physics-object-pool.md
+    added: 2026-05-22
+    revised: ""
+
+  - purpose: projectile_creation
+    status: active
+    api: PhysicsObjectPool.acquire_projectile()
+    not: PackedScene.instantiate()
+    adr: docs/architecture/adr-0003-physics-object-pool.md
+    reason: "子弹 RigidBody2D 从预分配池获取——保持碎片/子弹创建路径一致。池容量 20，CCD 预启用。"
+    referenced_by:
+      - docs/architecture/adr-0003-physics-object-pool.md
+      - docs/architecture/adr-0007-bullet-lifecycle.md
+    added: 2026-05-22
+    revised: ""
+
+  - purpose: bullet_hit_detection
+    status: active
+    api: PhysicsDirectBodyState2D.get_contact_*() in _integrate_forces() + custom collision_hit signal
+    not: RigidBody2D.body_entered signal
+    adr: docs/architecture/adr-0004-hit-detection.md
+    reason: "body_entered 仅传递 Node 引用——不提供 hit_point/hit_normal/impulse。_integrate_forces(state) 通过 state.get_contact_collider_position/normal/impulse(idx) 提供完整碰撞数据。"
+    referenced_by:
+      - docs/architecture/adr-0004-hit-detection.md
+    added: 2026-05-22
+    revised: ""
+
+  - purpose: aoe_detection
+    status: active
+    api: PhysicsDirectSpaceState2D.intersect_shape() + PhysicsShapeQueryParameters2D.exclude
+    not: Area2D.area_entered / body_entered
+    adr: docs/architecture/adr-0004-hit-detection.md
+    reason: "intersect_shape() 返回范围内所有碰撞体——每个独立产生 HitData。exclude_rids 排除发射源自身。Area2D 方式需 140+ 额外子节点且无 CCD 支持。"
+    referenced_by:
+      - docs/architecture/adr-0004-hit-detection.md
+    added: 2026-05-22
+    revised: ""
+
+  - purpose: enemy_vision_raycast
+    status: active
+    api: PhysicsRayQueryParameters2D + PhysicsDirectSpaceState2D.intersect_ray()
+    not: RayCast2D node
+    adr: docs/architecture/adr-0004-hit-detection.md
+    reason: "每 0.2s 3 条射线——直接 API 查询效率更高。不走 hit_detected signal（感知射线非战斗命中）。"
+    referenced_by:
+      - docs/architecture/adr-0004-hit-detection.md
+    added: 2026-05-22
+    revised: ""
+
+  - purpose: material_destruction_tracking
+    status: active
+    api: MaterialDestruction._accumulated_damage Dictionary (instance_id → float)
+    not: Godot PhysicsMaterial damage system
+    adr: docs/architecture/adr-0005-material-destruction-pipeline.md
+    reason: "GodotPhysics2D 无内置材质破坏/损伤累积概念。自定义 Dictionary 追踪 + 材质阈值 JSON 配置实现 5 种材质的差异化规则。"
+    referenced_by:
+      - docs/architecture/adr-0005-material-destruction-pipeline.md
+    added: 2026-05-22
+    revised: ""
+
+  - purpose: boss_movement
+    status: active
+    api: RigidBody2D._integrate_forces() + state.linear_velocity
+    not: CharacterBody2D.move_and_slide()    # 禁止用于 Boss 根节点——需独立 RigidBody2D 子节点
+    adr: docs/architecture/adr-0012-boss-body-part-architecture.md
+    reason: "CharacterBody2D + top_level RigidBody2D 子节点存在根本性缺陷——手动位置同步每帧擦除 PhysicsServer impulse 效果。RigidBody2D + _integrate_forces 原生支持子节点 PinJoint2D 物理响应。"
+    referenced_by:
+      - docs/architecture/adr-0012-boss-body-part-architecture.md
+    added: 2026-05-23
+    revised: ""
+
+  - purpose: boss_body_part_connection
+    status: active
+    api: PinJoint2D (softness=0.1-0.5)
+    not: RigidBody2D.top_level = true          # 禁止——手动同步覆盖物理积分
+    adr: docs/architecture/adr-0012-boss-body-part-architecture.md
+    reason: "PinJoint2D 原生支持关节约束——部件与根节点共享物理空间，外部 impulse 通过关节自然传递。top_level=true 脱离父级 transform 但需手动同步——PhysicsServer 与手动 transform 赋值的竞争条件导致 impulse 仅存活一帧。"
+    referenced_by:
+      - docs/architecture/adr-0012-boss-body-part-architecture.md
+    added: 2026-05-23
+    revised: ""
+
+  - purpose: enemy_navigation_cbody2d
+    status: active
+    api: NavigationAgent2D + move_and_slide() (RVO2 enabled: 侦察兵/士兵; RVO2 disabled: 重装兵)
+    not: manual GDScript A* pathfinding
+    adr: docs/architecture/adr-0013-enemy-navigation.md
+    reason: "NavigationAgent2D 在 Godot C++ NavigationServer2D 层执行 A* 寻路——15 agent <0.1ms vs GDScript A* 3-5ms。RVO2 自动维持 80-150px 间距。重装兵无需避让——碾压移动。"
+    referenced_by:
+      - docs/architecture/adr-0013-enemy-navigation.md
+    added: 2026-05-23
+    revised: ""
+
+  - purpose: enemy_navigation_rbody2d
+    status: active
+    api: direct movement + RayCast2D wall avoidance
+    not: NavigationAgent2D + RVO2 (Carrier)     # 禁止——_integrate_forces() 与 velocity_computed signal 不兼容
+    adr: docs/architecture/adr-0013-enemy-navigation.md
+    reason: "NavigationAgent2D velocity_computed signal 在 _integrate_forces() 调用栈外触发——无法在 physics step 内安全地设置 state.linear_velocity。Carrier 行为简单（冲向玩家+爆炸），直接移动+射线避障即满足需求。"
+    referenced_by:
+      - docs/architecture/adr-0013-enemy-navigation.md
+    added: 2026-05-23
+    revised: ""
 
 # Example:
 #
@@ -157,7 +689,69 @@ api_decisions: []
 # Register a pattern when an ADR explicitly bans it AND other ADRs might
 # unknowingly use it (i.e., it's a tempting but wrong approach for this project).
 
-forbidden_patterns: []
+forbidden_patterns:
+  - pattern: manual_room_node_management
+    status: active
+    description: "禁止使用 PackedScene.instantiate() + 手动 add_child/queue_free 管理房间场景。必须使用 SceneTree.change_scene_to_file() 进行房间切换。"
+    why: "ADR-0001 已将 UI 系统设为 Autoload——手动管理持久根场景的架构优势不复存在。额外 ~200 行生命周期代码增加维护负担而无实质收益。"
+    adr: docs/architecture/adr-0002-scene-loading-strategy.md
+    added: 2026-05-22
+
+  - pattern: direct_runtime_rigidbody_instantiation
+    status: active
+    description: "禁止任何系统直接调用 PackedScene.instantiate() 创建碎片或子弹 RigidBody2D。必须通过 PhysicsObjectPool.acquire_debris() / acquire_projectile() 从预分配池获取。"
+    why: "运行时 instantiate() 在移动端造成帧尖峰（1-5ms），违反 60fps 目标。对象池将分配开销移至启动阶段，且 FIFO 回收天然限制活跃 RigidBody2D 数量。"
+    adr: docs/architecture/adr-0003-physics-object-pool.md
+    added: 2026-05-22
+
+  - pattern: direct_godot_collision_callback_access
+    status: active
+    description: "禁止任何下游系统直接连接 RigidBody2D.body_entered 或使用 Godot 物理回调。所有碰撞事件必须通过 HitDetection.hit_detected signal 统一消费。"
+    why: "body_entered 不提供碰撞位置/法线/冲量数据——直接使用会导致下游收到不完整数据。集中式 hit_detected signal 确保所有消费者得到完整的 9 字段 HitData。"
+    adr: docs/architecture/adr-0004-hit-detection.md
+    added: 2026-05-22
+
+  - pattern: hardcoded_material_thresholds
+    status: active
+    description: "禁止在代码中硬编码材质破坏阈值（threshold）、碎片数（debris_count）、裂缝阶段数（crack_stages）。所有材质参数必须从 assets/data/materials/material_config.json 读取。"
+    why: "Pillar 3（规则稳定、材质行为可学习）要求材质参数可被关卡设计师和平衡设计师不重新编译调整。硬编码阈值会导致调优周期延长（改代码→重新编译→重新部署）。"
+    adr: docs/architecture/adr-0005-material-destruction-pipeline.md
+    added: 2026-05-22
+
+  - pattern: direct_game_state_write
+    status: active
+    description: "禁止任何系统直接修改 `GameStateMachine._current_state` 或绕过 `transition_to()` 切换游戏状态。所有状态切换必须通过 `GameStateMachine.transition_to()` 方法。"
+    why: "集中式状态机是游戏状态的唯一权威源——直接写入会绕过合法转换白名单验证，导致非法状态切换（如 DEAD → PAUSED）和不可调试的行为不一致。"
+    adr: docs/architecture/adr-0010-game-state-machine.md
+    added: 2026-05-23
+
+  - pattern: direct_camera_offset_write
+    status: active
+    description: "禁止任何系统直接修改 Camera2D.offset 属性。所有屏幕震动必须通过 `CameraSystem.shake(intensity, duration)` 方法触发。"
+    why: "CameraSystem 管理震动优先级叠加策略（取最大强度 + 重新开始计时）——直接写入 offset 会绕过此策略，导致震动幅度爆炸或多系统同时写入 offset 互相覆盖。"
+    adr: docs/architecture/adr-0011-camera-system.md
+    added: 2026-05-23
+
+  - pattern: direct_time_scale_manipulation
+    status: active
+    description: "禁止任何系统直接修改 `Engine.time_scale`。所有慢动作效果必须通过 `CameraSystem.hit_stop(duration, time_scale)` 方法触发。"
+    why: "CameraSystem 使用 `create_timer(process_always=true)` 确保 time_scale 恢复不受自身影响——直接修改 time_scale 可能导致恢复逻辑错误（time_scale=0 时 Tween 完全停止）。集中式管理确保恢复行为可预测。"
+    adr: docs/architecture/adr-0011-camera-system.md
+    added: 2026-05-23
+
+  - pattern: top_level_body_part_sync
+    status: active
+    description: "禁止使用 `RigidBody2D.top_level = true` + `_physics_process` 手动全局位置同步管理 Boss 身体部件。所有身体部件必须通过 PinJoint2D 关节与根节点连接。"
+    why: "手动位置同步每帧覆盖 PhysicsServer 的 impulse 积分结果——外部冲击力施加到 RigidBody2D 上仅存活一帧即被位置赋值擦除。部件永远无法积累有效速度或产生可观物理偏移，与 GDD 核心需求'身体部件正常接受外部冲击力'根本冲突。引擎专家确认此为 API 设计层面的固有竞争条件，非 bug。"
+    adr: docs/architecture/adr-0012-boss-body-part-architecture.md
+    added: 2026-05-23
+
+  - pattern: navigation_agent_with_rigidbody2d
+    status: active
+    description: "禁止在 RigidBody2D 敌人上使用 NavigationAgent2D + RVO2 避让。RigidBody2D 敌人（Carrier）必须使用直接移动 + RayCast2D 避障。"
+    why: "NavigationAgent2D.velocity_computed signal 在 _integrate_forces() 调用栈外触发——无法在 physics step 内安全地设置 state.linear_velocity。RVO2 avoidance force 与 RigidBody2D 积分竞争控制权导致抖动。引擎专家确认此为 API 层面的不兼容。"
+    adr: docs/architecture/adr-0013-enemy-navigation.md
+    added: 2026-05-23
 
 # Example:
 #
