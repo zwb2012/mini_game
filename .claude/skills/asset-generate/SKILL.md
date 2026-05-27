@@ -59,12 +59,13 @@ Read `design/assets/ai-services.yaml`. If it does not exist:
 > Exit.
 
 If `active_service` is `none`:
-> "No AI backend selected. Run `/asset-generate --setup` to choose one. Available: OpenAI DALL-E 3, LiblibAI, ComfyUI (local)."
+> "No AI backend selected. Run `/asset-generate --setup` to choose one. Available: OpenAI DALL-E 3, Seedream (火山引擎), LiblibAI (哩布哩布), ComfyUI (local)."
 > Exit.
 
 Check that the required configuration is present for the active service:
 - `openai_dalle3` → check `$OPENAI_API_KEY`
-- `liblib` → check `$LIBLIB_API_KEY`
+- `seedream` → check `$ARK_API_KEY`
+- `liblib` → check `$LIBLIB_ACCESS_KEY` and `$LIBLIB_SECRET_KEY`
 - `comfyui_local` → read `services.comfyui_local.url` from `ai-services.yaml` (default: `http://localhost:8188`)
 
 ---
@@ -74,7 +75,7 @@ Check that the required configuration is present for the active service:
 Use `AskUserQuestion` to configure the backend:
 
 Tab 1 — "Choose AI backend":
-- Options: `OpenAI DALL-E 3` / `LiblibAI (哩布哩布)` / `ComfyUI (local)` / `None (disable)`
+- Options: `OpenAI DALL-E 3` / `Seedream (火山引擎)` / `LiblibAI (哩布哩布)` / `ComfyUI (local)` / `None (disable)`
 
 After selection, prompt for any service-specific details (model choice, quality, etc.). Then write to `design/assets/ai-services.yaml`:
 
@@ -268,6 +269,21 @@ curl -s -o "[output_path]" \
 ```
 
 Parse response: `jq -r '.data[0].url'` → download that URL to target path.
+
+### Backend: Seedream (火山引擎)
+
+Uses `curl` — OpenAI-compatible API format. No additional scripts needed.
+
+```bash
+curl -X POST https://ark.cn-beijing.volces.com/api/v3/images/generations \
+  -H "Content-Type: application/json" \
+  -H "Authorization: Bearer $ARK_API_KEY" \
+  -d "{\"model\":\"doubao-seedream-4-5-251128\",\"prompt\":\"[prompt]\",\"size\":\"[size]\",\"sequential_image_generation\":\"disabled\",\"response_format\":\"url\",\"stream\":false,\"watermark\":true}"
+```
+
+Parse response: `jq -r '.data[0].url'` → download that URL to target path.
+Size: `1K` | `2K` | `3K` | `4K` or custom `"1920x1080"`.
+Supports `seed` for reproducibility, `sequential_image_generation` for multi-image.
 
 ### Backend: LiblibAI (哩布哩布)
 

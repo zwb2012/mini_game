@@ -3,12 +3,13 @@
 #
 # 设置方法:
 #   export OPENAI_API_KEY="sk-..."
-#   export LIBLIB_API_KEY="..."
+#   export ARK_API_KEY="..."  (火山引擎 Seedream)
+#   export LIBLIB_ACCESS_KEY="..." && export LIBLIB_SECRET_KEY="..."
 #   (ComfyUI 使用本地地址，见下方 services.comfyui_local.url)
 #
 # 或写入 ~/.bashrc / ~/.zshrc 持久化
 
-active_service: none  # openai_dalle3 | liblib | comfyui_local | none
+active_service: seedream  # openai_dalle3 | seedream | liblib | comfyui_local | none
 
 services:
   openai_dalle3:
@@ -16,6 +17,11 @@ services:
     quality: "standard"  # standard | hd
     style: "vivid"       # vivid | natural
     default_size: "1024x1024"
+
+  seedream:
+    base_url: "https://ark.cn-beijing.volces.com/api/v3"
+    model: "doubao-seedream-4-5-251128"  # Seedream 4.5
+    default_size: "2K"                   # 1K | 2K | 3K | 4K 或 "1024x1024"
 
   liblib:
     base_url: "https://api.liblib.ai"
