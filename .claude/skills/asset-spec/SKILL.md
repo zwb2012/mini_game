@@ -212,6 +212,7 @@ Combine the agent outputs into a draft spec per asset. Present all specs in conv
 | Dimensions | [e.g. 256×256px, 4-frame sprite sheet] |
 | Format | [PNG / SVG / WAV / etc.] |
 | Naming | [e.g. vfx_frost_hit_01.png] |
+| Slice | [none / grid:3x1 names:front,side,back / tile:64x64] |
 | Polycount | [if 3D — e.g. <800 tris] |
 | Texture Res | [e.g. 512px — matches Art Bible §8 Tier 2] |
 

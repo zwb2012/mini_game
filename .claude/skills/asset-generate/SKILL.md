@@ -222,7 +222,25 @@ For each asset, call the configured AI backend (see Phase 5: API Dispatch).
 
 Save each image to its target path (from spec Dimensions and naming convention).
 
-After each successful generation, update the asset's status in `design/assets/asset-manifest.md`:
+After each successful generation, apply post-processing:
+
+**Slice** (if spec's Slice field != "none"):
+Parse the Slice value and build the `slice_image.py` command:
+- `grid:3x1, names:front,side,back` → `--grid 3x1 --names "front,side,back"`
+- `grid:4x4, prefix:walk` → `--grid 4x4 --prefix "walk"`
+- `tile:64x64` → `--tile 64x64`
+
+```bash
+python .claude/skills/asset-generate/tools/slice_image.py \
+  --input "[output_path]" \
+  --output-dir "[output_dir]" \
+  [--grid NxM | --tile WxH] \
+  [--names "a,b,c" | --prefix "name"]
+```
+
+After successful slice, delete the raw (un-sliced) image.
+
+Update the asset's status in `design/assets/asset-manifest.md`:
 - `Needed` → `Generated`
 
 Also record the generation seed (if returned by API) in the manifest.
@@ -250,11 +268,12 @@ Route based on `active_service` in `ai-services.yaml`. Each backend has a differ
 
 ### Generic Flow (all backends)
 
-1. Read asset spec → get prompt, dimensions, negative prompt
+1. Read asset spec → get prompt, dimensions, slice config
 2. Build and execute API call per backend format below
 3. Parse response → extract image URL or base64 data
 4. Download image to target path
-5. Return success/failure
+5. **If slice config != "none"**: run `slice_image.py` → produce sub-frames, delete raw image
+6. Return success/failure + output paths
 
 ### Backend: OpenAI DALL-E
 
