@@ -15,7 +15,11 @@
       "Bash(dir *)",
       "Bash(python -m json.tool*)",
       "Bash(python -m pytest*)",
-      "Bash(py -m pytest*)"
+      "Bash(py -m pytest*)",
+      "Bash(curl *)",
+      "Bash(wget *)",
+      "Bash(mkdir *)",
+      "Bash(python .claude/skills/*/tools/*)"
     ],
     "deny": [
       "Bash(rm -rf *)",

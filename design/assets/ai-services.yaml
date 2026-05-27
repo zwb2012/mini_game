@@ -1,0 +1,26 @@
+# AI 图片生成服务配置（所有后端均为可选）
+# API keys 通过环境变量注入，不写在此文件中
+#
+# 设置方法:
+#   export OPENAI_API_KEY="sk-..."
+#   export LIBLIB_API_KEY="..."
+#   (ComfyUI 使用本地地址，见下方 services.comfyui_local.url)
+#
+# 或写入 ~/.bashrc / ~/.zshrc 持久化
+
+active_service: none  # openai_dalle3 | liblib | comfyui_local | none
+
+services:
+  openai_dalle3:
+    model: "dall-e-3"
+    quality: "standard"  # standard | hd
+    style: "vivid"       # vivid | natural
+    default_size: "1024x1024"
+
+  liblib:
+    base_url: "https://api.liblib.ai"
+    default_size: "1024x1024"
+    script: ".claude/skills/asset-generate/tools/generate_liblib.py"  # HMAC-SHA1 签名脚本，curl 无法直接调用
+
+  comfyui_local:
+    url: "http://localhost:8188"  # 修改为你的 ComfyUI 地址

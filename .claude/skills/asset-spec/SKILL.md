@@ -264,17 +264,20 @@ Then update `design/assets/asset-manifest.md`. If it doesn't exist, create it:
 
 ## Progress Summary
 
-| Total | Needed | In Progress | Done | Approved |
-|-------|--------|-------------|------|----------|
-| [N] | [N] | [N] | [N] | [N] |
+| Total | Needed | Generated | Approved |
+|-------|--------|-----------|----------|
+| [N] | [N] | [N] | [N] |
 
 ## Assets by Context
 
 ### [Target Type]: [Target Name]
-| Asset ID | Name | Category | Status | Spec File |
-|----------|------|----------|--------|-----------|
-| ASSET-001 | [name] | [category] | Needed | design/assets/specs/[target]-assets.md |
+| Asset ID | Name | Category | Status | Seed | Spec File |
+|----------|------|----------|--------|------|-----------|
+| ASSET-001 | [name] | [category] | Needed | — | design/assets/specs/[target]-assets.md |
 ```
+
+> **Status values**: `Needed` (spec written, prompt ready) → `Generated` (AI image saved to assets/) → `Approved` (reviewed in-game, signed off)
+> **Seed**: AI generation seed for reproducibility. Populated by `/asset-generate` when status moves to `Generated`.
 
 If the manifest already exists, append the new context block and update the Progress Summary counts.
 
@@ -290,8 +293,9 @@ Use `AskUserQuestion`:
   - `[A] Spec another system — /asset-spec system:[next-system]`
   - `[B] Spec a level — /asset-spec level:[level-name]`
   - `[C] Spec a character — /asset-spec character:[character-name]`
-  - `[D] Run /asset-audit — validate delivered assets against specs`
-  - `[E] Stop here`
+  - `[D] Run /asset-generate final — generate production assets from these specs (after features are implemented)`
+  - `[E] Run /asset-audit — validate delivered assets against specs`
+  - `[F] Stop here`
 
 ---
 
@@ -349,4 +353,5 @@ Every phase follows: **Identify → Confirm → Generate → Review → Approve 
 ## Recommended Next Steps
 
 - Run `/asset-spec [next-context]` to continue speccing remaining systems, levels, or characters
+- Run `/asset-generate final` after features are implemented to generate production assets from these specs
 - Run `/asset-audit` to validate delivered assets against the written specs and identify gaps or mismatches

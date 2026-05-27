@@ -213,6 +213,7 @@ Before presenting next steps, check project state:
 Use `AskUserQuestion` for next steps. Only include options that are genuinely next based on the state check above:
 
 **Option pool — include only if not already done:**
+- `[_] Run /asset-generate concept — generate mood board / style reference images from the art bible (concept art, no GDDs required)` (always include — art bible is the only prerequisite)
 - `[_] Run /map-systems — decompose the concept into systems before writing GDDs` (skip if systems-index.md exists)
 - `[_] Run /setup-engine — configure the engine (asset standards may need revisiting after engine is set)` (skip if engine configured)
 - `[_] Run /design-system — start the first GDD` (skip if any GDDs exist)
@@ -224,7 +225,7 @@ Use `AskUserQuestion` for next steps. Only include options that are genuinely ne
 
 Assign letters A, B, C… only to the options actually included. Mark the most logical pipeline-advancing option as `(recommended)`.
 
-> **Always include** `/create-architecture` and Stop here as options — these are always valid next steps once the art bible is complete.
+> **Always include** `/asset-generate concept`, `/create-architecture`, and Stop here as options — these are always valid next steps once the art bible is complete.
 
 ---
 
@@ -242,8 +243,11 @@ Every section follows: **Question → Options → Decision → Draft (from art-d
 ## Recommended Next Steps
 
 After the art bible is approved:
+- Run `/asset-generate concept` to generate mood board / style reference images (optional — for visual alignment)
 - Run `/map-systems` to decompose the concept into game systems before authoring GDDs
 - Run `/setup-engine` if the engine is not yet configured (asset standards may need revisiting after engine selection)
 - Run `/design-system [first-system]` to start authoring per-system GDDs
+- Run `/review-all-gdds` once all MVP GDDs are written (required before Technical Setup gate)
+- Run `/asset-spec` once GDDs exist to generate per-asset visual specs and AI generation prompts
 - Run `/consistency-check` once GDDs exist to validate them against the art bible's visual rules
 - Run `/create-architecture` to produce the master architecture document
