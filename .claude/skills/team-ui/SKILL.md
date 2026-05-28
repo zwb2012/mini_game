@@ -94,13 +94,24 @@ After the spec is complete, invoke `/ux-review design/ux/[feature-name].md`.
 
 ### Phase 2: Visual Design
 
+**Check for existing Figma mockups**: Glob `design/ux/mockups/[feature-name]/mockup-manifest.md`.
+If it exists, read it and extract the Figma file URL and frame references. Pass these to
+art-director as visual reference — the Figma prototypes are the target visual quality bar.
+
 Delegate to **art-director**:
-- Review the full UX spec (flows, wireframes, interaction patterns, accessibility notes) — not just the wireframe images
-- Apply visual treatment from the art bible: colors, typography, spacing, animation style
-- Check that visual design preserves accessibility compliance: verify color contrast ratios, and confirm color is never the only indicator of state (shape, text, or icon must reinforce it)
-- Specify all asset requirements needed from the art pipeline: icons at specified sizes, background textures, fonts, decorative elements — with precise dimensions and format requirements
+- Review the full UX spec (flows, wireframes, interaction patterns, accessibility notes)
+- **If Figma mockups exist**: Use them as the definitive visual reference. Apply art bible
+  treatment to match the Figma look. The mockup screenshots define the target — do not
+  redesign from scratch.
+- **If no Figma mockups**: Apply visual treatment from the art bible: colors, typography,
+  spacing, animation style. Create the visual design from the UX spec text.
+- Check that visual design preserves accessibility compliance: verify color contrast ratios,
+  and confirm color is never the only indicator of state (shape, text, or icon must reinforce it)
+- Specify all asset requirements: icons at specified sizes, background textures, fonts,
+  decorative elements — with precise dimensions and format requirements
 - Ensure consistency with existing implemented UI screens
-- Output: visual design spec with style notes and asset manifest
+- Output: visual design spec with style notes and asset manifest, referencing Figma mockups
+  if available
 
 ### Phase 3: Implementation
 
@@ -111,6 +122,11 @@ Before implementation begins, spawn the **engine UI specialist** (from `.claude/
 - Output: engine UI implementation notes to hand off to ui-programmer before they begin
 
 If no engine is configured, skip this step.
+
+**Check for Figma mockups**: Glob `design/ux/mockups/[feature-name]/mockup-manifest.md`.
+If it exists, read the manifest — the Figma file URL is embedded in its header.
+Pass the screenshots and Figma URL to ui-programmer as the **definitive visual
+reference** — the implementation must match the mockup.
 
 Delegate to **ui-programmer**:
 - Implement the UI following the UX spec and visual design spec
@@ -132,6 +148,13 @@ Delegate in parallel:
 
 All three review streams must report before proceeding to Phase 5.
 
+**Figma Mockup Comparison (if mockups exist)**: If `design/ux/mockups/[feature-name]/mockup-manifest.md`
+exists, spawn an additional review: compare the implemented UI (via screenshots or
+in-engine capture) against the Figma mockup frames. Flag significant visual deviations:
+wrong colors, incorrect spacing, misaligned elements, missing states. Each deviation is
+classified as BLOCKER (breaks UX spec requirement or visibly diverges from mockup)
+or ADVISORY (cosmetic, may be intentional due to engine constraints).
+
 ### Phase 5: Polish
 
 - Address all review feedback
@@ -144,8 +167,9 @@ All three review streams must report before proceeding to Phase 5.
 ## Quick Reference — When to Use Which Skill
 
 - `/ux-design` — Author a new UX spec for a screen, flow, or HUD from scratch
-- `/ux-review` — Validate a completed UX spec before implementation
-- `/team-ui [feature]` — Full pipeline from concept through polish (calls `/ux-design` and `/ux-review` internally)
+- `/ux-review` — Validate a completed UX spec before implementation (use `--with-mockup` after `/ui-mockup`)
+- `/ui-mockup` — Generate a Figma visual prototype from an approved UX spec
+- `/team-ui [feature]` — Full pipeline from concept through polish (calls `/ux-design` and `/ux-review` internally; automatically uses Figma mockups if available)
 - `/quick-design` — Small UI changes that don't need a full new UX spec
 
 ## Error Recovery Protocol

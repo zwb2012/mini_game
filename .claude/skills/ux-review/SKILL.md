@@ -1,7 +1,7 @@
 ---
 name: ux-review
 description: "Validates a UX spec, HUD design, or interaction pattern library for completeness, accessibility compliance, GDD alignment, and implementation readiness. Produces APPROVED / NEEDS REVISION / MAJOR REVISION NEEDED verdict with specific gaps."
-argument-hint: "[file-path or 'all' or 'hud' or 'patterns']"
+argument-hint: "[file-path or 'all' or 'hud' or 'patterns'] [--with-mockup]"
 user-invocable: true
 allowed-tools: Read, Glob, Grep
 model: sonnet
@@ -33,6 +33,8 @@ the `/team-ui` pipeline.
 
 - **Specific file path** (e.g., `/ux-review design/ux/inventory.md`): validate
   that one document
+- **Specific file path with `--with-mockup`** (e.g., `/ux-review design/ux/inventory.md --with-mockup`):
+  validate the document AND the associated Figma mockup (see Phase 3D)
 - **`all`**: find all files in `design/ux/` and validate each
 - **`hud`**: validate `design/ux/hud.md` specifically
 - **`patterns`**: validate `design/ux/interaction-patterns.md` specifically
@@ -199,6 +201,50 @@ Run all checks against a `hud-design.md`-based document.
 
 ---
 
+## Phase 3D: Figma Mockup Comparison (only when `--with-mockup` is passed)
+
+If `--with-mockup` was NOT passed as an argument, skip this phase entirely.
+
+If `--with-mockup` IS passed, check for the associated Figma mockup:
+
+1. Read `design/ux/mockups/[screen-name]/mockup-manifest.md`. If it does not exist:
+   > "No mockup manifest found. Run `/ui-mockup [screen-name]` first to generate the Figma prototype."
+   Skip this phase and continue with the plain UX spec review.
+
+2. If the manifest exists, read it and validate:
+
+### Component Coverage
+- [ ] Every component in the UX spec Component Inventory has a corresponding entry
+  in the mockup manifest's Component Coverage table
+- [ ] No Figma component was introduced that is absent from the UX spec (scope creep)
+
+### State Coverage
+- [ ] Every state in the UX spec States & Variants table has a corresponding Figma frame
+- [ ] At minimum: Default, Empty, Error, and Loading (if async data) states are represented
+
+### Layout Alignment
+- [ ] Zone placement in Figma frames matches the Layout Zones specified in the UX spec
+- [ ] Information hierarchy is visually reflected in the Figma frame layout
+
+### Art Bible Compliance (if art bible exists)
+- [ ] Colors used in the mockup match the art bible palette (Section 4)
+- [ ] Typography matches art bible UI/HUD Visual Direction (Section 7)
+
+### Verdict for Mockup
+
+Add to the Quality Issues list with findings. Issues are BLOCKING (component/state
+gaps, scope creep) or ADVISORY (cosmetic layout differences, minor art bible deviations):
+
+```
+### Figma Mockup Comparison: [ALL CHECKS PASSED / GAPS FOUND]
+Component Coverage: [N/M] mapped — Missing: [list], Scope Creep: [list]
+State Coverage: [N/M] have frames — Missing: [list]
+Layout Alignment: [ALIGNED / MISALIGNMENTS] — [details]
+Art Bible: [COMPLIANT / WARNINGS / NOT CHECKED (no art bible)] — [findings]
+```
+
+---
+
 ## Phase 4: Output the Verdict
 
 ```markdown
@@ -234,8 +280,9 @@ Run all checks against a `hud-design.md`-based document.
 **Blocking issues**: [N] — must be resolved before implementation
 **Advisory issues**: [N] — recommended but not blocking
 
-[For APPROVED]: This spec is ready for handoff to `/team-ui` Phase 2
-(Visual Design).
+[For APPROVED]: This spec is ready for handoff. If a Figma mockup is desired,
+run `/ui-mockup [screen-name]` to generate it, then `/ux-review [spec] --with-mockup`
+to validate the prototype. Otherwise, continue to `/team-ui` Phase 2 (Visual Design).
 
 [For NEEDS REVISION]: Address the [N] blocking issues above, then re-run
 `/ux-review`.
@@ -251,9 +298,10 @@ Recommend returning to `/ux-design` to rework [sections].
 This skill is READ-ONLY — it never edits or writes files. It reports findings only.
 
 After delivering the verdict:
-- For **APPROVED**: suggest running `/team-ui` to begin implementation coordination
-- For **NEEDS REVISION**: offer to help fix specific gaps ("Would you like me to
-  help draft the missing error state?") — but do not auto-fix; wait for user
+- For **APPROVED**: suggest running `/ui-mockup [screen-name]` for a Figma visual prototype,
+  then `/ux-review [spec] --with-mockup` to validate it — or proceed directly to `/team-ui`
+  to begin implementation
+- For **NEEDS REVISION**: offer to help fix specific gaps — but do not auto-fix; wait for user
   instruction
 - For **MAJOR REVISION NEEDED**: suggest returning to `/ux-design` with the
   specific sections to rework
