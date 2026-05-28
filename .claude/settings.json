@@ -19,7 +19,9 @@
       "Bash(curl *)",
       "Bash(wget *)",
       "Bash(mkdir *)",
-      "Bash(python .claude/skills/*/tools/*)"
+      "Bash(python .claude/skills/*/tools/generate_liblib.py)",
+      "Bash(python .claude/skills/*/tools/slice_image.py)",
+      "Bash(python .claude/skills/*/tools/generate_audio.py)"
     ],
     "deny": [
       "Bash(rm -rf *)",

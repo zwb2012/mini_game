@@ -1,7 +1,7 @@
 ---
 name: asset-generate
-description: "Generate game assets using external AI image services. Two modes: 'concept' (mood board reference after art-bible) and 'final' (production assets after dev-story to replace placeholders). Reads asset specs, calls configured AI backend, saves images, updates manifest."
-argument-hint: "[concept | final [asset-id|system:name|all|--dry-run] | --setup | --approve [asset-id|all] | --dry-run]"
+description: "Generate game assets using external AI services. Image modes: 'concept' (mood board after art-bible) and 'final' (production assets after dev-story). Audio mode: 'audio' (music/SFX after asset-spec). Reads asset specs, calls configured AI backend, saves assets, updates manifest."
+argument-hint: "[concept | final [asset-id|system:name|all|--dry-run] | audio [asset-id|all|--dry-run] | --setup | --approve [asset-id|all] | --dry-run]"
 user-invocable: true
 allowed-tools: Read, Glob, Grep, Write, Edit, Bash, AskUserQuestion
 model: sonnet
@@ -21,6 +21,11 @@ elif arg == "final":
         → Phase 4b (Dry-Run)
     else:
         → Phase 4 (Final Mode, optionally scoped by asset-id / system:name / all / --regenerate)
+elif arg == "audio":
+    if sub-arg == "--dry-run":
+        → Phase 8b (Audio Dry-Run)
+    else:
+        → Phase 8 (Audio Mode, optionally scoped by asset-id / all)
 elif arg == "--setup":
     → Phase 2 (Setup Mode)
 elif arg == "--approve":
@@ -43,12 +48,16 @@ else:
 | `final --dry-run` | Preview (scoped) | Show what would be generated for final target, no API calls |
 | `--setup` | Setup | Configure AI backend interactively |
 | `--approve [asset-id\|all]` | Approve | Mark generated assets as Approved |
+| `audio` | Audio | Generate all prompt-ready audio assets |
+| `audio [asset-id]` | Single Audio | Generate one specific audio (e.g. `audio ASSET-003`) |
+| `audio all` | Batch Audio | Generate all prompt-ready audio |
+| `audio --dry-run` | Audio Preview | Show what audio would be generated, no API calls |
 | `--dry-run` | Preview (all) | Show all Needed assets, no API calls |
 | _(no argument)_ | Interactive | Ask user which mode |
 
 If no argument is provided, use `AskUserQuestion`:
 - "What do you want to generate?"
-  - Options: `[A] Concept art (mood board / style reference)` / `[B] Final production assets (replace placeholders)` / `[C] Setup — configure AI backend` / `[D] Dry-run — preview without generating`
+  - Options: `[A] Concept art (mood board / style reference)` / `[B] Final production assets (replace placeholders)` / `[C] Audio — music & SFX` / `[D] Setup — configure AI backend` / `[E] Dry-run — preview without generating`
 
 ---
 
@@ -58,8 +67,12 @@ Read `design/assets/ai-services.yaml`. If it does not exist:
 > "No AI service configuration found at `design/assets/ai-services.yaml`. Run `/asset-generate --setup` to configure an AI backend."
 > Exit.
 
+### Image mode config check
+
+If mode is `concept` or `final`, check image services:
+
 If `active_service` is `none`:
-> "No AI backend selected. Run `/asset-generate --setup` to choose one. Available: OpenAI DALL-E 3, Seedream (火山引擎), LiblibAI (哩布哩布), ComfyUI (local)."
+> "No image backend selected. Run `/asset-generate --setup` to choose one. Available: OpenAI DALL-E 3, Seedream (火山引擎), LiblibAI (哩布哩布), ComfyUI (local)."
 > Exit.
 
 Check that the required configuration is present for the active service:
@@ -68,19 +81,40 @@ Check that the required configuration is present for the active service:
 - `liblib` → check `$LIBLIB_ACCESS_KEY` and `$LIBLIB_SECRET_KEY`
 - `comfyui_local` → read `services.comfyui_local.url` from `ai-services.yaml` (default: `http://localhost:8188`)
 
+### Audio mode config check
+
+If mode is `audio`, read `audio_services` section:
+
+If `audio_services.active` is `none`:
+> "No audio backend selected. Run `/asset-generate --setup` to choose one. Available: 通义音乐 (Tongyi), Stable Audio 3.0, Lyria 3 Pro."
+> Exit.
+
+Check that the required environment variable is set:
+- `tongyi` → check `$DASHSCOPE_API_KEY`
+- `stable_audio` → check `$STABILITY_API_KEY`
+- `lyria` → check `$GOOGLE_API_KEY`
+
 ---
 
 ## Phase 2: Setup Mode (`--setup`)
 
-Use `AskUserQuestion` to configure the backend:
+First, ask which type of backend to configure. Use `AskUserQuestion`:
+- "What type of AI backend do you want to configure?"
+  - Options: `[A] Image generation` / `[B] Audio generation` / `[C] Both`
 
-Tab 1 — "Choose AI backend":
+**If Image**: Use `AskUserQuestion` → "Choose image backend":
 - Options: `OpenAI DALL-E 3` / `Seedream (火山引擎)` / `LiblibAI (哩布哩布)` / `ComfyUI (local)` / `None (disable)`
 
-After selection, prompt for any service-specific details (model choice, quality, etc.). Then write to `design/assets/ai-services.yaml`:
+**If Audio**: Use `AskUserQuestion` → "Choose audio backend":
+- Options: `通义音乐 (Tongyi)` / `Stable Audio 3.0` / `Lyria 3 Pro` / `None (disable)`
+
+After selection, write to `design/assets/ai-services.yaml`:
 
 ```yaml
 active_service: [chosen_service]
+# ... or ...
+audio_services:
+  active: [chosen_audio_service]
 # ... service config ...
 ```
 
@@ -335,6 +369,53 @@ curl -s -X POST "[comfyui_url]/prompt" \
 
 > **Implementation note**: ComfyUI workflow JSON is environment-specific. Placeholder until user configures their ComfyUI setup.
 
+### Audio Backends
+
+Audio generation uses `generate_audio.py` as a unified CLI that routes to the configured backend.
+
+```bash
+python .claude/skills/asset-generate/tools/generate_audio.py \
+  --backend [tongyi|stable_audio|lyria] \
+  --prompt "[prompt]" \
+  --output "[output_path]"
+```
+
+Backend routing is read from `design/assets/ai-services.yaml` → `audio_services`.
+
+#### Backend: 通义音乐 (Tongyi)
+
+Uses `curl` — Bearer token auth to Alibaba DashScope.
+
+```bash
+curl -s -X POST "https://dashscope.aliyuncs.com/api/v1/services/audio/music/generation" \
+  -H "Authorization: Bearer $DASHSCOPE_API_KEY" \
+  -H "Content-Type: application/json" \
+  -d "{\"model\":\"fun-music-v1\",\"input\":{\"prompt\":\"[prompt]\"}}"
+```
+
+Response contains an audio URL. Download to output path.
+
+#### Backend: Stable Audio 3.0
+
+`curl` against Stability AI API.
+
+```bash
+curl -s -X POST "https://api.stability.ai/v2alpha/generation/stable-audio/generate" \
+  -H "Authorization: Bearer $STABILITY_API_KEY" \
+  -H "Content-Type: application/json" \
+  -d "{\"model\":\"stable-audio-3.0-large\",\"prompt\":\"[prompt]\",\"duration\":[duration]}"
+```
+
+#### Backend: Lyria 3 Pro
+
+`curl` against Google Gemini API.
+
+```bash
+curl -s -X POST "https://generativelanguage.googleapis.com/v1beta/models/lyria-3-pro:generate?key=$GOOGLE_API_KEY" \
+  -H "Content-Type: application/json" \
+  -d "{\"prompt\":\"[prompt]\",\"duration\":[duration]}"
+```
+
 ---
 
 ## Phase 6: Post-Generation Actions
@@ -366,7 +447,70 @@ Use `AskUserQuestion`:
   - `[A] Generate more assets — /asset-generate final [target]`
   - `[B] Approve generated assets — /asset-generate --approve`
   - `[C] Run /asset-audit — validate against specs`
-  - `[D] Stop here`
+  - `[D] Generate audio — /asset-generate audio`
+  - `[E] Stop here`
+
+---
+
+## Phase 8: Audio Mode (`audio [asset-id|all|--dry-run]`)
+
+Generate music and SFX assets using AI audio services.
+
+### 8a: Gather Context
+
+Read `design/assets/ai-services.yaml` → `audio_services` section. If `active` is `none`:
+> "No audio backend selected. Run `/asset-generate --setup` to configure one. Available: 通义音乐 (Tongyi), Stable Audio 3.0, Lyria 3 Pro."
+
+Read `design/assets/asset-manifest.md`. Filter for Category starting with "Audio" and Status = "Needed".
+If no matching assets:
+> "No audio assets with status 'Needed' found. Run `/asset-spec` to define audio assets first, then `/asset-generate audio` to generate them."
+
+### 8b: Dry-Run
+
+Show what would be generated:
+```
+## Audio Dry-Run — [N] tracks to generate
+
+| Asset ID | Name | Category | Duration | Est. Cost |
+|----------|------|----------|----------|-----------|
+| ASSET-010 | bgm_main_theme | Audio - Music | 120s | ~$0.04 |
+```
+
+Exit without calling API.
+
+### 8c: Generate
+
+For each audio asset, read spec → extract Generation Prompt and Duration.
+
+Confirm with user, then for each asset:
+
+```bash
+mkdir -p assets/audio/music/ assets/audio/sfx/ assets/audio/ambient/
+
+python .claude/skills/asset-generate/tools/generate_audio.py \
+  --backend [from audio_services.active] \
+  --prompt "[generation prompt]" \
+  --output "[naming from spec]"
+```
+
+Save to path matching Category:
+- `Audio - Music` → `assets/audio/music/[naming]`
+- `Audio - SFX` → `assets/audio/sfx/[naming]`
+- `Audio - Ambient` → `assets/audio/ambient/[naming]`
+
+Update manifest: `Needed` → `Generated`.
+
+### 8d: Report
+
+```
+## Audio Generation Complete
+
+| Asset ID | Name | Status | Path |
+|----------|------|--------|------|
+| ASSET-010 | bgm_main_theme | Generated | assets/audio/music/bgm_main_theme.ogg |
+
+Next: listen to generated audio, run `/asset-generate --approve [asset-id]` to mark approved.
+```
 
 ---
 

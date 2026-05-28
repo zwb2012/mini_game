@@ -40,7 +40,7 @@ Items / Props
 VFX / Particles
 UI Screens (list each screen by name)
 HUD Elements
-Audio (SFX, music — descriptions only, no generation prompts)
+Audio (SFX, music)
 Other
 ```
 
@@ -165,7 +165,7 @@ Group assets into categories:
 - **VFX / Particles** — hit effects, ambient particles, screen effects
 - **Environment** — props, tiles, backgrounds, skyboxes
 - **UI** — HUD elements, menu art, fonts (if custom)
-- **Audio** — SFX, music tracks, ambient loops *(note: audio specs are descriptions only — no generation prompts)*
+- **Audio** — SFX, music tracks, ambient loops
 - **3D Assets** — meshes, materials (if applicable per engine)
 
 Present the full identified list to the user. Use `AskUserQuestion`:
@@ -185,7 +185,7 @@ Spawn specialist agents based on review mode. **Issue all Task calls simultaneou
 
 **`art-director`** via Task:
 - Provide: full asset list from Phase 2, art bible Visual Identity Statement, Color System, Shape Language, the source doc's visual requirements, and any reference games/art mentioned in the art bible Section 9
-- Ask: "For each asset in this list, produce: (1) a 2–3 sentence visual description anchored to the art bible's shape language and color system — be specific enough that two different artists would produce consistent results; (2) a generation prompt ready for use with AI image tools (Midjourney/Stable Diffusion style — include style keywords, composition, color palette anchors, negative prompts); (3) which art bible rules directly govern this asset (cite by section). For audio assets, describe the sonic character instead of a generation prompt."
+- Ask: "For each asset in this list, produce: (1) a 2–3 sentence visual description anchored to the art bible's shape language and color system — be specific enough that two different artists would produce consistent results; (2) a generation prompt ready for use with AI image tools (Midjourney/Stable Diffusion style — include style keywords, composition, color palette anchors, negative prompts); (3) which art bible rules directly govern this asset (cite by section). For audio assets, generate a music/audio prompt (instrumentation, tempo, mood, structure)."
 
 **`technical-artist`** via Task:
 - Provide: full asset list, art bible Asset Standards (Section 8), technical-preferences.md performance budgets, engine name and version
@@ -213,6 +213,7 @@ Combine the agent outputs into a draft spec per asset. Present all specs in conv
 | Format | [PNG / SVG / WAV / etc.] |
 | Naming | [e.g. vfx_frost_hit_01.png] |
 | Slice | [none / grid:3x1 names:front,side,back / tile:64x64] |
+| Duration | [for audio — e.g. 120s (loopable)] |
 | Polycount | [if 3D — e.g. <800 tris] |
 | Texture Res | [e.g. 512px — matches Art Bible §8 Tier 2] |
 
@@ -224,7 +225,8 @@ Combine the agent outputs into a draft spec per asset. Present all specs in conv
 - §4 Color System: [color role — e.g. "uses Threat Blue per semantic color rules"]
 
 **Generation Prompt:**
-[Ready-to-use prompt. Include: style keywords, composition notes, color palette anchors, lighting direction, negative prompts.]
+[For visual: style keywords, composition, color palette, lighting direction, negative prompts.]
+[For audio: instrumentation, tempo/BPM, key, mood, structure, duration — ready for AI music API.]
 
 **Status:** Needed
 ```
@@ -295,8 +297,9 @@ Use `AskUserQuestion`:
   - `[B] Spec a level — /asset-spec level:[level-name]`
   - `[C] Spec a character — /asset-spec character:[character-name]`
   - `[D] Run /asset-generate final — generate production assets from these specs (after features are implemented)`
-  - `[E] Run /asset-audit — validate delivered assets against specs`
-  - `[F] Stop here`
+  - `[E] Run /asset-generate audio — generate music/SFX from audio specs`
+  - `[F] Run /asset-audit — validate delivered assets against specs`
+  - `[G] Stop here`
 
 ---
 
@@ -355,4 +358,5 @@ Every phase follows: **Identify → Confirm → Generate → Review → Approve 
 
 - Run `/asset-spec [next-context]` to continue speccing remaining systems, levels, or characters
 - Run `/asset-generate final` after features are implemented to generate production assets from these specs
+- Run `/asset-generate audio` to generate music/SFX from audio specs
 - Run `/asset-audit` to validate delivered assets against the written specs and identify gaps or mismatches

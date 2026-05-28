@@ -30,3 +30,23 @@ services:
 
   comfyui_local:
     url: "http://localhost:8188"  # 修改为你的 ComfyUI 地址
+
+# ── 音频后端（均可选）──────────────────────────────────────────────────
+
+audio_services:
+  active: none  # tongyi | stable_audio | lyria | none
+
+  tongyi:
+    api_key_env: "DASHSCOPE_API_KEY"
+    base_url: "https://dashscope.aliyuncs.com/api/v1/services/audio/music/generation"
+    model: "fun-music-v1"
+
+  stable_audio:
+    api_key_env: "STABILITY_API_KEY"
+    base_url: "https://api.stability.ai/v2alpha/generation/stable-audio/generate"
+    model: "stable-audio-3.0-large"
+
+  lyria:
+    api_key_env: "GOOGLE_API_KEY"
+    base_url: "https://generativelanguage.googleapis.com/v1beta"
+    model: "lyria-3-pro"
