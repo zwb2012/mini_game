@@ -1,0 +1,50 @@
+{
+  "SessionStart": [
+    {
+      "matcher": "",
+      "hooks": [
+        { "type": "command", "command": "bash \"${CLAUDE_PROJECT_DIR}/.dsh/hooks/session-start.sh\"", "timeout": 10 },
+        { "type": "command", "command": "bash \"${CLAUDE_PROJECT_DIR}/.dsh/hooks/detect-gaps.sh\"", "timeout": 10 }
+      ]
+    }
+  ],
+  "PreToolUse": [
+    {
+      "matcher": "pwsh",
+      "hooks": [
+        { "type": "command", "command": "bash \"${CLAUDE_PROJECT_DIR}/.dsh/hooks/validate-commit.sh\"", "timeout": 15 },
+        { "type": "command", "command": "bash \"${CLAUDE_PROJECT_DIR}/.dsh/hooks/validate-push.sh\"", "timeout": 10 }
+      ]
+    }
+  ],
+  "PostToolUse": [
+    {
+      "matcher": "write|edit",
+      "hooks": [
+        { "type": "command", "command": "bash \"${CLAUDE_PROJECT_DIR}/.dsh/hooks/validate-assets.sh\"", "timeout": 10 },
+        { "type": "command", "command": "bash \"${CLAUDE_PROJECT_DIR}/.dsh/hooks/validate-skill-change.sh\"", "timeout": 5 }
+      ]
+    }
+  ],
+  "Stop": [
+    {
+      "hooks": [
+        { "type": "command", "command": "bash \"${CLAUDE_PROJECT_DIR}/.dsh/hooks/session-stop.sh\"", "timeout": 10 }
+      ]
+    }
+  ],
+  "SubagentStart": [
+    {
+      "hooks": [
+        { "type": "command", "command": "bash \"${CLAUDE_PROJECT_DIR}/.dsh/hooks/log-agent.sh\"", "timeout": 5 }
+      ]
+    }
+  ],
+  "SubagentStop": [
+    {
+      "hooks": [
+        { "type": "command", "command": "bash \"${CLAUDE_PROJECT_DIR}/.dsh/hooks/log-agent-stop.sh\"", "timeout": 5 }
+      ]
+    }
+  ]
+}

@@ -13,7 +13,7 @@ Skills 会引用本文档中的 gate IDs，而不是在内部嵌入完整 prompt
 在任何 skill 中，用引用替换内联 director prompt：
 
 ```
-Spawn `creative-director` via Task using gate **CD-PILLARS** from
+Spawn `creative-director` via subagent using gate **CD-PILLARS** from
 `.claude/docs/director-gates.md`.
 ```
 
@@ -77,7 +77,7 @@ Apply the resolved mode:
 
 ```
 # Apply mode check, then:
-Spawn `[agent-name]` via Task:
+Spawn `[agent-name]` via subagent:
 - Gate: [GATE-ID] (see .claude/docs/director-gates.md)
 - Context: [fields listed under that gate]
 - Await the verdict before proceeding.
@@ -87,7 +87,7 @@ Spawn `[agent-name]` via Task:
 
 ```
 # Apply mode check for each gate first, then spawn all that survive:
-Spawn all [N] agents simultaneously via Task — issue all Task calls before
+Spawn all [N] agents simultaneously via subagent — issue all subagent calls before
 waiting for any result. Collect all verdicts before proceeding.
 ```
 
@@ -100,7 +100,7 @@ waiting for any result. Collect all verdicts before proceeding.
 | Verdict | Meaning | Default action |
 |---------|---------|----------------|
 | **APPROVE / READY** | 无问题。继续。 | 继续工作流 |
-| **CONCERNS [list]** | 存在问题但不阻塞。 | 通过 `AskUserQuestion` 呈现给用户 — 选项：`Revise flagged items` / `Accept and proceed` / `Discuss further` |
+| **CONCERNS [list]** | 存在问题但不阻塞。 | 通过 `ask_user_question` 呈现给用户 — 选项：`Revise flagged items` / `Accept and proceed` / `Discuss further` |
 | **REJECT / NOT READY [blockers]** | 阻塞性问题。不要继续。 | 向用户呈现 blockers。在解决前不要写文件或推进阶段。 |
 
 **Escalation rule**：当多个 directors 并行生成时，采用最严格 verdict — 一个 NOT READY 会覆盖所有 READY verdicts。
@@ -681,7 +681,7 @@ Tier 2 leads 使用 Sonnet（默认）。
 当 workflow 在同一 checkpoint 需要多个 directors（最常见于 `/gate-check`）时，同时生成所有 agents：
 
 ```
-Spawn in parallel (issue all Task calls before waiting for any result):
+Spawn in parallel (issue all subagent calls before waiting for any result):
 1. creative-director  → gate CD-PHASE-GATE
 2. technical-director → gate TD-PHASE-GATE
 3. producer           → gate PR-PHASE-GATE

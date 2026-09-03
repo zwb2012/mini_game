@@ -132,7 +132,7 @@ Users:
     User: "Yes, write it."  ← ONLY NOW does file get created
 
 11. AGENT WRITES FILE
-    Agent: [Uses Write tool]
+    Agent: [Uses write tool]
            "Created design/gdd/crafting-system.md. Would you like me to run
             /design-review to validate it against the standard?"
 ```
@@ -329,9 +329,9 @@ Skill: "Writing design/concept.md..."
 
 ---
 
-## 🎛️ 结构化决策 UI（AskUserQuestion）
+## 🎛️ 结构化决策 UI（ask_user_question）
 
-使用 `AskUserQuestion` 工具，以**可选择 UI** 而不是普通 Markdown 文本呈现决策。这能给用户一个干净的界面来从选项中选择（或输入 “Other” 作为自定义答案）。
+使用 `ask_user_question` 工具，以**可选择 UI** 而不是普通 Markdown 文本呈现决策。这能给用户一个干净的界面来从选项中选择（或输入 “Other” 作为自定义答案）。
 
 ### 解释 → 捕获模式
 
@@ -339,9 +339,9 @@ Skill: "Writing design/concept.md..."
 
 1. **先解释** — 在对话文本中写出完整的专家分析：详细优缺点、理论引用、参考游戏、支柱对齐。这是承载推理的地方。
 
-2. **捕获决策** — 调用 `AskUserQuestion`，提供简洁的选项标签和短描述。用户从 UI 中选择，或输入自定义答案。
+2. **捕获决策** — 调用 `ask_user_question`，提供简洁的选项标签和短描述。用户从 UI 中选择，或输入自定义答案。
 
-### 何时使用 AskUserQuestion
+### 何时使用 ask_user_question
 
 ✅ **适用于：**
 - 每个你会呈现 2-4 个选项的决策点
@@ -369,7 +369,7 @@ Skill: "Writing design/concept.md..."
 在对话中引入主题后，批量提出受限问题：
 
 ```
-AskUserQuestion:
+ask_user_question:
   questions:
     - question: "Should crafting recipes be discovered or learned?"
       header: "Discovery"
@@ -396,7 +396,7 @@ AskUserQuestion:
 在对话文本中写出完整优缺点分析后：
 
 ```
-AskUserQuestion:
+ask_user_question:
   questions:
     - question: "Which crafting approach fits your vision?"
       header: "Approach"
@@ -414,7 +414,7 @@ AskUserQuestion:
 在呈现完整战略分析与支柱对齐后：
 
 ```
-AskUserQuestion:
+ask_user_question:
   questions:
     - question: "How should we handle crafting scope for Alpha?"
       header: "Scope"
@@ -429,12 +429,12 @@ AskUserQuestion:
 
 ### 团队技能编排
 
-在团队技能中，子代理会以文本形式返回分析。**编排者**（主会话）在阶段之间的每个决策点调用 `AskUserQuestion`：
+在团队技能中，子代理会以文本形式返回分析。**编排者**（主会话）在阶段之间的每个决策点调用 `ask_user_question`：
 
 ```
 [game-designer returns 3 combat approaches with analysis]
 
-Orchestrator uses AskUserQuestion:
+Orchestrator uses ask_user_question:
   question: "Which combat approach should we develop?"
   options: [concise summaries of the 3 approaches]
 
@@ -458,7 +458,7 @@ Orchestrator uses AskUserQuestion:
 2. User: "Yes" or "No, change X first" or "Show me the full draft"
 
 3. IF User says "Yes":
-   Agent: [Uses Write/Edit tool]
+   Agent: [Uses write/edit tool]
           "Written to [filepath]. Next steps?"
 
    IF User says "No":
@@ -507,7 +507,7 @@ Agent: "This implementation requires changes to 3 files:
        Should I:
        A) Show you the code first, then write all 3
        B) Implement one file at a time with approval between each
-       C) Write all 3 now (fastest, but less review)
+       C) write all 3 now (fastest, but less review)
 
        For complex features, I recommend B."
 ```
@@ -673,4 +673,4 @@ WHEN implementing:
 - **所有技能** — 已更新为写入前必须获得批准
 - **WORKFLOW-GUIDE.md** — 已用协作示例重写
 - **README.md** — 明确说明设计是协作式（非自主式）
-- **AskUserQuestion tool** — 已集成到 16 个技能中，用于结构化选项 UI
+- **ask_user_question tool** — 已集成到 16 个技能中，用于结构化选项 UI

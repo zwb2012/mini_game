@@ -1,4 +1,4 @@
-# Claude Code Game Studios -- 完整工作流指南
+# DeepSeek Harness Game Studios -- 完整工作流指南
 
 > **如何使用代理架构从零开始做出并发布一款游戏。**
 >
@@ -64,14 +64,14 @@ cd my-game
 启动一个新的 Claude Code 会话。你应该会看到来自 `session-start.sh` 钩子的输出：
 
 ```
-=== Claude Code Game Studios -- Session Context ===
+=== DeepSeek Harness Game Studios -- Session Context ===
 Branch: main
 Recent commits:
   abc1234 Initial commit
 ===================================
 ```
 
-如果看到这些，说明钩子正常工作。否则，请检查 `.claude/settings.json`，确保钩子路径适合你的 OS。
+如果看到这些，说明钩子正常工作。否则，请检查 `.dsh/hooks.json` 是否已接入 DSH 的 `hooks-claude-code` 桥接，并确保钩子路径适合你的 OS。
 
 ### 步骤 4：随时请求帮助
 
@@ -299,7 +299,7 @@ production/           # Sprint plans, milestones, releases
 1. 读取你的游戏概念、系统索引，以及任何上游/下游 GDD
 2. 运行技术可行性预检查（领域映射 + 可行性简报）
 3. 引导你逐一完成 8 个必需 GDD 章节
-4. 每个章节遵循：Context > Questions > Options > Decision > Draft > Approval > Write
+4. 每个章节遵循：Context > Questions > Options > Decision > Draft > Approval > write
 5. 每个章节在获批后立即写入文件（可抵抗崩溃）
 6. 标记与现有已批准 GDD 的冲突
 7. 按类别路由到专家代理（systems-designer 负责数学、economy-designer 负责经济、narrative-director 负责叙事系统）
@@ -1101,9 +1101,9 @@ Director gates 是专家代理，会在关键工作流步骤审查你的工作�
 
 完整协议和示例见 `docs/COLLABORATIVE-DESIGN-PRINCIPLE.md`。
 
-### AskUserQuestion 工具
+### ask_user_question 工具
 
-代理使用 `AskUserQuestion` 工具进行结构化选项呈现。模式是先解释再捕获：先在对话文本中完整分析，然后使用干净的 UI 选择器进行决策。用于设计选择、架构决策和战略问题。不要用于开放式探索问题或简单 yes/no 确认。
+代理使用 `ask_user_question` 工具进行结构化选项呈现。模式是先解释再捕获：先在对话文本中完整分析，然后使用干净的 UI 选择器进行决策。用于设计选择、架构决策和战略问题。不要用于开放式探索问题或简单 yes/no 确认。
 
 ### 代理协调（3 层层级）
 
@@ -1152,7 +1152,7 @@ Tier 3 (Specialists):  gameplay-programmer, engine-programmer,
 | `validate-commit.sh` | Before commit | 检查设计文档引用、有效 JSON、无硬编码值 |
 | `validate-push.sh` | Before push | 推送到 main/develop 时警告 |
 | `validate-assets.sh` | Before commit | 检查资源命名和大小 |
-| `validate-skill-change.sh` | Skill file written | `.claude/skills/` 变更后建议运行 `/skill-test` |
+| `validate-skill-change.sh` | Skill file written | `.dsh/skills/` 变更后建议运行 `/skill-test` |
 | `log-agent.sh` | Agent start | 记录 agent invocations 供审计追踪 |
 | `log-agent-stop.sh` | Agent stop | 完成代理审计轨迹（start + stop） |
 | `session-stop.sh` | Session end | 最终会话日志 |

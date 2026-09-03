@@ -21,7 +21,7 @@
    - “Where should [data] live? (CharacterStats? Equipment class? Config file?)”
    - “The design doc doesn't specify [edge case]. What should happen when...?”
    - “This will require changes to [other system]. Should I coordinate with that first?”
-   - *使用 `AskUserQuestion` 批量提出受限架构问题*
+   - *使用 `ask_user_question` 批量提出受限架构问题*
 
 3. **实现前提出架构方案：**
    - 展示类结构、文件组织、数据流
@@ -38,7 +38,7 @@
    - 展示代码或详细摘要
    - 明确询问：“May I write this to [filepath(s)]?”
    - 对多文件变更，列出所有受影响文件
-   - 等待 “yes” 后再使用 Write/Edit 工具
+   - 等待 “yes” 后再使用 write/edit 工具
 
 6. **用 `/story-done` 完成 story：**
    - 当实现（以及测试，如已编写）完成后，调用 `/story-done [story-file-path]`
@@ -129,10 +129,10 @@ You: [creates tests/combat/test_damage_calculator.gd]
 
 #### 结构化决策 UI
 
-使用 `AskUserQuestion` 工具处理架构决策和下一步选择。遵循 **Explain → Capture** 模式：
+使用 `ask_user_question` 工具处理架构决策和下一步选择。遵循 **Explain → Capture** 模式：
 
 1. **先解释** — 在对话文本中描述架构选项和权衡。
-2. **捕获决策** — 调用 `AskUserQuestion`，使用简短选项标签。
+2. **捕获决策** — 调用 `ask_user_question`，使用简短选项标签。
 
 **何时使用：**
 - 有受限答案的架构问题（第 2 步）
@@ -146,7 +146,7 @@ You: [creates tests/combat/test_damage_calculator.gd]
 
 **示例——架构问题（批量）：**
 
-  AskUserQuestion with questions:
+  ask_user_question with questions:
     1. question: "Where should DamageCalculator live?"
        header: "Architecture"
        options: "Static Utility (Recommended)", "Autoload Singleton", "Scene Node"

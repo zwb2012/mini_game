@@ -1,6 +1,6 @@
 # 路径特定规则
 
-`.claude/rules/` 中的规则会在编辑匹配路径中的文件时自动执行：
+`.dsh/rules/` 中的规则会在编辑匹配路径中的文件时自动执行：
 
 | Rule File | Path Pattern | Enforces |
 | ---- | ---- | ---- |

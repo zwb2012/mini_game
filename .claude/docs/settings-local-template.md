@@ -1,62 +1,24 @@
-# settings.local.json 模板
+# DSH 设置说明
 
-创建 `.claude/settings.local.json`，用于不应提交到版本控制的个人覆盖设置。
-将其加入 `.gitignore`。
+DSH 的运行配置由桌面端管理（`$DSH_HOME/settings.yaml` 与桌面端设置面板）。本项目
+不再使用 Claude Code 的 `.claude/settings.json`；权限与审批由 DSH 的沙箱 / 审批模型处理。
 
-## settings.local.json 示例
+## 权限 / 审批
 
-```json
-{
-  "permissions": {
-    "allow": [
-      "Bash(git *)",
-      "Bash(npm *)",
-      "Read",
-      "Glob",
-      "Grep"
-    ],
-    "deny": [
-      "Bash(rm -rf *)",
-      "Bash(git push --force *)"
-    ]
-  }
-}
-```
+DSH 使用基于策略的审批（允许 / 拒绝）而非 Claude 的 `permissions.allow/deny` 列表。
+安全操作（git status、测试运行）默认放行；危险操作（强制推送、`rm -rf`、读取 `.env`）
+会被拒绝并在需要时向你确认。不要试图绕过拒绝 —— 按 DSH 政策处理。
 
-## 权限模式
+## Hooks
 
-Claude Code 支持不同的权限模式。游戏开发推荐如下：
+DSH 通过 `hooks-claude-code` 桥接加载 `.dsh/hooks.json`（见 `.dsh/hooks/README.md`）。
+这取代了旧的 `.claude/settings.json` hooks 段。
 
-### 开发期间（默认）
-使用 **normal mode** — Claude 会在运行大多数命令前询问。这对 production code 最安全。
+## 本地覆盖
 
-### 原型制作期间
-使用范围受限的 **auto-accept mode** — 对一次性代码迭代更快。
-仅在 `prototypes/` 目录中工作时使用。
+个人 / 未提交的覆盖使用 DSH 的本地工作区指令文件：
 
-### 代码评审期间
-使用 **read-only** 权限 — Claude 可以读取和搜索，但不能修改文件。
+- `AGENTS.local.md` —— 项目根的个人工作区指令覆盖（DSH 在 `AGENTS.md` 之后读取 `.local` 覆盖）。
+- DSH 桌面端设置 —— 模型、provider、推理档位等运行偏好。
 
-## 本地自定义 Hooks
-
-你可以在 `settings.local.json` 中添加个人 hooks，用于扩展（而非覆盖）
-项目 hooks。例如，构建完成时添加通知：
-
-```json
-{
-  "hooks": {
-    "Stop": [
-      {
-        "matcher": "",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "bash -c 'echo Session ended at $(date)'",
-            "timeout": 5
-          }
-        ]
-      }
-    ]
-  }
-}
-```
+`AGENTS.local.md` 已被 `.gitignore` 忽略。

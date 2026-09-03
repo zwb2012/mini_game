@@ -19,11 +19,11 @@ Fired before a tool is executed. Can **allow** (exit 0) or **block** (exit 2).
 }
 ```
 
-### PreToolUse: Write
+### PreToolUse: write
 
 ```json
 {
-  "tool_name": "Write",
+  "tool_name": "write",
   "tool_input": {
     "file_path": "src/gameplay/health.gd",
     "content": "extends Node\n..."
@@ -31,11 +31,11 @@ Fired before a tool is executed. Can **allow** (exit 0) or **block** (exit 2).
 }
 ```
 
-### PreToolUse: Edit
+### PreToolUse: edit
 
 ```json
 {
-  "tool_name": "Edit",
+  "tool_name": "edit",
   "tool_input": {
     "file_path": "src/gameplay/health.gd",
     "old_string": "var health = 100",
@@ -44,11 +44,11 @@ Fired before a tool is executed. Can **allow** (exit 0) or **block** (exit 2).
 }
 ```
 
-### PreToolUse: Read
+### PreToolUse: read
 
 ```json
 {
-  "tool_name": "Read",
+  "tool_name": "read",
   "tool_input": {
     "file_path": "src/gameplay/health.gd"
   }
@@ -59,11 +59,11 @@ Fired before a tool is executed. Can **allow** (exit 0) or **block** (exit 2).
 
 Fired after a tool completes. **Cannot block** (exit code ignored for blocking). Stderr messages are shown as warnings.
 
-### PostToolUse: Write
+### PostToolUse: write
 
 ```json
 {
-  "tool_name": "Write",
+  "tool_name": "write",
   "tool_input": {
     "file_path": "assets/data/enemy_stats.json",
     "content": "{\"goblin\": {\"health\": 50}}"
@@ -72,11 +72,11 @@ Fired after a tool completes. **Cannot block** (exit code ignored for blocking).
 }
 ```
 
-### PostToolUse: Edit
+### PostToolUse: edit
 
 ```json
 {
-  "tool_name": "Edit",
+  "tool_name": "edit",
   "tool_input": {
     "file_path": "assets/data/enemy_stats.json",
     "old_string": "\"health\": 50",
@@ -88,7 +88,7 @@ Fired after a tool completes. **Cannot block** (exit code ignored for blocking).
 
 ## SubagentStart
 
-Fired when a subagent is spawned via the Task tool.
+Fired when a subagent is spawned via the subagent tool.
 
 ```json
 {

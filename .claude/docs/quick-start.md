@@ -264,22 +264,25 @@ Templates 位于 `.claude/docs/templates/`：
 ## 文件结构参考
 
 ```
-CLAUDE.md                          -- 主配置（先读这个，约 60 行）
-.claude/
-  settings.json                    -- Claude Code hooks 和项目设置
-  agents/                          -- 49 个 agent definitions（YAML frontmatter）
-  skills/                          -- 73 个 slash command definitions（YAML frontmatter）
-  hooks/                           -- settings.json 连接的 12 个 hook scripts（.sh）
+AGENTS.md                          -- 主配置（DSH 读取，先读这个）
+CLAUDE.md                          -- 指向 AGENTS.md 的一行指针
+.dsh/
+  skills/                          -- 75 个技能（DSH 从 .dsh/skills 自动发现）
+  hooks/                           -- 12 个 hook scripts（.sh）+ 说明
+  hooks.json                       -- DSH hooks-claude-code 桥接配置
   rules/                           -- 11 个 path-specific rule files
+  delegation.md                    -- 工作室层级与 DSH subagent 委派
+.claude/
+  agents/                          -- 49 个 agent definitions（YAML frontmatter）
   docs/
     quick-start.md                 -- 本文件
-    technical-preferences.md       -- 项目特定标准（由 /setup-engine 填充）
+    technical-preferences.md       -- 项目特定标准（由 setup-engine 填充）
     coding-standards.md            -- 编码和设计文档标准
-    coordination-rules.md          -- Agent 协调规则
+    coordination-rules.md          -- agent 协调规则
     context-management.md          -- 上下文预算和压缩说明
     directory-structure.md         -- 项目目录布局
-    workflow-catalog.yaml          -- 7 阶段 pipeline definition（由 /help 读取）
+    workflow-catalog.yaml          -- 7 阶段 pipeline definition（由 help 读取）
     setup-requirements.md          -- 系统先决条件（Git Bash、jq、Python）
-    settings-local-template.md     -- 个人 settings.local.json 指南
+    settings-local-template.md     -- DSH 设置与 hooks 说明
     templates/                     -- 41 个 document templates
 ```

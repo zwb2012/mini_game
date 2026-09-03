@@ -43,10 +43,10 @@ sudo pacman -S jq       # Arch
 ## 平台说明
 
 ### Windows
-- Git for Windows 包含 **Git Bash**，提供所有 hooks 在 `settings.json` 中使用的 `bash` 命令
+- Git for Windows 包含 **Git Bash**，提供所有 hooks 在 `.dsh/hooks.json` 中使用的 `bash` 命令
 - 确保 Git Bash 位于你的 PATH 中（如果通过 Git 安装器安装，默认如此）
-- Hooks 使用 `bash .claude/hooks/[name].sh` — 这在 Windows 上可用，因为
-  Claude Code 会通过能够找到 `bash.exe` 的 shell 调用命令
+- Hooks 使用 `bash .dsh/hooks/[name].sh` — 这在 Windows 上可用，因为
+  DSH 会通过能够找到 `bash.exe` 的 shell 调用命令
 
 ### macOS / Linux
 - Bash 原生可用

@@ -244,7 +244,7 @@ Question → Options → Decision → Draft → Approval
 ```
 
 > **Note:** 这些示例以对话文本展示协作模式。
-> 实践中，agents 现在会在决策点使用 `AskUserQuestion` tool，
+> 实践中，agents 现在会在决策点使用 `ask_user_question` tool，
 > 展示结构化 option pickers（包含 labels、descriptions 和 multi-select）。
 > 模式是 **Explain → Capture**：agents 先在对话中解释分析，
 > 然后为用户决策展示结构化 UI picker。
@@ -267,7 +267,7 @@ Question → Options → Decision → Draft → Approval
    - Strategic analysis 在决策前展示
 
 4. **Agents Get Approval Before Writing Files**
-   - 使用 Write/Edit tools 前明确询问 "May I write to [file]?"
+   - 使用 write/edit tools 前明确询问 "May I write to [file]?"
    - Multi-file changes 先列出所有受影响文件
    - User 说 "Yes" 后才创建文件
 

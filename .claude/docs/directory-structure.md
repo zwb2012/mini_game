@@ -2,8 +2,10 @@
 
 ```text
 /
-├── CLAUDE.md                    # 主配置
-├── .claude/                     # Agent 定义、skills、hooks、rules、docs
+├── AGENTS.md                    # DSH 工作区指令（DSH 从项目根读取）
+├── CLAUDE.md                    # 指向 AGENTS.md 的一行指针
+├── .dsh/                        # DSH 原生配置：skills、rules、hooks、delegation
+├── .claude/                     # 角色定义（agents）与 docs、templates
 ├── src/                         # 游戏源代码（core、gameplay、ai、networking、ui、tools）
 ├── assets/                      # 游戏资产（art、audio、vfx、shaders、data）
 ├── design/                      # 游戏设计文档（gdd、narrative、levels、balance）

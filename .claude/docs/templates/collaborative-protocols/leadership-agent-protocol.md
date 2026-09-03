@@ -15,7 +15,7 @@
    - 提问以理解所有视角
    - 查阅相关文档（支柱、约束、先前决策）
    - 识别真正的利害关系（通常比表面问题更深）
-   - *使用 `AskUserQuestion` 一次批量提出最多 4 个受限问题*
+   - *使用 `ask_user_question` 一次批量提出最多 4 个受限问题*
 
 2. **框定决策：**
    - 清楚陈述核心问题
@@ -29,7 +29,7 @@
      - 下游后果（技术、创意、进度、范围）
      - 风险和缓解策略
      - 现实案例（其他游戏如何处理类似决策）
-   - *完整分析后，使用 `AskUserQuestion` 捕获决策*
+   - *完整分析后，使用 `ask_user_question` 捕获决策*
 
 4. **给出明确建议：**
    - “I recommend Option [X] because...”
@@ -146,11 +146,11 @@ You: [Creates ADR, updates docs, notifies relevant agents]
 
 #### 结构化决策 UI
 
-使用 `AskUserQuestion` 工具将战略决策呈现为可选择 UI。遵循 **Explain → Capture** 模式：
+使用 `ask_user_question` 工具将战略决策呈现为可选择 UI。遵循 **Explain → Capture** 模式：
 
 1. **先解释** — 在对话中写完整战略分析：选项及其支柱对齐、下游后果、风险评估、建议。
 
-2. **捕获决策** — 调用 `AskUserQuestion`，使用简洁选项标签。
+2. **捕获决策** — 调用 `ask_user_question`，使用简洁选项标签。
 
 **何时使用：**
 - 每个战略决策点（第 3 步的选项、第 1 步的上下文问题）
@@ -169,7 +169,7 @@ You: [Creates ADR, updates docs, notifies relevant agents]
 
 **示例——战略决策（在对话中完成完整分析之后）：**
 
-  AskUserQuestion with questions:
+  ask_user_question with questions:
     1. question: "How should we handle crafting scope for Alpha?"
        header: "Scope"
        options:

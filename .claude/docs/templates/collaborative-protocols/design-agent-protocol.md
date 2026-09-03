@@ -16,14 +16,14 @@
    - 约束是什么（范围、复杂度、现有系统）？
    - 用户喜欢/讨厌哪些参考游戏或机制？
    - 这如何连接到游戏支柱？
-   - *使用 `AskUserQuestion` 一次批量提出最多 4 个受限问题*
+   - *使用 `ask_user_question` 一次批量提出最多 4 个受限问题*
 
 2. **提出 2-4 个选项并说明理由：**
    - 解释每个选项的优缺点
    - 引用游戏设计理论（MDA、SDT、Bartle 等）
    - 将每个选项与用户声明的目标对齐
    - 给出推荐，但明确将最终决定权交给用户
-   - *完整解释后，使用 `AskUserQuestion` 捕获决策*
+   - *完整解释后，使用 `ask_user_question` 捕获决策*
 
 3. **基于用户选择起草：**
    - 迭代创建章节（展示一个章节、获取反馈、修订）
@@ -33,7 +33,7 @@
 4. **写入文件前获得批准：**
    - 展示完整草稿或摘要
    - 明确询问：“May I write this to [filepath]?”
-   - 在使用 Write/Edit 工具前等待 “yes”
+   - 在使用 write/edit 工具前等待 “yes”
    - 如果用户说 “no” 或 “change X”，则迭代并回到第 3 步
 
 #### 示例交互模式
@@ -92,7 +92,7 @@ You (request approval):
 
 User: "Yes"
 
-You: [uses Write tool]
+You: [uses write tool]
      "Created design/gdd/crafting-system.md. Would you like me to run /design-review to validate it?"
 ```
 
@@ -107,22 +107,22 @@ You: [uses Write tool]
 
 #### 结构化决策 UI
 
-使用 `AskUserQuestion` 工具将决策呈现为可选择 UI，而不是纯文本。遵循 **Explain → Capture** 模式：
+使用 `ask_user_question` 工具将决策呈现为可选择 UI，而不是纯文本。遵循 **Explain → Capture** 模式：
 
 1. **先解释** — 在对话文本中写出完整分析：详细优缺点、理论参考、示例游戏、支柱对齐。专家推理放在这里——不要试图塞进工具。
 
-2. **捕获决策** — 调用 `AskUserQuestion`，使用简短选项标签和简短描述。用户从 UI 选择或输入自定义答案。
+2. **捕获决策** — 调用 `ask_user_question`，使用简短选项标签和简短描述。用户从 UI 选择或输入自定义答案。
 
 **何时使用：**
 - 每个提出 2-4 个选项的决策点（第 2 步）
 - 初始澄清问题中有受限答案的问题（第 1 步）
-- 在一次 `AskUserQuestion` 调用中批量提出最多 4 个独立问题
+- 在一次 `ask_user_question` 调用中批量提出最多 4 个独立问题
 - 下一步选择（“先起草公式章节还是先修订规则？”）
 
 **何时不要使用：**
 - 开放式探索问题（“roguelike 的什么点让你兴奋？”）
 - 单个 yes/no 确认（“May I write to file?”）
-- 作为 Task subagent 运行时（工具可能不可用）——组织文本输出，让编排器可通过 AskUserQuestion 呈现选项
+- 作为 Task subagent 运行时（工具可能不可用）——组织文本输出，让编排器可通过 ask_user_question 呈现选项
 
 **格式指南：**
 - 标签：1-5 个词（例如，“Hybrid Discovery”、“Full Randomized”）
@@ -132,7 +132,7 @@ You: [uses Write tool]
 
 **示例——用于澄清问题的多问题批量：**
 
-  AskUserQuestion with questions:
+  ask_user_question with questions:
     1. question: "Should crafting recipes be discovered or learned?"
        header: "Discovery"
        options: "Experimentation", "NPC/Book Learning", "Tiered Hybrid"
@@ -142,7 +142,7 @@ You: [uses Write tool]
 
 **示例——捕获设计决策（在对话中完成完整分析之后）：**
 
-  AskUserQuestion with questions:
+  ask_user_question with questions:
     1. question: "Which crafting approach fits your vision?"
        header: "Approach"
        options:
